@@ -19,7 +19,7 @@ public class Ship extends Sprite{
 		super(x,y);
 		this.name = name;
 		Random r = new Random();
-		this.strength = r.nextInt(151)+100;
+		this.setStrength(r.nextInt(151)+100);
 		this.alive = true;
 		this.bullets = new ArrayList<Bullet>();
 		this.loadImage(Ship.SHIP_IMAGE);
@@ -50,7 +50,8 @@ public class Ship extends Sprite{
 		/*
 		 * TODO: Instantiate a new bullet and add it to the bullets arraylist of ship
 		 */
-		this.bullets = new ArrayList<Bullet>();
+		Bullet newBullet = new Bullet(x, y);
+		this.bullets.add(newBullet);
     }
 
 	//method called if up/down/left/right arrow key is pressed.
@@ -61,6 +62,14 @@ public class Ship extends Sprite{
 		 */
 		this.x += this.dx;
 		this.y += this.dy;
+	}
+
+	public int getStrength() {
+		return strength;
+	}
+
+	public void setStrength(int strength) {
+		this.strength = strength;
 	}
 
 }
