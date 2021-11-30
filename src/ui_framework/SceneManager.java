@@ -19,7 +19,10 @@ public class SceneManager {
 
 	public void load(String path) {
 		View view = routes.get(path);
+
 		Scene scene = view.getScene();
 		stage.setScene(scene);
+
+		view.start();
 	}
 }
