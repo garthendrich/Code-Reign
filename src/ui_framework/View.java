@@ -3,7 +3,7 @@ package ui_framework;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
-abstract class View {
+public abstract class View {
     protected Scene scene;
 	protected SceneManager sceneManager;
 
