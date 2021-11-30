@@ -1,4 +1,4 @@
-package miniprojtemplate;
+package game;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;

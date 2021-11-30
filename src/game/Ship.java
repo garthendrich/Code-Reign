@@ -1,4 +1,4 @@
-package miniprojtemplate;
+package game;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -50,7 +50,7 @@ public class Ship extends Sprite{
 		/*
 		 * TODO: Instantiate a new bullet and add it to the bullets arraylist of ship
 		 */
-		Bullet newBullet = new Bullet(x, y);
+		this.bullets = new ArrayList<Bullet>();
     }
 
 	//method called if up/down/left/right arrow key is pressed.
