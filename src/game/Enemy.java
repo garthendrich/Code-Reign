@@ -2,9 +2,9 @@ package game;
 
 import javafx.scene.image.Image;
 
-public class Fish extends Sprite {
+public class Enemy extends Sprite {
 	public static final int MAX_FISH_SPEED = 5;
-	public final static Image FISH_IMAGE = new Image("images/fish.png",Fish.FISH_WIDTH,Fish.FISH_WIDTH,false,false);
+	public final static Image FISH_IMAGE = new Image("images/fish.png",Enemy.FISH_WIDTH,Enemy.FISH_WIDTH,false,false);
 	public final static int FISH_WIDTH=50;
 	private boolean alive;
 	//attribute that will determine if a fish will initially move to the right
@@ -12,10 +12,10 @@ public class Fish extends Sprite {
 	private int speed;
 	
 	
-	Fish(int x, int y){
+	Enemy(int x, int y){
 		super(x,y);
 		this.alive = true;
-		this.loadImage(Fish.FISH_IMAGE);
+		this.loadImage(Enemy.FISH_IMAGE);
 		/*
 		 *TODO: Randomize speed of fish and moveRight's initial value 
 		 */
