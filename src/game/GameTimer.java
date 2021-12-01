@@ -38,4 +38,38 @@ public class GameTimer extends AnimationTimer{
 			sprite.updatePosition();
 		}
 	}
+
+	private void manageSpriteCollisions() {
+		for (Enemy enemy: enemies) {
+			manageCollisionOf(character, enemy);
+
+			ArrayList<Bullet> characterBullets = character.getBullets();
+			for (Bullet characterBullet : characterBullets) manageCollisionOf(enemy, characterBullet);
+		}
+	}
+
+	private void manageCollisionOf(Character character, Enemy enemy) {
+		if (character.collidesWith(enemy)) {
+			int enemyDamage = enemy.getDamage();
+			character.reduceStrengthBy(enemyDamage);
+
+			if (enemy instanceof Boss == false) enemies.remove(enemy);
+		}
+	}
+
+	private void manageCollisionOf(Enemy enemy, Bullet characterBullet) {
+		if (characterBullet.collidesWith(enemy)) {
+			if (enemy instanceof Boss) {
+				Boss enemyBoss = (Boss) enemy;
+
+				int characterBulletDamage = characterBullet.getDamage();
+				enemyBoss.reduceHealthBy(characterBulletDamage);
+
+				if (enemyBoss.isAlive() == false)  enemies.remove(enemyBoss);
+
+			} else {
+				enemies.remove(enemy);
+			}
+		}
+	}
 }
