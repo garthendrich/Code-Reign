@@ -21,7 +21,7 @@ public class Bullet extends Sprite {
 		 * 						set the bullet's visibility to false.
 		 */
 		x -= Bullet.BULLET_SPEED;
-		if(x <= 0){
+		if(x <= GameStage.WINDOW_WIDTH){
 			isVisible();
 		}
 	}
