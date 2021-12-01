@@ -6,23 +6,23 @@ import javafx.scene.image.Image;
 
 
 
-public class Ship extends Sprite{
+public class Character extends Sprite{
 	private String name;
 	private int strength;
 	private boolean alive;
 
 	private ArrayList<Bullet> bullets;
-	public final static Image SHIP_IMAGE = new Image("images/ship.png",Ship.SHIP_WIDTH,Ship.SHIP_WIDTH,false,false);
+	public final static Image SHIP_IMAGE = new Image("images/ship.png",Character.SHIP_WIDTH,Character.SHIP_WIDTH,false,false);
 	private final static int SHIP_WIDTH = 50;
 
-	public Ship(String name, int x, int y){
+	public Character(String name, int x, int y){
 		super(x,y);
 		this.name = name;
 		Random r = new Random();
 		this.setStrength(r.nextInt(151)+100);
 		this.alive = true;
 		this.bullets = new ArrayList<Bullet>();
-		this.loadImage(Ship.SHIP_IMAGE);
+		this.loadImage(Character.SHIP_IMAGE);
 	}
 
 	public boolean isAlive(){

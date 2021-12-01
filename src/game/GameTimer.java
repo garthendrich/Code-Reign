@@ -15,7 +15,7 @@ public class GameTimer extends AnimationTimer{
 	public static final int ENEMY_SPAWN_COUNT = 3;
 
 	private GraphicsContext graphicsContext;
-	private Ship myShip = new Ship("Going merry", 150, 250);
+	private Character character = new Character("Going merry", 150, 250);
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 
 	GameTimer(GraphicsContext graphicsContext){
