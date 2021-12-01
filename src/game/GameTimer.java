@@ -5,7 +5,9 @@ import java.util.Random;
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
@@ -26,11 +28,11 @@ public class GameTimer extends AnimationTimer{
 	public void handle(long currentTimeInNanoseconds) {
 		updateSpritePositions();
 		manageSpriteCollisions();
+		reRenderSprites();
 	}
 
 	private void updateSpritePositions() {
 		ArrayList<Bullet> characterBullets = character.getBullets();
-
 		ArrayList<Sprite> sprites = new ArrayList<Sprite>();
 		sprites.add(character);
 		sprites.addAll(characterBullets);
@@ -67,11 +69,37 @@ public class GameTimer extends AnimationTimer{
 				int characterBulletDamage = characterBullet.getDamage();
 				enemyBoss.reduceHealthBy(characterBulletDamage);
 
-				if (enemyBoss.isAlive() == false)  enemies.remove(enemyBoss);
+				if (enemyBoss.isAlive() == false) enemies.remove(enemyBoss);
 
 			} else {
 				enemies.remove(enemy);
 			}
 		}
+	}
+
+	private void reRenderSprites() {
+		clearCanvas();
+
+		ArrayList<Bullet> characterBullets = character.getBullets();
+		ArrayList<Sprite> sprites = new ArrayList<Sprite>();
+		sprites.add(character);
+		sprites.addAll(characterBullets);
+		sprites.addAll(enemies);
+
+		for (Sprite sprite : sprites) render(sprite);
+	}
+
+	private void clearCanvas() {
+		Canvas canvas = graphicsContext.getCanvas();
+		double canvasWidth = canvas.getWidth();
+		double canvasHeight = canvas.getHeight();
+		graphicsContext.clearRect(0, 0, canvasWidth, canvasHeight);
+	}
+
+	private void render(GameElement gameElement) {
+		Image gameElementImage = gameElement.getImage();
+		int gameElementXPos = gameElement.getXPos();
+		int gameElementYPos = gameElement.getYPos();
+		graphicsContext.drawImage(gameElementImage, gameElementXPos, gameElementYPos);
 	}
 }
