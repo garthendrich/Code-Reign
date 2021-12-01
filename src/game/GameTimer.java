@@ -25,4 +25,17 @@ public class GameTimer extends AnimationTimer{
 	@Override
 	public void handle(long currentNanoTime) {
 	}
+
+	private void updateSpritePositions() {
+		ArrayList<Bullet> characterBullets = character.getBullets();
+
+		ArrayList<Sprite> sprites = new ArrayList<Sprite>();
+		sprites.add(character);
+		sprites.addAll(characterBullets);
+		sprites.addAll(enemies);
+
+		for (Sprite sprite : sprites) {
+			sprite.updatePosition();
+		}
+	}
 }
