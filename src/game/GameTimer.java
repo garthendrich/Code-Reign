@@ -23,7 +23,9 @@ public class GameTimer extends AnimationTimer{
 	}
 
 	@Override
-	public void handle(long currentNanoTime) {
+	public void handle(long currentTimeInNanoseconds) {
+		updateSpritePositions();
+		manageSpriteCollisions();
 	}
 
 	private void updateSpritePositions() {
