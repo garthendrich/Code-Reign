@@ -9,30 +9,17 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
-/*
- * The GameTimer is a subclass of the AnimationTimer class. It must override the handle method.
- */
-
 public class GameTimer extends AnimationTimer{
 
-	private GraphicsContext gc;
-	private Scene theScene;
-	private Ship myShip;
-	private ArrayList<Fish> fishes;
-	public static final int MAX_NUM_FISHES = 3;
+	public static final int SPRITE_MOVING_DISTANCE = 10;
+	public static final int ENEMY_SPAWN_COUNT = 3;
 
+	private GraphicsContext graphicsContext;
+	private Ship myShip = new Ship("Going merry", 150, 250);
+	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 
-	GameTimer(GraphicsContext gc, Scene theScene){
-		this.gc = gc;
-		this.theScene = theScene;
-		this.myShip = new Ship("Going merry",100,100);
-		//instantiate the ArrayList of Fish
-		this.fishes = new ArrayList<Fish>();
-
-		//call the spawnFishes method
-		this.spawnFishes();
-		//call method to handle mouse click event
-		this.handleKeyPressEvent();
+	GameTimer(GraphicsContext graphicsContext){
+		this.graphicsContext = graphicsContext;
 	}
 
 	@Override
