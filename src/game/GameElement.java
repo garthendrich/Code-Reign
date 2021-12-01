@@ -11,54 +11,54 @@ public class GameElement {
 	protected double width;
 	protected double height;
 
-	public GameElement(int xPos, int yPos){
-		this.x = xPos;
-		this.y = yPos;
-		this.visible = true;
+	public GameElement(int xPos, int yPos, Image img){
+		x = xPos;
+		y = yPos;
+		loadImage(img);
+		visible = true;
 	}
 
 	//method to set the object's image
 	protected void loadImage(Image img){
 		try{
-			this.img = img;
-	        this.setSize();
+	        setSize();
 		} catch(Exception e){}
 	}
 
 	//method to set the image to the image view node
 	void render(GraphicsContext gc){
-		gc.drawImage(this.img, this.x, this.y);
+		gc.drawImage(img, x, y);
 
     }
 
 	//method to set the object's width and height properties
 	private void setSize(){
-		this.width = this.img.getWidth();
-	    this.height = this.img.getHeight();
+		width = img.getWidth();
+	    height = img.getHeight();
 	}
 	//method that will check for collision of two sprites
 	public boolean collidesWith(GameElement rect2)	{
-		Rectangle2D rectangle1 = this.getBounds();
+		Rectangle2D rectangle1 = getBounds();
 		Rectangle2D rectangle2 = rect2.getBounds();
 
 		return rectangle1.intersects(rectangle2);
 	}
 	//method that will return the bounds of an image
 	private Rectangle2D getBounds(){
-		return new Rectangle2D(this.x, this.y, this.width, this.height);
+		return new Rectangle2D(x, y, width, height);
 	}
 
 	//method to return the image
 	Image getImage(){
-		return this.img;
+		return img;
 	}
 	//getters
 	public int getX() {
-    	return this.x;
+    	return x;
 	}
 
 	public int getY() {
-    	return this.y;
+    	return y;
 	}
 
 	public boolean getVisible(){
@@ -79,14 +79,14 @@ public class GameElement {
 	}
 
 	public void setWidth(double val){
-		this.width = val;
+		width = val;
 	}
 
 	public void setHeight(double val){
-		this.height = val;
+		height = val;
 	}
 
 	public void setVisible(boolean value){
-		this.visible = value;
+		visible = value;
 	}
 }
