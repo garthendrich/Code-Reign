@@ -50,6 +50,6 @@ public class Enemy extends Sprite {
 
 	//getter
 	public boolean isAlive() {
-		return this.alive;
+		return alive;
 	}
 }
