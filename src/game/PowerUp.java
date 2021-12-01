@@ -6,5 +6,5 @@ abstract class PowerUp extends GameElement{
 		super(xPos, yPos);
 	}
 
-
+	abstract void checkCollision(Character character);
 }
