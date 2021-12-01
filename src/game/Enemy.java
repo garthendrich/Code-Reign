@@ -3,7 +3,7 @@ package game;
 import javafx.scene.image.Image;
 import java.util.Random;
 
-public class Enemy extends Sprite {
+public class Enemy extends GameElement {
 	public static final int MAX_FISH_SPEED = 5;
 	public final static Image FISH_IMAGE = new Image("images/fish.png",Enemy.FISH_WIDTH,Enemy.FISH_WIDTH,false,false);
 	public final static int FISH_WIDTH=50;
