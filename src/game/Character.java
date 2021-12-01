@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Random;
 import javafx.scene.image.Image;
 
-public class Character extends Sprite{
+public class Character extends GameElement{
 	private String name;
 	private int strength;
 	private boolean alive;
 
 	private ArrayList<Bullet> bullets;
-	public final static Image SHIP_IMAGE = new Image("images/ship.png",Character.SHIP_WIDTH,Character.SHIP_WIDTH,false,false);
-	private final static int SHIP_WIDTH = 50;
+	public final static Image CHARACTER_IMAGE = new Image("images/ship.png",Character.CHARACTER_WIDTH,Character.CHARACTER_WIDTH,false,false);
+	private final static int CHARACTER_WIDTH = 50;
 
 	public Character(String name, int x, int y){
 		super(x,y);
@@ -19,7 +19,7 @@ public class Character extends Sprite{
 		setStrength(r.nextInt(151)+100);
 		alive = true;
 		bullets = new ArrayList<Bullet>();
-		loadImage(Character.SHIP_IMAGE);
+		loadImage(Character.CHARACTER_IMAGE);
 	}
 
 	public boolean isAlive(){
