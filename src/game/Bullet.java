@@ -20,9 +20,9 @@ public class Bullet extends Sprite {
 		 * 					If the x position has reached the right boundary of the screen,
 		 * 						set the bullet's visibility to false.
 		 */
-		x -= Bullet.BULLET_SPEED;
+		x += Bullet.BULLET_SPEED;
 		if(x <= GameStage.WINDOW_WIDTH){
-			isVisible();
+			setVisible(false);
 		}
 	}
 }
