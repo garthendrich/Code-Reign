@@ -9,7 +9,7 @@ public class Bullet extends Sprite {
 
 	public Bullet(int x, int y){
 		super(x,y);
-		this.loadImage(Bullet.BULLET_IMAGE);
+		loadImage(Bullet.BULLET_IMAGE);
 	}
 
 
@@ -20,9 +20,9 @@ public class Bullet extends Sprite {
 		 * 					If the x position has reached the right boundary of the screen,
 		 * 						set the bullet's visibility to false.
 		 */
-		this.x -= Bullet.BULLET_SPEED;
-		if(this.x <= 0){
-			this.isVisible();
+		x -= Bullet.BULLET_SPEED;
+		if(x <= 0){
+			isVisible();
 		}
 	}
 }
