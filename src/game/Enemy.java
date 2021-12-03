@@ -4,25 +4,25 @@ import javafx.scene.image.Image;
 import java.util.Random;
 
 public class Enemy extends GameElement {
-	public static final int MAX_FISH_SPEED = 5;
-	public final static Image FISH_IMAGE = new Image("images/fish.png",Enemy.FISH_WIDTH,Enemy.FISH_WIDTH,false,false);
-	public final static int FISH_WIDTH=50;
+	public static final int MAX_ENEMY_SPEED = 5;
+	public final static Image ENEMY_IMAGE = new Image("images/fish.png", Enemy.ENEMY_WIDTH, Enemy.ENEMY_WIDTH, false, false);
+	public final static int ENEMY_WIDTH = 50;
 	private boolean alive;
 	//attribute that will determine if a fish will initially move to the right
 	private boolean moveRight;
 	private int speed;
 
 
-	Enemy(int x, int y){
-		super(x,y);
+	Enemy(int x, int y, Image img){
+		super(x,y, img);
 		alive = true;
-		loadImage(Enemy.FISH_IMAGE);
+		loadImage(Enemy.ENEMY_IMAGE);
 		/*
 		 *TODO: Randomize speed of fish and moveRight's initial value
 		 */
 		Random r = new Random();
-		speed = r.nextInt(MAX_FISH_SPEED);
-		moveRight = false;
+		speed = r.nextInt(MAX_ENEMY_SPEED);
+		moveRight = r.nextBoolean();
 	}
 
 	//method that changes the x position of the fish
