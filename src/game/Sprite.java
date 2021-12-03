@@ -34,11 +34,15 @@ public class Sprite extends GameElement{
 
 	}
 
-	void setDX(int value){
-		this.dX = value;
+	void setDX(int distance){
+		this.dX = distance;
 	}
 
-	void setDY(int value){
-		this.dY = value;
+	void setDY(int distance){
+		this.dY = distance;
+	}
+
+	void updatePosition(){
+
 	}
 }
