@@ -11,10 +11,9 @@ public class GameElement {
 	protected double width;
 	protected double height;
 
-	public GameElement(int xPos, int yPos, Image img){
+	public GameElement(int xPos, int yPos){
 		x = xPos;
 		y = yPos;
-		loadImage(img);
 		visible = true;
 	}
 

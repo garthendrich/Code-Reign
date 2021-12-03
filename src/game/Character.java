@@ -14,7 +14,7 @@ public class Character extends GameElement{
 	private final static int CHARACTER_WIDTH = 50;
 
 	public Character(String name, int x, int y){
-		super(x,y, Character.CHARACTER_IMAGE);
+		super(x,y);
 		Random r = new Random();
 		setStrength(r.nextInt(151)+100);
 		alive = true;

@@ -13,8 +13,8 @@ public class Enemy extends GameElement {
 	private int speed;
 
 
-	Enemy(int x, int y, Image img){
-		super(x,y, img);
+	Enemy(int x, int y){
+		super(x,y);
 		alive = true;
 		loadImage(Enemy.ENEMY_IMAGE);
 		/*
