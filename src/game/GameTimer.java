@@ -31,8 +31,43 @@ public class GameTimer extends AnimationTimer{
 		reRenderSprites();
 	}
 
-
+	private void spawnEnemies(int spawnCount) {
+		for (int spawned = 0; spawned < spawnCount; spawned++) {
+			Enemy enemy = createEnemyAtRandomUnoccupiedPosition();
+			enemies.add(enemy);
 		}
+	}
+
+	private Enemy createEnemyAtRandomUnoccupiedPosition() {
+		Enemy enemy = null;
+
+		for (int generatePositionAttempts = 0; generatePositionAttempts < 10; generatePositionAttempts++) {
+			enemy = createEnemyAtRandomPosition();
+
+			if (isEnemyCollidingAnotherSprite(enemy) == false) break;
+		}
+
+		return enemy;
+	}
+
+	private Enemy createEnemyAtRandomPosition() {
+		int lowestXPos = GameArea.LOWER_X_BOUND;
+		int highestXPos = GameArea.UPPER_X_BOUND - Enemy.WIDTH;
+		int randomXPos = generateRandomNumber(lowestXPos, highestXPos);
+
+		int lowestYPos = GameArea.LOWER_Y_BOUND;
+		int highestYPos = GameArea.UPPER_Y_BOUND - Enemy.HEIGHT;
+		int randomYPos = generateRandomNumber(lowestYPos, highestYPos);
+
+		return new Enemy(randomXPos, randomYPos);
+	}
+
+	private boolean isEnemyCollidingAnotherSprite(Enemy enemy) {
+		ArrayList<Sprite> sprites = getAllSprites();
+		for (Sprite sprite : sprites) if (enemy.collidesWith(sprite)) return true;
+		return false;
+	}
+
 	private void updateSpritePositions() {
 		ArrayList<Sprite> sprites = getAllSprites();
 		for (Sprite sprite : sprites) sprite.updatePosition();
@@ -100,5 +135,10 @@ public class GameTimer extends AnimationTimer{
 		sprites.addAll(characterBullets);
 		sprites.addAll(enemies);
 		return sprites;
+	}
+
+	private int generateRandomNumber(int min, int max) {
+		Random randomizer = new Random();
+		return min + randomizer.nextInt(max - min + 1);
 	}
 }
