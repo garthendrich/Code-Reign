@@ -1,91 +1,47 @@
 package game;
 
 import javafx.geometry.Rectangle2D;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 public class GameElement {
-	protected Image img;
-	protected int x, y, dx, dy;
-	protected boolean visible;
-	protected double width;
-	protected double height;
+	protected Image image;
+	protected int xPos, yPos, width, height;
 
-	public GameElement(int xPos, int yPos){
-		x = xPos;
-		y = yPos;
-		visible = true;
+	public GameElement(int xPos, int yPos, Image image){
+		this.xPos = xPos;
+		this.yPos = yPos;
+		this.image = image;
 	}
 
-	//method to set the object's image
-	protected void loadImage(Image img){
-		try{
-	        setSize();
-		} catch(Exception e){}
-	}
-
-	//method to set the image to the image view node
-	void render(GraphicsContext gc){
-		gc.drawImage(img, x, y);
-
-    }
-
-	//method to set the object's width and height properties
-	private void setSize(){
-		width = img.getWidth();
-	    height = img.getHeight();
-	}
 	//method that will check for collision of two sprites
 	public boolean collidesWith(GameElement rect2)	{
-		Rectangle2D rectangle1 = getBounds();
-		Rectangle2D rectangle2 = rect2.getBounds();
-
+		Rectangle2D rectangle1 = getHitBox();
+		Rectangle2D rectangle2 = rect2.getHitBox();
 		return rectangle1.intersects(rectangle2);
 	}
 	//method that will return the bounds of an image
-	private Rectangle2D getBounds(){
-		return new Rectangle2D(x, y, width, height);
+	private Rectangle2D getHitBox(){
+		return new Rectangle2D(xPos, yPos, width, height);
 	}
 
 	//method to return the image
 	Image getImage(){
-		return img;
+		return image;
 	}
 	//getters
-	public int getX() {
-    	return x;
+	public int getXPos() {
+    	return xPos;
 	}
 
 	public int getY() {
-    	return y;
+    	return yPos;
 	}
 
-	public boolean getVisible(){
-		return visible;
-	}
-	public boolean isVisible(){
-		if(visible) return true;
-		return false;
+	public int getWidth(){
+		return width;
 	}
 
-	//setters
-	public void setDX(int dx){
-		this.dx = dx;
-	}
-
-	public void setDY(int dy){
-		this.dy = dy;
-	}
-
-	public void setWidth(double val){
-		width = val;
-	}
-
-	public void setHeight(double val){
-		height = val;
-	}
-
-	public void setVisible(boolean value){
-		visible = value;
+	public int getHeight(){
+		return height;
 	}
 }
