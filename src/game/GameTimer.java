@@ -17,11 +17,16 @@ public class GameTimer extends AnimationTimer{
 	public static final int ENEMY_SPAWN_COUNT = 3;
 	public static final int ENEMY_SPAWN_INTERVAL_SECONDS = 5;
 
+	public static final int POWER_UP_SPAWN_INTERVAL_SECONDS = 10;
+	public static final int POWER_UP_OCCURENCE_SECONDS = 5;
+
 	private GraphicsContext graphicsContext;
 	private Character character = new Character("Going merry", 150, 250);
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+	private PowerUp powerUp;
 	private long gameStartTimeInNanos = -1;
 	private double gameTimeDuringPreviousEnemySpawn = 0;
+	private double gameTimeDuringPreviousPowerUpSpawn = 0;
 	private ArrayList<KeyCode> keysPressed = new ArrayList<KeyCode>();
 
 	GameTimer(GraphicsContext graphicsContext){
@@ -34,11 +39,18 @@ public class GameTimer extends AnimationTimer{
 	public void handle(long currentTimeInNanos) {
 		double gameTime = computeGameTime(currentTimeInNanos);
 
-		double previousSpawnElapsedSeconds = gameTime - gameTimeDuringPreviousEnemySpawn;
-		if (previousSpawnElapsedSeconds > ENEMY_SPAWN_INTERVAL_SECONDS) {
+		double elapsedSecondsSincePreviousEnemySpawn = gameTime - gameTimeDuringPreviousEnemySpawn;
+		if (elapsedSecondsSincePreviousEnemySpawn > ENEMY_SPAWN_INTERVAL_SECONDS) {
 			spawnEnemies(ENEMY_SPAWN_COUNT);
 			gameTimeDuringPreviousEnemySpawn = gameTime;
 		}
+
+		double elapsedSecondsSincePreviousPowerUpSpawn = gameTime - gameTimeDuringPreviousPowerUpSpawn;
+		if (elapsedSecondsSincePreviousPowerUpSpawn > POWER_UP_SPAWN_INTERVAL_SECONDS) {
+			spawnPowerUp();
+			gameTimeDuringPreviousPowerUpSpawn = gameTime;
+		}
+		if (elapsedSecondsSincePreviousPowerUpSpawn > POWER_UP_OCCURENCE_SECONDS) deSpawnPowerUp();
 
 		updateSpritePositions();
 		manageSpriteCollisions();
@@ -85,6 +97,22 @@ public class GameTimer extends AnimationTimer{
 		ArrayList<Sprite> sprites = getAllSprites();
 		for (Sprite sprite : sprites) if (enemy.collidesWith(sprite)) return true;
 		return false;
+	}
+
+	private void spawnPowerUp() {
+		powerUp = createRandomPowerUp();
+	}
+
+	private void deSpawnPowerUp() {
+		powerUp = null;
+	}
+
+	private PowerUp createRandomPowerUp() {
+		Random randomizer = new Random();
+		switch(randomizer.nextInt(2)) {
+			case 0: return new Pearl();
+			case 1: return new Star();
+		}
 	}
 
 	private void updateSpritePositions() {
