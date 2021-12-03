@@ -53,8 +53,8 @@ public class GameTimer extends AnimationTimer{
 		if (elapsedSecondsSincePreviousPowerUpSpawn > POWER_UP_OCCURENCE_SECONDS) deSpawnPowerUp();
 
 		updateSpritePositions();
-		manageSpriteCollisions();
 		reRenderSprites();
+		manageGameElementCollisions();
 	}
 
 	private double computeGameTime(long currentTimeInNanos) {
@@ -75,7 +75,7 @@ public class GameTimer extends AnimationTimer{
 		for (int generatePositionAttempts = 0; generatePositionAttempts < 10; generatePositionAttempts++) {
 			enemy = createEnemyAtRandomPosition();
 
-			if (isEnemyCollidingAnotherSprite(enemy) == false) break;
+			if (isEnemyCollidingAnotherGameElement(enemy) == false) break;
 		}
 
 		return enemy;
@@ -93,9 +93,9 @@ public class GameTimer extends AnimationTimer{
 		return new Enemy(randomXPos, randomYPos);
 	}
 
-	private boolean isEnemyCollidingAnotherSprite(Enemy enemy) {
-		ArrayList<Sprite> sprites = getAllSprites();
-		for (Sprite sprite : sprites) if (enemy.collidesWith(sprite)) return true;
+	private boolean isEnemyCollidingAnotherGameElement(Enemy enemy) {
+		ArrayList<GameElement> gameElements = getAllGameElements();
+		for (GameElement gameElement : gameElements) if (enemy.collidesWith(gameElement)) return true;
 		return false;
 	}
 
@@ -120,12 +120,23 @@ public class GameTimer extends AnimationTimer{
 		for (Sprite sprite : sprites) sprite.updatePosition();
 	}
 
-	private void manageSpriteCollisions() {
+	private void manageGameElementCollisions() {
+		ArrayList<Bullet> characterBullets = character.getBullets();
+
+		manageCollisionOf(character, powerUp);
+
 		for (Enemy enemy: enemies) {
 			manageCollisionOf(character, enemy);
 
-			ArrayList<Bullet> characterBullets = character.getBullets();
 			for (Bullet characterBullet : characterBullets) manageCollisionOf(enemy, characterBullet);
+		}
+	}
+
+	private void manageCollisionOf(Character character, PowerUp powerUp) {
+		if (character.collidesWith(powerUp)) {
+			powerUp.applyTo(character);
+
+			deSpawnPowerUp();
 		}
 	}
 
@@ -173,6 +184,14 @@ public class GameTimer extends AnimationTimer{
 		int gameElementXPos = gameElement.getXPos();
 		int gameElementYPos = gameElement.getYPos();
 		graphicsContext.drawImage(gameElementImage, gameElementXPos, gameElementYPos);
+	}
+
+	private ArrayList<GameElement> getAllGameElements() {
+		ArrayList<GameElement> gameElements = new ArrayList<GameElement>();
+		ArrayList<Sprite> sprites = getAllSprites();
+		gameElements.addAll(sprites);
+		gameElements.add(powerUp);
+		return gameElements;
 	}
 
 	private ArrayList<Sprite> getAllSprites() {
