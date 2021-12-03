@@ -13,7 +13,6 @@ import javafx.scene.input.KeyEvent;
 
 public class GameTimer extends AnimationTimer{
 
-	public static final int SPRITE_MOVING_DISTANCE = 10;
 	public static final int ENEMY_INITIAL_SPAWN_COUNT = 7;
 	public static final int ENEMY_SPAWN_COUNT = 3;
 	public static final int ENEMY_SPAWN_INTERVAL_SECONDS = 5;
@@ -23,6 +22,7 @@ public class GameTimer extends AnimationTimer{
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 	private long gameStartTimeInNanos = -1;
 	private double gameTimeDuringPreviousEnemySpawn = 0;
+	private ArrayList<KeyCode> keysPressed = new ArrayList<KeyCode>();
 
 	GameTimer(GraphicsContext graphicsContext){
 		this.graphicsContext = graphicsContext;
@@ -159,5 +159,33 @@ public class GameTimer extends AnimationTimer{
 	private int generateRandomNumber(int min, int max) {
 		Random randomizer = new Random();
 		return min + randomizer.nextInt(max - min + 1);
+	}
+
+	public void handleKeyPress(KeyCode key) {
+		if (keysPressed.contains(key)) return;
+
+		keysPressed.add(key);
+		updateCharacterMovement();
+	}
+
+	public void handleKeyRelease(KeyCode key) {
+		keysPressed.remove(key);
+		updateCharacterMovement();
+	}
+
+	private void updateCharacterMovement() {
+		if (isKeyPressed(KeyCode.UP) && isKeyPressed(KeyCode.DOWN)) character.stopMovingVertically();
+		else if (isKeyPressed(KeyCode.UP)) character.moveUpward();
+		else if (isKeyPressed(KeyCode.DOWN)) character.moveDownward();
+		else character.stopMovingVertically();
+
+		if (isKeyPressed(KeyCode.LEFT) && isKeyPressed(KeyCode.RIGHT)) character.stopMovingHorizontally();
+		else if (isKeyPressed(KeyCode.LEFT)) character.moveLeftward();
+		else if (isKeyPressed(KeyCode.RIGHT)) character.moveRightward();
+		else character.stopMovingHorizontally();
+	}
+
+	private boolean isKeyPressed(KeyCode key) {
+		return keysPressed.contains(key);
 	}
 }
