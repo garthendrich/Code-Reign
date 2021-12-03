@@ -13,7 +13,7 @@ public class GameStage {
 	public static final int WINDOW_HEIGHT = 600;
 
 	private Scene scene;
-	private GameTimer gametimer;
+	private GameTimer gameTimer;
 
 	public GameStage() {
 		StackPane root = new StackPane();
@@ -22,7 +22,7 @@ public class GameStage {
 		scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
 
 		GraphicsContext graphicsContext = canvas.getGraphicsContext2D();
-		gametimer = new GameTimer(graphicsContext);
+		gameTimer = new GameTimer(graphicsContext);
 	}
 
 	/**
@@ -35,10 +35,7 @@ public class GameStage {
 		stage.setScene(scene);
 		stage.show();
 
-		gametimer.start();
+		gameTimer.start();
 	}
-
-
-
 }
 
