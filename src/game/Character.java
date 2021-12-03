@@ -10,11 +10,11 @@ public class Character extends GameElement{
 	private boolean alive;
 
 	private ArrayList<Bullet> bullets;
-	public final static Image CHARACTER_IMAGE = new Image("images/ship.png",Character.CHARACTER_WIDTH,Character.CHARACTER_WIDTH,false,false);
+	public final static Image CHARACTER_IMAGE = new Image("images/ship.png", Character.CHARACTER_WIDTH, Character.CHARACTER_WIDTH, false, false);
 	private final static int CHARACTER_WIDTH = 50;
 
 	public Character(String name, int x, int y){
-		super(x,y);
+		super(x,y, Character.CHARACTER_IMAGE);
 		Random r = new Random();
 		setStrength(r.nextInt(151)+100);
 		alive = true;
