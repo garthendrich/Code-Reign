@@ -31,16 +31,11 @@ public class GameTimer extends AnimationTimer{
 		reRenderSprites();
 	}
 
-	private void updateSpritePositions() {
-		ArrayList<Bullet> characterBullets = character.getBullets();
-		ArrayList<Sprite> sprites = new ArrayList<Sprite>();
-		sprites.add(character);
-		sprites.addAll(characterBullets);
-		sprites.addAll(enemies);
 
-		for (Sprite sprite : sprites) {
-			sprite.updatePosition();
 		}
+	private void updateSpritePositions() {
+		ArrayList<Sprite> sprites = getAllSprites();
+		for (Sprite sprite : sprites) sprite.updatePosition();
 	}
 
 	private void manageSpriteCollisions() {
@@ -80,12 +75,7 @@ public class GameTimer extends AnimationTimer{
 	private void reRenderSprites() {
 		clearCanvas();
 
-		ArrayList<Bullet> characterBullets = character.getBullets();
-		ArrayList<Sprite> sprites = new ArrayList<Sprite>();
-		sprites.add(character);
-		sprites.addAll(characterBullets);
-		sprites.addAll(enemies);
-
+		ArrayList<Sprite> sprites = getAllSprites();
 		for (Sprite sprite : sprites) render(sprite);
 	}
 
@@ -101,5 +91,14 @@ public class GameTimer extends AnimationTimer{
 		int gameElementXPos = gameElement.getXPos();
 		int gameElementYPos = gameElement.getYPos();
 		graphicsContext.drawImage(gameElementImage, gameElementXPos, gameElementYPos);
+	}
+
+	private ArrayList<Sprite> getAllSprites() {
+		ArrayList<Sprite> sprites = new ArrayList<Sprite>();
+		sprites.add(character);
+		ArrayList<Bullet> characterBullets = character.getBullets();
+		sprites.addAll(characterBullets);
+		sprites.addAll(enemies);
+		return sprites;
 	}
 }
