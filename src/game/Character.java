@@ -16,7 +16,7 @@ public class Character extends GameElement{
 	public Character(String name, int x, int y){
 		super(x,y);
 		Random r = new Random();
-		setStrength(r.nextInt(151)+100);
+		strength = r.nextInt(151)+100;
 		alive = true;
 		bullets = new ArrayList<Bullet>();
 		loadImage(Character.CHARACTER_IMAGE);
@@ -68,8 +68,8 @@ public class Character extends GameElement{
 		return strength;
 	}
 
-	public void setStrength(int strength) {
-		this.strength = strength;
+	public void addStrength(){
+		strength += 50;
 	}
 
 }
