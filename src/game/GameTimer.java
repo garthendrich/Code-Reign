@@ -53,8 +53,8 @@ public class GameTimer extends AnimationTimer{
 		if (elapsedSecondsSincePreviousPowerUpSpawn > POWER_UP_OCCURENCE_SECONDS) deSpawnPowerUp();
 
 		updateSpritePositions();
-		reRenderSprites();
 		manageGameElementCollisions();
+		reRenderGameElements();
 	}
 
 	private double computeGameTime(long currentTimeInNanos) {
@@ -165,14 +165,14 @@ public class GameTimer extends AnimationTimer{
 		}
 	}
 
-	private void reRenderSprites() {
-		clearCanvas();
+	private void reRenderGameElements() {
+		clearGameCanvas();
 
-		ArrayList<Sprite> sprites = getAllSprites();
-		for (Sprite sprite : sprites) render(sprite);
+		ArrayList<GameElement> gameElements = getAllGameElements();
+		for (GameElement gameElement : gameElements) render(gameElement);
 	}
 
-	private void clearCanvas() {
+	private void clearGameCanvas() {
 		Canvas canvas = graphicsContext.getCanvas();
 		double canvasWidth = canvas.getWidth();
 		double canvasHeight = canvas.getHeight();
