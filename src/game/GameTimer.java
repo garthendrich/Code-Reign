@@ -14,21 +14,40 @@ import javafx.scene.input.KeyEvent;
 public class GameTimer extends AnimationTimer{
 
 	public static final int SPRITE_MOVING_DISTANCE = 10;
+	public static final int ENEMY_INITIAL_SPAWN_COUNT = 7;
 	public static final int ENEMY_SPAWN_COUNT = 3;
+	public static final int ENEMY_SPAWN_INTERVAL_SECONDS = 5;
 
 	private GraphicsContext graphicsContext;
 	private Character character = new Character("Going merry", 150, 250);
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+	private long gameStartTimeInNanos = -1;
+	private double gameTimeDuringPreviousEnemySpawn = 0;
 
 	GameTimer(GraphicsContext graphicsContext){
 		this.graphicsContext = graphicsContext;
+
+		spawnEnemies(ENEMY_INITIAL_SPAWN_COUNT);
 	}
 
 	@Override
-	public void handle(long currentTimeInNanoseconds) {
+	public void handle(long currentTimeInNanos) {
+		double gameTime = computeGameTime(currentTimeInNanos);
+
+		double previousSpawnElapsedSeconds = gameTime - gameTimeDuringPreviousEnemySpawn;
+		if (previousSpawnElapsedSeconds > ENEMY_SPAWN_INTERVAL_SECONDS) {
+			spawnEnemies(ENEMY_SPAWN_COUNT);
+			gameTimeDuringPreviousEnemySpawn = gameTime;
+		}
+
 		updateSpritePositions();
 		manageSpriteCollisions();
 		reRenderSprites();
+	}
+
+	private double computeGameTime(long currentTimeInNanos) {
+		if (gameStartTimeInNanos == -1) gameStartTimeInNanos = currentTimeInNanos;
+		return (currentTimeInNanos - gameStartTimeInNanos) / 1_000_000_000.0;
 	}
 
 	private void spawnEnemies(int spawnCount) {
