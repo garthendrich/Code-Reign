@@ -11,7 +11,7 @@ class Pearl extends PowerUp{
 	}
 
 	@Override
-	void applyTo(Character character) {
+	void applyTo(Edolite edolite) {
 		// TODO Auto-generated method stub
 
 	}
