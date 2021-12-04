@@ -45,6 +45,7 @@ public class GameTimer extends AnimationTimer{
 		manageOrglitSpawns();
 		managePowerUpSpawns();
 		updateSpritePositions();
+		updateOrglitMovements();
 		manageGameElementCollisions();
 		reRenderGameElements();
 	}
@@ -139,6 +140,10 @@ public class GameTimer extends AnimationTimer{
 	private void updateSpritePositions() {
 		ArrayList<Sprite> sprites = getAllSprites();
 		for (Sprite sprite : sprites) sprite.updatePosition();
+	}
+
+	private void updateOrglitMovements() {
+		for (Orglit orglit : orglits) orglit.updateMovement();
 	}
 
 	private void manageGameElementCollisions() {

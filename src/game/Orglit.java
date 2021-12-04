@@ -17,9 +17,18 @@ public class Orglit extends Sprite{
 	public Orglit(int x, int y) {
 		super(x,y, ORGLIT_IMAGE);
 
+		setRandomInitialMovement();
 		Random randomizer = new Random();
 		int movementSpeed = MIN_MOVEMENT_SPEED + randomizer.nextInt(MAX_MOVEMENT_SPEED - MIN_MOVEMENT_SPEED + 1);
 		setMovementSpeed(movementSpeed);
+	}
+
+	private void setRandomInitialMovement() {
+		Random randomizer = new Random();
+		switch(randomizer.nextInt(2)) {
+			case 0: moveLeft();
+			case 1: moveRight();
+		}
 	}
 
 	public int getDamage() {
@@ -32,5 +41,13 @@ public class Orglit extends Sprite{
 
 	boolean isAlive() {
 		return isAlive;
+	}
+
+	void updateMovement() {
+		if (xPos == 0) {
+			moveRight();
+		} else if (xPos == GameStage.CANVAS_WIDTH - this.width) {
+			moveLeft();
+		}
 	}
 }
