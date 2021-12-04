@@ -40,17 +40,15 @@ public class Sprite extends GameElement {
 	}
 
 	void updatePosition() {
-		int lowestXPos = GameArea.LOWER_X_BOUND;
-		int highestXPos = GameArea.UPPER_X_BOUND - width;
-		int lowestYPos = GameArea.LOWER_Y_BOUND;
-		int highestYPos = GameArea.UPPER_Y_BOUND - height;
+		int highestXPos = GameStage.CANVAS_WIDTH - this.width;
+		int highestYPos = GameStage.CANVAS_HEIGHT - this.height;
 
 		xPos += dX;
-		if (xPos < lowestXPos) xPos = lowestXPos;
+		if (xPos < 0) xPos = 0;
 		else if (xPos > highestXPos) xPos = highestXPos;
 
 		yPos += dY;
-		if (yPos < lowestYPos) yPos = lowestYPos;
+		if (yPos < 0) yPos = 0;
 		else if (yPos > highestYPos) yPos = highestYPos;
 	}
 }

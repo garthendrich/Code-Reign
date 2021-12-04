@@ -83,13 +83,11 @@ public class GameTimer extends AnimationTimer{
 	}
 
 	private Orglit createOrglitAtRandomPosition() {
-		int lowestXPos = GameArea.LOWER_X_BOUND;
-		int highestXPos = GameArea.UPPER_X_BOUND - Orglit.WIDTH;
-		int randomXPos = generateRandomNumber(lowestXPos, highestXPos);
+		int highestXPos = GameStage.CANVAS_WIDTH - Orglit.WIDTH;
+		int randomXPos = generateRandomNumber(0, highestXPos);
 
-		int lowestYPos = GameArea.LOWER_Y_BOUND;
-		int highestYPos = GameArea.UPPER_Y_BOUND - Orglit.HEIGHT;
-		int randomYPos = generateRandomNumber(lowestYPos, highestYPos);
+		int highestYPos = GameStage.CANVAS_HEIGHT - Orglit.HEIGHT;
+		int randomYPos = generateRandomNumber(0, highestYPos);
 
 		return new Orglit(randomXPos, randomYPos);
 	}
@@ -112,13 +110,11 @@ public class GameTimer extends AnimationTimer{
 	}
 
 	private void spawnPowerUp() {
-		int lowestXPos = GameArea.LOWER_X_BOUND;
-		int highestXPos = GameArea.UPPER_X_BOUND / 2;
-		int randomXPos = generateRandomNumber(lowestXPos, highestXPos);
+		int highestXPos = (GameStage.CANVAS_WIDTH / 2) - PowerUp.SIZE;
+		int randomXPos = generateRandomNumber(0, highestXPos);
 
-		int lowestYPos = GameArea.LOWER_Y_BOUND;
-		int highestYPos = GameArea.UPPER_Y_BOUND - PowerUp.SIZE;
-		int randomYPos = generateRandomNumber(lowestYPos, highestYPos);
+		int highestYPos = GameStage.CANVAS_HEIGHT - PowerUp.SIZE;
+		int randomYPos = generateRandomNumber(0, highestYPos);
 
 		powerUp = createRandomPowerUpAt(randomXPos, randomYPos);
 	}
@@ -206,10 +202,7 @@ public class GameTimer extends AnimationTimer{
 	}
 
 	private void clearGameCanvas() {
-		Canvas canvas = graphicsContext.getCanvas();
-		double canvasWidth = canvas.getWidth();
-		double canvasHeight = canvas.getHeight();
-		graphicsContext.clearRect(0, 0, canvasWidth, canvasHeight);
+		graphicsContext.clearRect(0, 0, GameStage.CANVAS_WIDTH, GameStage.CANVAS_HEIGHT);
 	}
 
 	private void render(GameElement gameElement) {
