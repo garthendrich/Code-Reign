@@ -71,38 +71,15 @@ public class GameTimer extends AnimationTimer{
 
 	private void spawnOrglits(int spawnCount) {
 		for (int spawned = 0; spawned < spawnCount; spawned++) {
-			Orglit orglit = createOrglitAtRandomUnoccupiedPosition();
-			orglits.add(orglit);
+			int lowestXPos = GameStage.CANVAS_WIDTH / 2;
+			int highestXPos = GameStage.CANVAS_WIDTH - Orglit.WIDTH;
+			int randomXPos = generateRandomNumber(lowestXPos, highestXPos);
+
+			int highestYPos = GameStage.CANVAS_HEIGHT - Orglit.HEIGHT;
+			int randomYPos = generateRandomNumber(0, highestYPos);
+
+			orglits.add(new Orglit(randomXPos, randomYPos));
 		}
-	}
-
-	private Orglit createOrglitAtRandomUnoccupiedPosition() {
-		Orglit orglit = null;
-
-		for (int generatePositionAttempts = 0; generatePositionAttempts < 10; generatePositionAttempts++) {
-			orglit = createOrglitAtRandomPosition();
-
-			if (isOrglitCollidingAnotherGameElement(orglit) == false) break;
-		}
-
-		return orglit;
-	}
-
-	private Orglit createOrglitAtRandomPosition() {
-		int lowestXPos = GameStage.CANVAS_WIDTH / 2;
-		int highestXPos = GameStage.CANVAS_WIDTH - Orglit.WIDTH;
-		int randomXPos = generateRandomNumber(lowestXPos, highestXPos);
-
-		int highestYPos = GameStage.CANVAS_HEIGHT - Orglit.HEIGHT;
-		int randomYPos = generateRandomNumber(0, highestYPos);
-
-		return new Orglit(randomXPos, randomYPos);
-	}
-
-	private boolean isOrglitCollidingAnotherGameElement(Orglit orglit) {
-		ArrayList<GameElement> gameElements = getAllGameElements();
-		for (GameElement gameElement : gameElements) if (orglit.collidesWith(gameElement)) return true;
-		return false;
 	}
 
 	private void managePowerUpSpawns() {
