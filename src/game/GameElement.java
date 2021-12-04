@@ -35,7 +35,7 @@ public class GameElement {
     	return xPos;
 	}
 
-	public int getY() {
+	public int getYPos() {
     	return yPos;
 	}
 
