@@ -3,18 +3,16 @@ package game;
 import javafx.scene.image.Image;
 
 class Pearl extends PowerUp{
-	private final static Image PEARL_IMAGE = new Image();
+	private final static Image PEARL_IMAGE = new Image("images/biscuit.png");
 
-	Pearl(int xPos, int yPos) {
-		super(xPos, yPos);
-		loadImage(Pearl.PEARL_IMAGE);
+	Pearl(int x, int y, Image image){
+		super(x, y, image);
+		this.image = PEARL_IMAGE;
 	}
 
 	@Override
-	void checkCollision(Character character) {
-		if(collidesWith(character)){
-			setVisible(false);
-			character.addStrength();
-		}
+	void applyTo(Character character) {
+		// TODO Auto-generated method stub
+
 	}
 }
