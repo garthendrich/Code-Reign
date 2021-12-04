@@ -35,10 +35,10 @@ public class Edolite extends Sprite{
     }
 
 	int reduceStrength(int amount){
-		if(amount == Agmatron.AGMATRON_DAMAGE){
-			return strength - Agmatron.AGMATRON_DAMAGE;
+		if(amount == Agmatron.getAgmatronDamage()){
+			return strength - Agmatron.getAgmatronDamage();
 		}else{
-			return strength - Orglit.ORGLIT_DAMAGE;
+			return strength - Orglit.getOrglitDamage();
 		}
 	}
 
