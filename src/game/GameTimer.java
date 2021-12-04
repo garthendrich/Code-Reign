@@ -21,7 +21,7 @@ public class GameTimer extends AnimationTimer{
 	public static final int POWER_UP_OCCURENCE_SECONDS = 5;
 
 	private GraphicsContext graphicsContext;
-	private Character character = new Character("Going merry", 150, 250);
+	private Edolite edolite = new Edolite("Burcham", 150, 250);
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 	private PowerUp powerUp;
 	private long gameStartTimeInNanos = -1;
@@ -121,41 +121,41 @@ public class GameTimer extends AnimationTimer{
 	}
 
 	private void manageGameElementCollisions() {
-		ArrayList<Bullet> characterBullets = character.getBullets();
+		ArrayList<Bullet> edoliteBullets = edolite.getBullets();
 
-		manageCollisionOf(character, powerUp);
+		manageCollisionOf(edolite, powerUp);
 
 		for (Enemy enemy: enemies) {
-			manageCollisionOf(character, enemy);
+			manageCollisionOf(edolite, enemy);
 
-			for (Bullet characterBullet : characterBullets) manageCollisionOf(enemy, characterBullet);
+			for (Bullet edoliteBullet : edoliteBullets) manageCollisionOf(enemy, edoliteBullet);
 		}
 	}
 
-	private void manageCollisionOf(Character character, PowerUp powerUp) {
-		if (character.collidesWith(powerUp)) {
-			powerUp.applyTo(character);
+	private void manageCollisionOf(Edolite edolite, PowerUp powerUp) {
+		if (edolite.collidesWith(powerUp)) {
+			powerUp.applyTo(edolite);
 
 			deSpawnPowerUp();
 		}
 	}
 
-	private void manageCollisionOf(Character character, Enemy enemy) {
-		if (character.collidesWith(enemy)) {
+	private void manageCollisionOf(Edolite edolite, Enemy enemy) {
+		if (edolite.collidesWith(enemy)) {
 			int enemyDamage = enemy.getDamage();
-			character.reduceStrengthBy(enemyDamage);
+			edolite.reduceStrengthBy(enemyDamage);
 
 			if (enemy instanceof Boss == false) enemies.remove(enemy);
 		}
 	}
 
-	private void manageCollisionOf(Enemy enemy, Bullet characterBullet) {
-		if (characterBullet.collidesWith(enemy)) {
+	private void manageCollisionOf(Enemy enemy, Bullet edoliteBullet) {
+		if (edoliteBullet.collidesWith(enemy)) {
 			if (enemy instanceof Boss) {
 				Boss enemyBoss = (Boss) enemy;
 
-				int characterBulletDamage = characterBullet.getDamage();
-				enemyBoss.reduceHealthBy(characterBulletDamage);
+				int edoliteBulletDamage = edoliteBullet.getDamage();
+				enemyBoss.reduceHealthBy(edoliteBulletDamage);
 
 				if (enemyBoss.isAlive() == false) enemies.remove(enemyBoss);
 
@@ -196,9 +196,9 @@ public class GameTimer extends AnimationTimer{
 
 	private ArrayList<Sprite> getAllSprites() {
 		ArrayList<Sprite> sprites = new ArrayList<Sprite>();
-		sprites.add(character);
-		ArrayList<Bullet> characterBullets = character.getBullets();
-		sprites.addAll(characterBullets);
+		sprites.add(edolite);
+		ArrayList<Bullet> edoliteBullets = edolite.getBullets();
+		sprites.addAll(edoliteBullets);
 		sprites.addAll(enemies);
 		return sprites;
 	}
@@ -212,24 +212,24 @@ public class GameTimer extends AnimationTimer{
 		if (keysPressed.contains(key)) return;
 
 		keysPressed.add(key);
-		updateCharacterMovement();
+		updateEdoliteMovement();
 	}
 
 	public void handleKeyRelease(KeyCode key) {
 		keysPressed.remove(key);
-		updateCharacterMovement();
+		updateEdoliteMovement();
 	}
 
-	private void updateCharacterMovement() {
-		if (isKeyPressed(KeyCode.UP) && isKeyPressed(KeyCode.DOWN)) character.stopMovingVertically();
-		else if (isKeyPressed(KeyCode.UP)) character.moveUpward();
-		else if (isKeyPressed(KeyCode.DOWN)) character.moveDownward();
-		else character.stopMovingVertically();
+	private void updateEdoliteMovement() {
+		if (isKeyPressed(KeyCode.UP) && isKeyPressed(KeyCode.DOWN)) edolite.stopMovingVertically();
+		else if (isKeyPressed(KeyCode.UP)) edolite.moveUpward();
+		else if (isKeyPressed(KeyCode.DOWN)) edolite.moveDownward();
+		else edolite.stopMovingVertically();
 
-		if (isKeyPressed(KeyCode.LEFT) && isKeyPressed(KeyCode.RIGHT)) character.stopMovingHorizontally();
-		else if (isKeyPressed(KeyCode.LEFT)) character.moveLeftward();
-		else if (isKeyPressed(KeyCode.RIGHT)) character.moveRightward();
-		else character.stopMovingHorizontally();
+		if (isKeyPressed(KeyCode.LEFT) && isKeyPressed(KeyCode.RIGHT)) edolite.stopMovingHorizontally();
+		else if (isKeyPressed(KeyCode.LEFT)) edolite.moveLeftward();
+		else if (isKeyPressed(KeyCode.RIGHT)) edolite.moveRightward();
+		else edolite.stopMovingHorizontally();
 	}
 
 	private boolean isKeyPressed(KeyCode key) {

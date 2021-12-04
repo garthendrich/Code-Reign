@@ -11,10 +11,10 @@ class Pearl extends PowerUp{
 	}
 
 	@Override
-	void checkCollision(Character character) {
-		if(collidesWith(character)){
+	void checkCollision(Edolite edolite) {
+		if(collidesWith(edolite)){
 			setVisible(false);
-			character.addStrength();
+			edolite.addStrength();
 		}
 	}
 }

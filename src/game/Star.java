@@ -11,7 +11,7 @@ class Star extends PowerUp{
 	}
 
 	@Override
-	void checkCollision(Character character) {
+	void checkCollision(Edolite edolite) {
 
 	}
 }
