@@ -71,9 +71,9 @@ public class GameTimer extends AnimationTimer{
 
 	private void spawnOrglits(int spawnCount) {
 		for (int spawned = 0; spawned < spawnCount; spawned++) {
-			int lowestXPos = GameStage.CANVAS_WIDTH / 2;
+			int canvasMiddleX = GameStage.CANVAS_WIDTH / 2;
 			int highestXPos = GameStage.CANVAS_WIDTH - Orglit.WIDTH;
-			int randomXPos = generateRandomNumber(lowestXPos, highestXPos);
+			int randomXPos = generateRandomNumber(canvasMiddleX, highestXPos);
 
 			int highestYPos = GameStage.CANVAS_HEIGHT - Orglit.HEIGHT;
 			int randomYPos = generateRandomNumber(0, highestYPos);
@@ -96,8 +96,8 @@ public class GameTimer extends AnimationTimer{
 	}
 
 	private void spawnPowerUp() {
-		int highestXPos = (GameStage.CANVAS_WIDTH / 2) - PowerUp.SIZE;
-		int randomXPos = generateRandomNumber(0, highestXPos);
+		int canvasMiddleX = GameStage.CANVAS_WIDTH / 2;
+		int randomXPos = generateRandomNumber(0, canvasMiddleX);
 
 		int highestYPos = GameStage.CANVAS_HEIGHT - PowerUp.SIZE;
 		int randomYPos = generateRandomNumber(0, highestYPos);
@@ -106,10 +106,10 @@ public class GameTimer extends AnimationTimer{
 	}
 
 	private PowerUp createRandomPowerUpAt(int xPos, int yPos) {
+		PowerUp powerUp = null;
+
 		Random randomizer = new Random();
 		int randomPowerUpIndex = randomizer.nextInt(2);
-
-		PowerUp powerUp = null;
 		switch(randomPowerUpIndex) {
 			case 0: powerUp = new Pearl(xPos, yPos);
 			case 1: powerUp = new Star(xPos, yPos);
@@ -222,9 +222,9 @@ public class GameTimer extends AnimationTimer{
 
 	private ArrayList<GameElement> getAllGameElements() {
 		ArrayList<GameElement> gameElements = new ArrayList<GameElement>();
+		if (powerUp != null) gameElements.add(powerUp);
 		ArrayList<Sprite> sprites = getAllSprites();
 		gameElements.addAll(sprites);
-		if (powerUp != null) gameElements.add(0, powerUp); // Add at index 0 so it renders first
 		return gameElements;
 	}
 

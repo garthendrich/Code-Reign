@@ -29,8 +29,8 @@ public class Orglit extends Sprite{
 
 	private void setRandomInitialMovement() {
 		Random randomizer = new Random();
-		int directionIndex = randomizer.nextInt(2);
-		switch(directionIndex) {
+		int randomDirectionIndex = randomizer.nextInt(2);
+		switch(randomDirectionIndex) {
 			case 0: moveLeft(); break;
 			case 1: moveRight(); break;
 			default:
