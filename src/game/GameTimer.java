@@ -222,13 +222,13 @@ public class GameTimer extends AnimationTimer{
 
 	private void updateEdoliteMovement() {
 		if (isKeyPressed(KeyCode.UP) && isKeyPressed(KeyCode.DOWN)) edolite.stopMovingVertically();
-		else if (isKeyPressed(KeyCode.UP)) edolite.moveUpward();
-		else if (isKeyPressed(KeyCode.DOWN)) edolite.moveDownward();
+		else if (isKeyPressed(KeyCode.UP)) edolite.moveUp();
+		else if (isKeyPressed(KeyCode.DOWN)) edolite.moveDown();
 		else edolite.stopMovingVertically();
 
 		if (isKeyPressed(KeyCode.LEFT) && isKeyPressed(KeyCode.RIGHT)) edolite.stopMovingHorizontally();
-		else if (isKeyPressed(KeyCode.LEFT)) edolite.moveLeftward();
-		else if (isKeyPressed(KeyCode.RIGHT)) edolite.moveRightward();
+		else if (isKeyPressed(KeyCode.LEFT)) edolite.moveLeft();
+		else if (isKeyPressed(KeyCode.RIGHT)) edolite.moveRight();
 		else edolite.stopMovingHorizontally();
 	}
 
