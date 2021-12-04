@@ -12,7 +12,6 @@ class Pearl extends PowerUp{
 
 	@Override
 	void applyTo(Edolite edolite) {
-		// TODO Auto-generated method stub
-
+		edolite.gainStrength();
 	}
 }
