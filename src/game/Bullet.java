@@ -29,4 +29,12 @@ public class Bullet extends Sprite{
 	boolean hasCollided() {
 		return hasCollided;
 	}
+
+	@Override
+	void updatePosition() {
+		super.updatePosition();
+
+		boolean isBulletAtRightmostEdge = (xPos == GameStage.CANVAS_WIDTH - this.width);
+		if (isBulletAtRightmostEdge) collide();
+	}
 }
