@@ -84,11 +84,13 @@ public class GameTimer extends AnimationTimer{
 	}
 
 	private Orglit createOrglitAtRandomPosition() {
+		int lowestXPos = GameStage.CANVAS_WIDTH / 2;
 		int highestXPos = GameStage.CANVAS_WIDTH - Orglit.WIDTH;
-		int randomXPos = generateRandomNumber(0, highestXPos);
+		int randomXPos = generateRandomNumber(lowestXPos, highestXPos);
 
+		int lowestYPos = GameStage.CANVAS_HEIGHT / 2;
 		int highestYPos = GameStage.CANVAS_HEIGHT - Orglit.HEIGHT;
-		int randomYPos = generateRandomNumber(0, highestYPos);
+		int randomYPos = generateRandomNumber(lowestYPos, highestYPos);
 
 		return new Orglit(randomXPos, randomYPos);
 	}
