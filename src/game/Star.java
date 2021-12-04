@@ -3,15 +3,16 @@ package game;
 import javafx.scene.image.Image;
 
 class Star extends PowerUp{
-	private final static Image STAR_IMAGE = new Image();
+	private final static Image STAR_IMAGE = new Image("images/biscuit.png");
 
-	Star(int xPos, int yPos){
-		super(xPos, yPos);
-		loadImage(Star.STAR_IMAGE);
+	Star(int x, int y, Image image){
+		super(x, y, image);
+		this.image = STAR_IMAGE;
 	}
 
 	@Override
-	void checkCollision(Character character) {
+	void applyTo(Character character) {
+		// TODO Auto-generated method stub
 
 	}
 }
