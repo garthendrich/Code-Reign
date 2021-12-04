@@ -13,36 +13,36 @@ import javafx.scene.input.KeyEvent;
 
 public class GameTimer extends AnimationTimer{
 
-	public static final int ENEMY_INITIAL_SPAWN_COUNT = 7;
-	public static final int ENEMY_SPAWN_COUNT = 3;
-	public static final int ENEMY_SPAWN_INTERVAL_SECONDS = 5;
+	public static final int ORGLIT_INITIAL_SPAWN_COUNT = 7;
+	public static final int ORGLIT_SPAWN_COUNT = 3;
+	public static final int ORGLIT_SPAWN_INTERVAL_SECONDS = 5;
 
 	public static final int POWER_UP_SPAWN_INTERVAL_SECONDS = 10;
 	public static final int POWER_UP_OCCURENCE_SECONDS = 5;
 
 	private GraphicsContext graphicsContext;
 	private Edolite edolite = new Edolite("Burcham", 150, 250);
-	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+	private ArrayList<Orglit> orglits = new ArrayList<Orglit>();
 	private PowerUp powerUp;
 	private long gameStartTimeInNanos = -1;
-	private double gameTimeDuringPreviousEnemySpawn = 0;
+	private double gameTimeDuringPreviousOrglitSpawn = 0;
 	private double gameTimeDuringPreviousPowerUpSpawn = 0;
 	private ArrayList<KeyCode> keysPressed = new ArrayList<KeyCode>();
 
 	GameTimer(GraphicsContext graphicsContext){
 		this.graphicsContext = graphicsContext;
 
-		spawnEnemies(ENEMY_INITIAL_SPAWN_COUNT);
+		spawnOrglits(ORGLIT_INITIAL_SPAWN_COUNT);
 	}
 
 	@Override
 	public void handle(long currentTimeInNanos) {
 		double gameTime = computeGameTime(currentTimeInNanos);
 
-		double elapsedSecondsSincePreviousEnemySpawn = gameTime - gameTimeDuringPreviousEnemySpawn;
-		if (elapsedSecondsSincePreviousEnemySpawn > ENEMY_SPAWN_INTERVAL_SECONDS) {
-			spawnEnemies(ENEMY_SPAWN_COUNT);
-			gameTimeDuringPreviousEnemySpawn = gameTime;
+		double elapsedSecondsSincePreviousOrglitSpawn = gameTime - gameTimeDuringPreviousOrglitSpawn;
+		if (elapsedSecondsSincePreviousOrglitSpawn > ORGLIT_SPAWN_INTERVAL_SECONDS) {
+			spawnOrglits(ORGLIT_SPAWN_COUNT);
+			gameTimeDuringPreviousOrglitSpawn = gameTime;
 		}
 
 		double elapsedSecondsSincePreviousPowerUpSpawn = gameTime - gameTimeDuringPreviousPowerUpSpawn;
@@ -62,40 +62,40 @@ public class GameTimer extends AnimationTimer{
 		return (currentTimeInNanos - gameStartTimeInNanos) / 1_000_000_000.0;
 	}
 
-	private void spawnEnemies(int spawnCount) {
+	private void spawnOrglits(int spawnCount) {
 		for (int spawned = 0; spawned < spawnCount; spawned++) {
-			Enemy enemy = createEnemyAtRandomUnoccupiedPosition();
-			enemies.add(enemy);
+			Orglit orglit = createOrglitAtRandomUnoccupiedPosition();
+			orglits.add(orglit);
 		}
 	}
 
-	private Enemy createEnemyAtRandomUnoccupiedPosition() {
-		Enemy enemy = null;
+	private Orglit createOrglitAtRandomUnoccupiedPosition() {
+		Orglit orglit = null;
 
 		for (int generatePositionAttempts = 0; generatePositionAttempts < 10; generatePositionAttempts++) {
-			enemy = createEnemyAtRandomPosition();
+			orglit = createOrglitAtRandomPosition();
 
-			if (isEnemyCollidingAnotherGameElement(enemy) == false) break;
+			if (isOrglitCollidingAnotherGameElement(orglit) == false) break;
 		}
 
-		return enemy;
+		return orglit;
 	}
 
-	private Enemy createEnemyAtRandomPosition() {
+	private Orglit createOrglitAtRandomPosition() {
 		int lowestXPos = GameArea.LOWER_X_BOUND;
-		int highestXPos = GameArea.UPPER_X_BOUND - Enemy.WIDTH;
+		int highestXPos = GameArea.UPPER_X_BOUND - Orglit.WIDTH;
 		int randomXPos = generateRandomNumber(lowestXPos, highestXPos);
 
 		int lowestYPos = GameArea.LOWER_Y_BOUND;
-		int highestYPos = GameArea.UPPER_Y_BOUND - Enemy.HEIGHT;
+		int highestYPos = GameArea.UPPER_Y_BOUND - Orglit.HEIGHT;
 		int randomYPos = generateRandomNumber(lowestYPos, highestYPos);
 
-		return new Enemy(randomXPos, randomYPos);
+		return new Orglit(randomXPos, randomYPos);
 	}
 
-	private boolean isEnemyCollidingAnotherGameElement(Enemy enemy) {
+	private boolean isOrglitCollidingAnotherGameElement(Orglit orglit) {
 		ArrayList<GameElement> gameElements = getAllGameElements();
-		for (GameElement gameElement : gameElements) if (enemy.collidesWith(gameElement)) return true;
+		for (GameElement gameElement : gameElements) if (orglit.collidesWith(gameElement)) return true;
 		return false;
 	}
 
@@ -125,10 +125,10 @@ public class GameTimer extends AnimationTimer{
 
 		manageCollisionOf(edolite, powerUp);
 
-		for (Enemy enemy: enemies) {
-			manageCollisionOf(edolite, enemy);
+		for (Orglit orglit: orglits) {
+			manageCollisionOf(edolite, orglit);
 
-			for (Bullet edoliteBullet : edoliteBullets) manageCollisionOf(enemy, edoliteBullet);
+			for (Bullet edoliteBullet : edoliteBullets) manageCollisionOf(orglit, edoliteBullet);
 		}
 	}
 
@@ -140,27 +140,27 @@ public class GameTimer extends AnimationTimer{
 		}
 	}
 
-	private void manageCollisionOf(Edolite edolite, Enemy enemy) {
-		if (edolite.collidesWith(enemy)) {
-			int enemyDamage = enemy.getDamage();
-			edolite.reduceStrengthBy(enemyDamage);
+	private void manageCollisionOf(Edolite edolite, Orglit orglit) {
+		if (edolite.collidesWith(orglit)) {
+			int orglitDamage = orglit.getDamage();
+			edolite.reduceStrengthBy(orglitDamage);
 
-			if (enemy instanceof Boss == false) enemies.remove(enemy);
+			if (orglit instanceof Boss == false) orglits.remove(orglit);
 		}
 	}
 
-	private void manageCollisionOf(Enemy enemy, Bullet edoliteBullet) {
-		if (edoliteBullet.collidesWith(enemy)) {
-			if (enemy instanceof Boss) {
-				Boss enemyBoss = (Boss) enemy;
+	private void manageCollisionOf(Orglit orglit, Bullet edoliteBullet) {
+		if (edoliteBullet.collidesWith(orglit)) {
+			if (orglit instanceof Boss) {
+				Boss enemyBoss = (Boss) orglit;
 
 				int edoliteBulletDamage = edoliteBullet.getDamage();
 				enemyBoss.reduceHealthBy(edoliteBulletDamage);
 
-				if (enemyBoss.isAlive() == false) enemies.remove(enemyBoss);
+				if (enemyBoss.isAlive() == false) orglits.remove(enemyBoss);
 
 			} else {
-				enemies.remove(enemy);
+				orglits.remove(orglit);
 			}
 		}
 	}
@@ -199,7 +199,7 @@ public class GameTimer extends AnimationTimer{
 		sprites.add(edolite);
 		ArrayList<Bullet> edoliteBullets = edolite.getBullets();
 		sprites.addAll(edoliteBullets);
-		sprites.addAll(enemies);
+		sprites.addAll(orglits);
 		return sprites;
 	}
 
