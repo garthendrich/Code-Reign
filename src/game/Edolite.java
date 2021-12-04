@@ -39,7 +39,7 @@ public class Edolite extends Sprite{
 		strength -= damage;
 	}
 
-	void gainStrength(){
+	public void gainStrength(){
 		strength += Pearl.PEARL_STRENGTH;
 	}
 
