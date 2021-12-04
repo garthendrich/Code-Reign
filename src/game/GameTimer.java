@@ -87,9 +87,8 @@ public class GameTimer extends AnimationTimer{
 		int highestXPos = GameStage.CANVAS_WIDTH - Orglit.WIDTH;
 		int randomXPos = generateRandomNumber(lowestXPos, highestXPos);
 
-		int lowestYPos = GameStage.CANVAS_HEIGHT / 2;
 		int highestYPos = GameStage.CANVAS_HEIGHT - Orglit.HEIGHT;
-		int randomYPos = generateRandomNumber(lowestYPos, highestYPos);
+		int randomYPos = generateRandomNumber(0, highestYPos);
 
 		return new Orglit(randomXPos, randomYPos);
 	}
