@@ -39,6 +39,10 @@ public class Edolite extends Sprite{
 		strength -= damage;
 	}
 
+	void gainStrength(){
+
+	}
+
 	void obtainEffect(){
 
 	}
