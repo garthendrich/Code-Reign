@@ -11,6 +11,8 @@ public class GameElement {
 		this.xPos = xPos;
 		this.yPos = yPos;
 		this.image = image;
+		width = (int) image.getWidth();
+		height = (int) image.getHeight();
 	}
 
 	//method that will check for collision of two sprites
