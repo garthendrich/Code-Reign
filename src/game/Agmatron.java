@@ -10,6 +10,8 @@ public class Agmatron extends Orglit {
 
 	public Agmatron(int x, int y) {
 		super(x, y);
+
+		damage = AGMATRON_DAMAGE;
 	}
 
 	void reduceHealthBy(int amount) {
@@ -22,10 +24,5 @@ public class Agmatron extends Orglit {
 		}else{
 			return false;
 		}
-	}
-
-	public static int getAgmatronDamage(){
-		return AGMATRON_DAMAGE;
-
 	}
 }
