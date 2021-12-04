@@ -12,6 +12,6 @@ class Pearl extends PowerUp{
 
 	@Override
 	void applyTo(Edolite edolite) {
-		edolite.gainStrength();
+		edolite.gainStrength(PEARL_STRENGTH);
 	}
 }
