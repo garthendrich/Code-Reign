@@ -21,12 +21,16 @@ public class GameTimer extends AnimationTimer{
 	public static final int POWER_UP_OCCURENCE_SECONDS = 5;
 
 	private GraphicsContext graphicsContext;
+
 	private Edolite edolite = new Edolite(150, 250);
 	private ArrayList<Orglit> orglits = new ArrayList<Orglit>();
 	private PowerUp powerUp;
+
 	private long gameStartTimeInNanos = -1;
+	private double gameTime;
 	private double gameTimeDuringPreviousOrglitSpawn = 0;
 	private double gameTimeDuringPreviousPowerUpSpawn = 0;
+
 	private ArrayList<KeyCode> keysPressed = new ArrayList<KeyCode>();
 
 	GameTimer(GraphicsContext graphicsContext){
@@ -37,32 +41,26 @@ public class GameTimer extends AnimationTimer{
 
 	@Override
 	public void handle(long currentTimeInNanos) {
-		double gameTime = computeGameTime(currentTimeInNanos);
+		updateGameTime(currentTimeInNanos);
+		manageOrglitSpawns();
+		managePowerUpSpawns();
+		updateSpritePositions();
+		manageGameElementCollisions();
+		reRenderGameElements();
+	}
 
+	private void updateGameTime(long currentTimeInNanos) {
+		if (gameStartTimeInNanos == -1) gameStartTimeInNanos = currentTimeInNanos;
+		gameTime = (currentTimeInNanos - gameStartTimeInNanos) / 1_000_000_000.0;
+	}
+
+	private void manageOrglitSpawns() {
 		double elapsedSecondsSincePreviousOrglitSpawn = gameTime - gameTimeDuringPreviousOrglitSpawn;
 
 		if (elapsedSecondsSincePreviousOrglitSpawn > ORGLIT_SPAWN_INTERVAL_SECONDS) {
 			spawnOrglits(ORGLIT_SPAWN_COUNT);
 			gameTimeDuringPreviousOrglitSpawn = gameTime;
 		}
-
-		double elapsedSecondsSincePreviousPowerUpSpawn = gameTime - gameTimeDuringPreviousPowerUpSpawn;
-
-		if (elapsedSecondsSincePreviousPowerUpSpawn > POWER_UP_OCCURENCE_SECONDS) deSpawnPowerUp();
-
-		if (elapsedSecondsSincePreviousPowerUpSpawn > POWER_UP_SPAWN_INTERVAL_SECONDS) {
-			spawnPowerUp();
-			gameTimeDuringPreviousPowerUpSpawn = gameTime;
-		}
-
-		updateSpritePositions();
-		manageGameElementCollisions();
-		reRenderGameElements();
-	}
-
-	private double computeGameTime(long currentTimeInNanos) {
-		if (gameStartTimeInNanos == -1) gameStartTimeInNanos = currentTimeInNanos;
-		return (currentTimeInNanos - gameStartTimeInNanos) / 1_000_000_000.0;
 	}
 
 	private void spawnOrglits(int spawnCount) {
@@ -100,6 +98,17 @@ public class GameTimer extends AnimationTimer{
 		ArrayList<GameElement> gameElements = getAllGameElements();
 		for (GameElement gameElement : gameElements) if (orglit.collidesWith(gameElement)) return true;
 		return false;
+	}
+
+	private void managePowerUpSpawns() {
+		double elapsedSecondsSincePreviousPowerUpSpawn = gameTime - gameTimeDuringPreviousPowerUpSpawn;
+
+		if (elapsedSecondsSincePreviousPowerUpSpawn > POWER_UP_OCCURENCE_SECONDS) deSpawnPowerUp();
+
+		if (elapsedSecondsSincePreviousPowerUpSpawn > POWER_UP_SPAWN_INTERVAL_SECONDS) {
+			spawnPowerUp();
+			gameTimeDuringPreviousPowerUpSpawn = gameTime;
+		}
 	}
 
 	private void spawnPowerUp() {
@@ -210,6 +219,11 @@ public class GameTimer extends AnimationTimer{
 		graphicsContext.drawImage(gameElementImage, gameElementXPos, gameElementYPos);
 	}
 
+	private int generateRandomNumber(int min, int max) {
+		Random randomizer = new Random();
+		return min + randomizer.nextInt(max - min + 1);
+	}
+
 	private ArrayList<GameElement> getAllGameElements() {
 		ArrayList<GameElement> gameElements = new ArrayList<GameElement>();
 		ArrayList<Sprite> sprites = getAllSprites();
@@ -225,11 +239,6 @@ public class GameTimer extends AnimationTimer{
 		sprites.addAll(edoliteBullets);
 		sprites.addAll(orglits);
 		return sprites;
-	}
-
-	private int generateRandomNumber(int min, int max) {
-		Random randomizer = new Random();
-		return min + randomizer.nextInt(max - min + 1);
 	}
 
 	public void handleKeyPress(KeyCode key) {
