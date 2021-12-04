@@ -8,7 +8,6 @@ public class Edolite extends Sprite{
 	private int strength;
 	private ArrayList<Bullet> bullets;
 	public final static Image EDOLITE_IMAGE = new Image("images/ship.png", 25, 25, false, false);
-	private final static Image BULLET_IMAGE = new Image("images/bullet.png", 25, 25, false, false);
 	private final static int MIN_STRENGTH = 100;
 	private final static int MAX_STRENGTH = 150;
 
@@ -32,7 +31,7 @@ public class Edolite extends Sprite{
 		/*
 		 * TODO: Instantiate a new bullet and add it to the bullets arraylist of ship
 		 */
-		bullets.add(new Bullet(x + (width / 2), y, BULLET_IMAGE));
+		bullets.add(new Bullet(x + (width / 2), y, Bullet.BULLET_IMAGE));
     }
 
 	void reduceStrength(int amount){
