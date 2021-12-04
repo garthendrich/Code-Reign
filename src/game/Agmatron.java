@@ -3,12 +3,13 @@ package game;
 import javafx.scene.image.Image;
 
 public class Agmatron extends Orglit {
-	private final static Image AGMATRON_IMAGE = new Image("images/poro.png");
-	private int health;
+
 	public final static int AGMATRON_DAMAGE = 50;
 
+	private int health;
+
 	public Agmatron(int x, int y) {
-		super(x, y, AGMATRON_IMAGE);
+		super(x, y);
 	}
 
 	void reduceHealthBy(int amount) {
