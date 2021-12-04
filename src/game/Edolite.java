@@ -34,8 +34,12 @@ public class Edolite extends Sprite{
 		bullets.add(new Bullet(x + (width / 2), y, Bullet.BULLET_IMAGE));
     }
 
-	void reduceStrength(int amount){
-
+	int reduceStrength(int amount){
+		if(amount == Agmatron.AGMATRON_DAMAGE){
+			return strength - Agmatron.AGMATRON_DAMAGE;
+		}else{
+			return strength - Orglit.ORGLIT_DAMAGE;
+		}
 	}
 
 	void obtainEffect(){
