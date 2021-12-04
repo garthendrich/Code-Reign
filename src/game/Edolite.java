@@ -31,7 +31,7 @@ public class Edolite extends Sprite{
 	//method called if spacebar is pressed
 	public void shoot(){
 		//compute for the x and y initial position of the bullet
-		int bulletXPos =+ this.xPos + this.width + 16;
+		int bulletXPos =+ this.xPos + (this.width + 16);
 		int bulletYPos =+ this.yPos + (this.height / 2);
 
 		Bullet bullet = new Bullet(bulletXPos, bulletYPos, strength);
@@ -43,8 +43,11 @@ public class Edolite extends Sprite{
 	}
 
 	boolean isAlive() {
-		if (strength >= 0) return true;
-		return false;
+		if (strength > 0){
+			return true;
+		}else{
+			return false;
+		}
 	}
 
 	public void gainStrength(int amount){
