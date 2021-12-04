@@ -13,36 +13,36 @@ import javafx.scene.input.KeyEvent;
 
 public class GameTimer extends AnimationTimer{
 
-	public static final int ENEMY_INITIAL_SPAWN_COUNT = 7;
-	public static final int ENEMY_SPAWN_COUNT = 3;
-	public static final int ENEMY_SPAWN_INTERVAL_SECONDS = 5;
+	public static final int ORGLIT_INITIAL_SPAWN_COUNT = 7;
+	public static final int ORGLIT_SPAWN_COUNT = 3;
+	public static final int ORGLIT_SPAWN_INTERVAL_SECONDS = 5;
 
 	public static final int POWER_UP_SPAWN_INTERVAL_SECONDS = 10;
 	public static final int POWER_UP_OCCURENCE_SECONDS = 5;
 
 	private GraphicsContext graphicsContext;
-	private Character character = new Character("Going merry", 150, 250);
-	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+	private Edolite edolite = new Edolite("Burcham", 150, 250);
+	private ArrayList<Orglit> orglits = new ArrayList<Orglit>();
 	private PowerUp powerUp;
 	private long gameStartTimeInNanos = -1;
-	private double gameTimeDuringPreviousEnemySpawn = 0;
+	private double gameTimeDuringPreviousOrglitSpawn = 0;
 	private double gameTimeDuringPreviousPowerUpSpawn = 0;
 	private ArrayList<KeyCode> keysPressed = new ArrayList<KeyCode>();
 
 	GameTimer(GraphicsContext graphicsContext){
 		this.graphicsContext = graphicsContext;
 
-		spawnEnemies(ENEMY_INITIAL_SPAWN_COUNT);
+		spawnOrglits(ORGLIT_INITIAL_SPAWN_COUNT);
 	}
 
 	@Override
 	public void handle(long currentTimeInNanos) {
 		double gameTime = computeGameTime(currentTimeInNanos);
 
-		double elapsedSecondsSincePreviousEnemySpawn = gameTime - gameTimeDuringPreviousEnemySpawn;
-		if (elapsedSecondsSincePreviousEnemySpawn > ENEMY_SPAWN_INTERVAL_SECONDS) {
-			spawnEnemies(ENEMY_SPAWN_COUNT);
-			gameTimeDuringPreviousEnemySpawn = gameTime;
+		double elapsedSecondsSincePreviousOrglitSpawn = gameTime - gameTimeDuringPreviousOrglitSpawn;
+		if (elapsedSecondsSincePreviousOrglitSpawn > ORGLIT_SPAWN_INTERVAL_SECONDS) {
+			spawnOrglits(ORGLIT_SPAWN_COUNT);
+			gameTimeDuringPreviousOrglitSpawn = gameTime;
 		}
 
 		double elapsedSecondsSincePreviousPowerUpSpawn = gameTime - gameTimeDuringPreviousPowerUpSpawn;
@@ -62,40 +62,40 @@ public class GameTimer extends AnimationTimer{
 		return (currentTimeInNanos - gameStartTimeInNanos) / 1_000_000_000.0;
 	}
 
-	private void spawnEnemies(int spawnCount) {
+	private void spawnOrglits(int spawnCount) {
 		for (int spawned = 0; spawned < spawnCount; spawned++) {
-			Enemy enemy = createEnemyAtRandomUnoccupiedPosition();
-			enemies.add(enemy);
+			Orglit orglit = createOrglitAtRandomUnoccupiedPosition();
+			orglits.add(orglit);
 		}
 	}
 
-	private Enemy createEnemyAtRandomUnoccupiedPosition() {
-		Enemy enemy = null;
+	private Orglit createOrglitAtRandomUnoccupiedPosition() {
+		Orglit orglit = null;
 
 		for (int generatePositionAttempts = 0; generatePositionAttempts < 10; generatePositionAttempts++) {
-			enemy = createEnemyAtRandomPosition();
+			orglit = createOrglitAtRandomPosition();
 
-			if (isEnemyCollidingAnotherGameElement(enemy) == false) break;
+			if (isOrglitCollidingAnotherGameElement(orglit) == false) break;
 		}
 
-		return enemy;
+		return orglit;
 	}
 
-	private Enemy createEnemyAtRandomPosition() {
+	private Orglit createOrglitAtRandomPosition() {
 		int lowestXPos = GameArea.LOWER_X_BOUND;
-		int highestXPos = GameArea.UPPER_X_BOUND - Enemy.WIDTH;
+		int highestXPos = GameArea.UPPER_X_BOUND - Orglit.WIDTH;
 		int randomXPos = generateRandomNumber(lowestXPos, highestXPos);
 
 		int lowestYPos = GameArea.LOWER_Y_BOUND;
-		int highestYPos = GameArea.UPPER_Y_BOUND - Enemy.HEIGHT;
+		int highestYPos = GameArea.UPPER_Y_BOUND - Orglit.HEIGHT;
 		int randomYPos = generateRandomNumber(lowestYPos, highestYPos);
 
-		return new Enemy(randomXPos, randomYPos);
+		return new Orglit(randomXPos, randomYPos);
 	}
 
-	private boolean isEnemyCollidingAnotherGameElement(Enemy enemy) {
+	private boolean isOrglitCollidingAnotherGameElement(Orglit orglit) {
 		ArrayList<GameElement> gameElements = getAllGameElements();
-		for (GameElement gameElement : gameElements) if (enemy.collidesWith(gameElement)) return true;
+		for (GameElement gameElement : gameElements) if (orglit.collidesWith(gameElement)) return true;
 		return false;
 	}
 
@@ -121,46 +121,46 @@ public class GameTimer extends AnimationTimer{
 	}
 
 	private void manageGameElementCollisions() {
-		ArrayList<Bullet> characterBullets = character.getBullets();
+		ArrayList<Bullet> edoliteBullets = edolite.getBullets();
 
-		manageCollisionOf(character, powerUp);
+		manageCollisionOf(edolite, powerUp);
 
-		for (Enemy enemy: enemies) {
-			manageCollisionOf(character, enemy);
+		for (Orglit orglit: orglits) {
+			manageCollisionOf(edolite, orglit);
 
-			for (Bullet characterBullet : characterBullets) manageCollisionOf(enemy, characterBullet);
+			for (Bullet edoliteBullet : edoliteBullets) manageCollisionOf(orglit, edoliteBullet);
 		}
 	}
 
-	private void manageCollisionOf(Character character, PowerUp powerUp) {
-		if (character.collidesWith(powerUp)) {
-			powerUp.applyTo(character);
+	private void manageCollisionOf(Edolite edolite, PowerUp powerUp) {
+		if (edolite.collidesWith(powerUp)) {
+			powerUp.applyTo(edolite);
 
 			deSpawnPowerUp();
 		}
 	}
 
-	private void manageCollisionOf(Character character, Enemy enemy) {
-		if (character.collidesWith(enemy)) {
-			int enemyDamage = enemy.getDamage();
-			character.reduceStrengthBy(enemyDamage);
+	private void manageCollisionOf(Edolite edolite, Orglit orglit) {
+		if (edolite.collidesWith(orglit)) {
+			int orglitDamage = orglit.getDamage();
+			edolite.reduceStrengthBy(orglitDamage);
 
-			if (enemy instanceof Boss == false) enemies.remove(enemy);
+			if (orglit instanceof Agmatron == false) orglits.remove(orglit);
 		}
 	}
 
-	private void manageCollisionOf(Enemy enemy, Bullet characterBullet) {
-		if (characterBullet.collidesWith(enemy)) {
-			if (enemy instanceof Boss) {
-				Boss enemyBoss = (Boss) enemy;
+	private void manageCollisionOf(Orglit orglit, Bullet edoliteBullet) {
+		if (edoliteBullet.collidesWith(orglit)) {
+			if (orglit instanceof Agmatron) {
+				Agmatron agmatron = (Agmatron) orglit;
 
-				int characterBulletDamage = characterBullet.getDamage();
-				enemyBoss.reduceHealthBy(characterBulletDamage);
+				int edoliteBulletDamage = edoliteBullet.getDamage();
+				agmatron.reduceHealthBy(edoliteBulletDamage);
 
-				if (enemyBoss.isAlive() == false) enemies.remove(enemyBoss);
+				if (agmatron.isAlive() == false) orglits.remove(agmatron);
 
 			} else {
-				enemies.remove(enemy);
+				orglits.remove(orglit);
 			}
 		}
 	}
@@ -196,10 +196,10 @@ public class GameTimer extends AnimationTimer{
 
 	private ArrayList<Sprite> getAllSprites() {
 		ArrayList<Sprite> sprites = new ArrayList<Sprite>();
-		sprites.add(character);
-		ArrayList<Bullet> characterBullets = character.getBullets();
-		sprites.addAll(characterBullets);
-		sprites.addAll(enemies);
+		sprites.add(edolite);
+		ArrayList<Bullet> edoliteBullets = edolite.getBullets();
+		sprites.addAll(edoliteBullets);
+		sprites.addAll(orglits);
 		return sprites;
 	}
 
@@ -212,24 +212,24 @@ public class GameTimer extends AnimationTimer{
 		if (keysPressed.contains(key)) return;
 
 		keysPressed.add(key);
-		updateCharacterMovement();
+		updateEdoliteMovement();
 	}
 
 	public void handleKeyRelease(KeyCode key) {
 		keysPressed.remove(key);
-		updateCharacterMovement();
+		updateEdoliteMovement();
 	}
 
-	private void updateCharacterMovement() {
-		if (isKeyPressed(KeyCode.UP) && isKeyPressed(KeyCode.DOWN)) character.stopMovingVertically();
-		else if (isKeyPressed(KeyCode.UP)) character.moveUpward();
-		else if (isKeyPressed(KeyCode.DOWN)) character.moveDownward();
-		else character.stopMovingVertically();
+	private void updateEdoliteMovement() {
+		if (isKeyPressed(KeyCode.UP) && isKeyPressed(KeyCode.DOWN)) edolite.stopMovingVertically();
+		else if (isKeyPressed(KeyCode.UP)) edolite.moveUpward();
+		else if (isKeyPressed(KeyCode.DOWN)) edolite.moveDownward();
+		else edolite.stopMovingVertically();
 
-		if (isKeyPressed(KeyCode.LEFT) && isKeyPressed(KeyCode.RIGHT)) character.stopMovingHorizontally();
-		else if (isKeyPressed(KeyCode.LEFT)) character.moveLeftward();
-		else if (isKeyPressed(KeyCode.RIGHT)) character.moveRightward();
-		else character.stopMovingHorizontally();
+		if (isKeyPressed(KeyCode.LEFT) && isKeyPressed(KeyCode.RIGHT)) edolite.stopMovingHorizontally();
+		else if (isKeyPressed(KeyCode.LEFT)) edolite.moveLeftward();
+		else if (isKeyPressed(KeyCode.RIGHT)) edolite.moveRightward();
+		else edolite.stopMovingHorizontally();
 	}
 
 	private boolean isKeyPressed(KeyCode key) {
