@@ -1,10 +1,12 @@
 package game;
 
+import javafx.scene.image.Image;
+
 abstract class PowerUp extends GameElement{
 
-	public PowerUp(int xPos, int yPos) {
-		super(xPos, yPos);
+	public PowerUp(int x, int y, Image image) {
+		super(x, y, image);
 	}
 
-	abstract void checkCollision(Character character);
+	abstract void applyTo(Character character);
 }
