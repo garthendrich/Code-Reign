@@ -12,8 +12,8 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class GameStage {
-	public static final int WINDOW_WIDTH = 900;
-	public static final int WINDOW_HEIGHT = 600;
+	public static final int WINDOW_WIDTH = 750;
+	public static final int WINDOW_HEIGHT = 500;
 
 	private Scene scene;
 	private GameTimer gameTimer;
