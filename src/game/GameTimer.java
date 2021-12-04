@@ -11,7 +11,9 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
-public class GameTimer extends AnimationTimer{
+public class GameTimer extends AnimationTimer {
+
+	public static final int MAX_GAME_TIME = 60;
 
 	public static final int EDOLITE_INITIAL_X_POS = 150;
 	public static final int EDOLITE_INITIAL_Y_POS = 250;
@@ -50,6 +52,7 @@ public class GameTimer extends AnimationTimer{
 		updateSpritePositions();
 		manageGameElementCollisions();
 		reRenderGameElements();
+		checkGameEnd();
 	}
 
 	private void updateGameTime(long currentTimeInNanos) {
@@ -213,6 +216,13 @@ public class GameTimer extends AnimationTimer{
 		int gameElementXPos = gameElement.getXPos();
 		int gameElementYPos = gameElement.getYPos();
 		graphicsContext.drawImage(gameElementImage, gameElementXPos, gameElementYPos);
+	}
+
+	private void checkGameEnd() {
+		if (edolite.isAlive() == false || gameTime >= MAX_GAME_TIME) {
+			this.stop();
+			// TODO Display game over
+		}
 	}
 
 	private int generateRandomNumber(int min, int max) {
