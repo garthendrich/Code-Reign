@@ -4,7 +4,8 @@ import javafx.scene.image.Image;
 
 public class Bullet extends Sprite{
 
-	public final static Image BULLET_IMAGE = new Image("images/bullet.png", 25, 25, false, false);
+	public final static int WIDTH = 25;
+	public final static Image BULLET_IMAGE = new Image("images/bullet.png", WIDTH, WIDTH, false, false);
 	private final static int MOVEMENT_SPEED = 20;
 
 	private int damage;

@@ -13,6 +13,9 @@ import javafx.scene.input.KeyEvent;
 
 public class GameTimer extends AnimationTimer{
 
+	public static final int EDOLITE_INITIAL_X_POS = 150;
+	public static final int EDOLITE_INITIAL_Y_POS = 250;
+
 	public static final int ORGLIT_INITIAL_SPAWN_COUNT = 7;
 	public static final int ORGLIT_SPAWN_COUNT = 3;
 	public static final int ORGLIT_SPAWN_INTERVAL_SECONDS = 5;
@@ -22,14 +25,14 @@ public class GameTimer extends AnimationTimer{
 
 	private GraphicsContext graphicsContext;
 
-	private Edolite edolite = new Edolite(150, 250);
+	private Edolite edolite = new Edolite(EDOLITE_INITIAL_X_POS, EDOLITE_INITIAL_Y_POS);
 	private ArrayList<Orglit> orglits = new ArrayList<Orglit>();
 	private PowerUp powerUp;
 
 	private long gameStartTimeInNanos = -1;
 	private double gameTime;
-	private double gameTimeDuringPreviousOrglitSpawn = 0;
-	private double gameTimeDuringPreviousPowerUpSpawn = 0;
+	private double orglitSpawnGameTime = 0;
+	private double powerUpSpawnGameTime = 0;
 
 	private ArrayList<KeyCode> keysHeld = new ArrayList<KeyCode>();
 
@@ -50,16 +53,19 @@ public class GameTimer extends AnimationTimer{
 	}
 
 	private void updateGameTime(long currentTimeInNanos) {
-		if (gameStartTimeInNanos == -1) gameStartTimeInNanos = currentTimeInNanos;
+		if (gameStartTimeInNanos == -1) {
+			gameStartTimeInNanos = currentTimeInNanos;
+		}
+
 		gameTime = (currentTimeInNanos - gameStartTimeInNanos) / 1_000_000_000.0;
 	}
 
 	private void manageOrglitSpawns() {
-		double elapsedSecondsSincePreviousOrglitSpawn = gameTime - gameTimeDuringPreviousOrglitSpawn;
+		double orglitSpawnElapsedSeconds = gameTime - orglitSpawnGameTime;
 
-		if (elapsedSecondsSincePreviousOrglitSpawn > ORGLIT_SPAWN_INTERVAL_SECONDS) {
+		if (orglitSpawnElapsedSeconds > ORGLIT_SPAWN_INTERVAL_SECONDS) {
 			spawnOrglits(ORGLIT_SPAWN_COUNT);
-			gameTimeDuringPreviousOrglitSpawn = gameTime;
+			orglitSpawnGameTime = gameTime;
 		}
 	}
 
@@ -100,13 +106,15 @@ public class GameTimer extends AnimationTimer{
 	}
 
 	private void managePowerUpSpawns() {
-		double elapsedSecondsSincePreviousPowerUpSpawn = gameTime - gameTimeDuringPreviousPowerUpSpawn;
+		double powerUpSpawnElapsedSeconds = gameTime - powerUpSpawnGameTime;
 
-		if (elapsedSecondsSincePreviousPowerUpSpawn > POWER_UP_OCCURENCE_SECONDS) deSpawnPowerUp();
+		if (powerUpSpawnElapsedSeconds > POWER_UP_OCCURENCE_SECONDS) {
+			deSpawnPowerUp();
+		}
 
-		if (elapsedSecondsSincePreviousPowerUpSpawn > POWER_UP_SPAWN_INTERVAL_SECONDS) {
+		if (powerUpSpawnElapsedSeconds > POWER_UP_SPAWN_INTERVAL_SECONDS) {
 			spawnPowerUp();
-			gameTimeDuringPreviousPowerUpSpawn = gameTime;
+			powerUpSpawnGameTime = gameTime;
 		}
 	}
 
