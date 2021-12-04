@@ -154,13 +154,14 @@ public class GameTimer extends AnimationTimer{
 		if (powerUp != null) manageCollisionOf(edolite, powerUp);
 
 		for (Orglit orglit : orglits) manageCollisionOf(edolite, orglit);
-		removeDeadOrglits();
 
 		for (Orglit orglit : orglits) for (Bullet edoliteBullet : edoliteBullets) {
 			if (orglit.isAlive() == false) break;
 			manageCollisionOf(orglit, edoliteBullet);
 		}
-		removeDeadOrglits();
+
+		deleteDeadOrglits();
+		deleteCollidedBullets();
 	}
 
 	private void manageCollisionOf(Edolite edolite, PowerUp powerUp) {
@@ -190,15 +191,31 @@ public class GameTimer extends AnimationTimer{
 			} else {
 				orglit.die();
 			}
+
+			edoliteBullet.collide();
 		}
 	}
 
-	private void removeDeadOrglits() {
+	private void deleteDeadOrglits() {
 		ArrayList<Orglit> deadOrglits = new ArrayList<Orglit>();
 
 		for (Orglit orglit : orglits) if (orglit.isAlive() == false) deadOrglits.add(orglit);
 
 		for (Orglit deadOrglit : deadOrglits) orglits.remove(deadOrglit);
+	}
+
+	private void deleteCollidedBullets() {
+		ArrayList<Bullet> collidedBullets = new ArrayList<Bullet>();
+
+		ArrayList<Bullet> edoliteBullets = edolite.getBullets();
+
+		for (Bullet edoliteBullet : edoliteBullets) {
+			if (edoliteBullet.hasCollided()) collidedBullets.add(edoliteBullet);
+		}
+
+		for (Bullet collidedBullet : collidedBullets) {
+			edoliteBullets.remove(collidedBullet);
+		}
 	}
 
 	private void reRenderGameElements() {
