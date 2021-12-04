@@ -3,7 +3,7 @@ package game;
 import javafx.scene.image.Image;
 
 class Pearl extends PowerUp{
-	private final static Image PEARL_IMAGE = new Image("images/biscuit.png");
+	public final static Image PEARL_IMAGE = new Image("images/biscuit.png", PowerUp.SIZE, PowerUp.SIZE, false, false);
 	public final static int PEARL_STRENGTH = 50;
 
 	Pearl(int x, int y){

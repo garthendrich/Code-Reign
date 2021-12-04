@@ -40,17 +40,20 @@ public class GameTimer extends AnimationTimer{
 		double gameTime = computeGameTime(currentTimeInNanos);
 
 		double elapsedSecondsSincePreviousOrglitSpawn = gameTime - gameTimeDuringPreviousOrglitSpawn;
+
 		if (elapsedSecondsSincePreviousOrglitSpawn > ORGLIT_SPAWN_INTERVAL_SECONDS) {
 			spawnOrglits(ORGLIT_SPAWN_COUNT);
 			gameTimeDuringPreviousOrglitSpawn = gameTime;
 		}
 
 		double elapsedSecondsSincePreviousPowerUpSpawn = gameTime - gameTimeDuringPreviousPowerUpSpawn;
+
+		if (elapsedSecondsSincePreviousPowerUpSpawn > POWER_UP_OCCURENCE_SECONDS) deSpawnPowerUp();
+
 		if (elapsedSecondsSincePreviousPowerUpSpawn > POWER_UP_SPAWN_INTERVAL_SECONDS) {
 			spawnPowerUp();
 			gameTimeDuringPreviousPowerUpSpawn = gameTime;
 		}
-		if (elapsedSecondsSincePreviousPowerUpSpawn > POWER_UP_OCCURENCE_SECONDS) deSpawnPowerUp();
 
 		updateSpritePositions();
 		manageGameElementCollisions();
@@ -101,11 +104,11 @@ public class GameTimer extends AnimationTimer{
 
 	private void spawnPowerUp() {
 		int lowestXPos = GameArea.LOWER_X_BOUND;
-		int highestXPos = GameArea.UPPER_X_BOUND - Orglit.WIDTH;
+		int highestXPos = GameArea.UPPER_X_BOUND / 2;
 		int randomXPos = generateRandomNumber(lowestXPos, highestXPos);
 
 		int lowestYPos = GameArea.LOWER_Y_BOUND;
-		int highestYPos = GameArea.UPPER_Y_BOUND - Orglit.HEIGHT;
+		int highestYPos = GameArea.UPPER_Y_BOUND - PowerUp.SIZE;
 		int randomYPos = generateRandomNumber(lowestYPos, highestYPos);
 
 		powerUp = createRandomPowerUpAt(randomXPos, randomYPos);
