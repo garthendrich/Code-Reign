@@ -49,11 +49,17 @@ public class Orglit extends Sprite{
 		return isAlive;
 	}
 
+	@Override
+	void updatePosition() {
+		super.updatePosition();
+		updateMovement();
+	}
+
 	void updateMovement() {
-		if (xPos == 0) {
-			moveRight();
-		} else if (xPos == GameStage.CANVAS_WIDTH - this.width) {
-			moveLeft();
-		}
+		boolean isOrglitAtLeftmostEdge = (xPos == 0);
+		boolean isOrglitAtRightmostEdge = (xPos == GameStage.CANVAS_WIDTH - this.width);
+
+		if (isOrglitAtLeftmostEdge) moveRight();
+		else if (isOrglitAtRightmostEdge) moveLeft();
 	}
 }
