@@ -16,6 +16,8 @@ public class Agmatron extends Orglit {
 
 	void reduceHealthBy(int amount) {
 		health -= amount;
-		if (health < 0) die();
+		if (health <= 0){
+			die();
+		}
 	}
 }
