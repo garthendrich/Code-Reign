@@ -17,7 +17,11 @@ public class Orglit extends Sprite{
 	public Orglit(int x, int y) {
 		super(x,y, ORGLIT_IMAGE);
 
+		setRandomMovementSpeed();
 		setRandomInitialMovement();
+	}
+
+	private void setRandomMovementSpeed() {
 		Random randomizer = new Random();
 		int movementSpeed = MIN_MOVEMENT_SPEED + randomizer.nextInt(MAX_MOVEMENT_SPEED - MIN_MOVEMENT_SPEED + 1);
 		setMovementSpeed(movementSpeed);
