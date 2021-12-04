@@ -15,7 +15,10 @@ public class Agmatron extends Orglit {
 	}
 
 	boolean isAlive() {
-		if (health >= 0) return true;
-		return false;
+		if (health >= 0){
+			return true;
+		}else{
+			return false;
+		}
 	}
 }
