@@ -5,8 +5,8 @@ import javafx.scene.image.Image;
 public class Agmatron extends Orglit {
 
 	public final static int AGMATRON_DAMAGE = 50;
-
-	private int health;
+	private final static int AGMATRON_HEALTH = 3000;
+	protected int health = AGMATRON_HEALTH;
 
 	public Agmatron(int x, int y) {
 		super(x, y);
@@ -15,7 +15,7 @@ public class Agmatron extends Orglit {
 	}
 
 	void reduceHealthBy(int amount) {
-		health -= amount;
+	health -= amount;
 	}
 
 	boolean isAlive() {
