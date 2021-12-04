@@ -21,7 +21,7 @@ public class GameTimer extends AnimationTimer{
 	public static final int POWER_UP_OCCURENCE_SECONDS = 5;
 
 	private GraphicsContext graphicsContext;
-	private Edolite edolite = new Edolite("Burcham", 150, 250);
+	private Edolite edolite = new Edolite(150, 250);
 	private ArrayList<Orglit> orglits = new ArrayList<Orglit>();
 	private PowerUp powerUp;
 	private long gameStartTimeInNanos = -1;

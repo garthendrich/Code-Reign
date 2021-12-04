@@ -12,8 +12,8 @@ public class Edolite extends Sprite{
 	private final static int MIN_STRENGTH = 100;
 	private final static int MAX_STRENGTH = 150;
 
-	public Edolite(String name, int x, int y, Image image){
-		super(x,y, image);
+	public Edolite(int x, int y) {
+		super(x,y, EDOLITE_IMAGE);
 		Random r = new Random();
 		this.strength = r.nextInt(MAX_STRENGTH - MIN_STRENGTH) + 101;
 		this.bullets = new ArrayList<Bullet>();
