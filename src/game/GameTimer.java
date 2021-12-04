@@ -242,7 +242,9 @@ public class GameTimer extends AnimationTimer{
 	}
 
 	public void handleKeyPress(KeyCode key) {
-		if (keysPressed.contains(key)) return;
+		if ((key == KeyCode.SPACE) && !isKeyHeld(KeyCode.SPACE)) {
+			edolite.shoot();
+		}
 
 		if (keysHeld.contains(key) == false) {
 			keysHeld.add(key);

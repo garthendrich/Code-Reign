@@ -14,6 +14,7 @@ public class Bullet extends Sprite{
 
 		this.damage = damage;
 		setMovementSpeed(MOVEMENT_SPEED);
+		moveRight();
 	}
 
 	int getDamage() {
