@@ -100,19 +100,32 @@ public class GameTimer extends AnimationTimer{
 	}
 
 	private void spawnPowerUp() {
-		powerUp = createRandomPowerUp();
+		int lowestXPos = GameArea.LOWER_X_BOUND;
+		int highestXPos = GameArea.UPPER_X_BOUND - Orglit.WIDTH;
+		int randomXPos = generateRandomNumber(lowestXPos, highestXPos);
+
+		int lowestYPos = GameArea.LOWER_Y_BOUND;
+		int highestYPos = GameArea.UPPER_Y_BOUND - Orglit.HEIGHT;
+		int randomYPos = generateRandomNumber(lowestYPos, highestYPos);
+
+		powerUp = createRandomPowerUpAt(randomXPos, randomYPos);
+	}
+
+	private PowerUp createRandomPowerUpAt(int xPos, int yPos) {
+		Random randomizer = new Random();
+		int randomPowerUpIndex = randomizer.nextInt(2);
+
+		PowerUp powerUp = null;
+		switch(randomPowerUpIndex) {
+			case 0: powerUp = new Pearl(xPos, yPos);
+			case 1: powerUp = new Star(xPos, yPos);
+		}
+
+		return powerUp;
 	}
 
 	private void deSpawnPowerUp() {
 		powerUp = null;
-	}
-
-	private PowerUp createRandomPowerUp() {
-		Random randomizer = new Random();
-		switch(randomizer.nextInt(2)) {
-			case 0: return new Pearl();
-			case 1: return new Star();
-		}
 	}
 
 	private void updateSpritePositions() {
