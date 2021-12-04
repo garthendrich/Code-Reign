@@ -138,11 +138,14 @@ public class GameTimer extends AnimationTimer{
 
 		if (powerUp != null) manageCollisionOf(edolite, powerUp);
 
-		for (Orglit orglit: orglits) {
-			manageCollisionOf(edolite, orglit);
+		for (Orglit orglit : orglits) manageCollisionOf(edolite, orglit);
+		removeDeadOrglits();
 
-			for (Bullet edoliteBullet : edoliteBullets) manageCollisionOf(orglit, edoliteBullet);
+		for (Orglit orglit : orglits) for (Bullet edoliteBullet : edoliteBullets) {
+			if (orglit.isAlive() == false) break;
+			manageCollisionOf(orglit, edoliteBullet);
 		}
+		removeDeadOrglits();
 	}
 
 	private void manageCollisionOf(Edolite edolite, PowerUp powerUp) {
@@ -158,24 +161,29 @@ public class GameTimer extends AnimationTimer{
 			int orglitDamage = orglit.getDamage();
 			edolite.reduceStrengthBy(orglitDamage);
 
-			if (orglit instanceof Agmatron == false) orglits.remove(orglit);
+			if (orglit instanceof Agmatron == false) orglit.die();
 		}
 	}
 
 	private void manageCollisionOf(Orglit orglit, Bullet edoliteBullet) {
 		if (edoliteBullet.collidesWith(orglit)) {
 			if (orglit instanceof Agmatron) {
-				Agmatron agmatron = (Agmatron) orglit;
-
 				int edoliteBulletDamage = edoliteBullet.getDamage();
+
+				Agmatron agmatron = (Agmatron) orglit;
 				agmatron.reduceHealthBy(edoliteBulletDamage);
-
-				if (agmatron.isAlive() == false) orglits.remove(agmatron);
-
 			} else {
-				orglits.remove(orglit);
+				orglit.die();
 			}
 		}
+	}
+
+	private void removeDeadOrglits() {
+		ArrayList<Orglit> deadOrglits = new ArrayList<Orglit>();
+
+		for (Orglit orglit : orglits) if (orglit.isAlive() == false) deadOrglits.add(orglit);
+
+		for (Orglit deadOrglit : deadOrglits) orglits.remove(deadOrglit);
 	}
 
 	private void reRenderGameElements() {

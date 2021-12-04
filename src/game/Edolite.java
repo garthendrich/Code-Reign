@@ -39,6 +39,11 @@ public class Edolite extends Sprite{
 		strength -= damage;
 	}
 
+	boolean isAlive() {
+		if (strength >= 0) return true;
+		return false;
+	}
+
 	public void gainStrength(int amount){
 		strength += amount;
 	}
