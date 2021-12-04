@@ -11,7 +11,7 @@ public class Orglit extends Sprite{
 	public final static int HEIGHT = 50;
 	public final static int DAMAGE = 10;
 
-	public Orglit(int x, int y) {
+	public Orglit(int x, int y, Image image) {
 		super(x,y, ORGLIT_IMAGE);
 		Random r = new Random();
 		this.movementSpeed = r.nextInt(MAX_ORGLIT_SPEED) + 1;
