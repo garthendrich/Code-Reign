@@ -226,7 +226,7 @@ public class GameTimer extends AnimationTimer{
 		ArrayList<GameElement> gameElements = new ArrayList<GameElement>();
 		ArrayList<Sprite> sprites = getAllSprites();
 		gameElements.addAll(sprites);
-		if (powerUp != null) gameElements.add(powerUp);
+		if (powerUp != null) gameElements.add(0, powerUp); // Add at index 0 so it renders first
 		return gameElements;
 	}
 
