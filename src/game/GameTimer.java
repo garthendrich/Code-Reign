@@ -145,19 +145,19 @@ public class GameTimer extends AnimationTimer{
 			int orglitDamage = orglit.getDamage();
 			edolite.reduceStrengthBy(orglitDamage);
 
-			if (orglit instanceof Boss == false) orglits.remove(orglit);
+			if (orglit instanceof Agmatron == false) orglits.remove(orglit);
 		}
 	}
 
 	private void manageCollisionOf(Orglit orglit, Bullet edoliteBullet) {
 		if (edoliteBullet.collidesWith(orglit)) {
-			if (orglit instanceof Boss) {
-				Boss enemyBoss = (Boss) orglit;
+			if (orglit instanceof Agmatron) {
+				Agmatron agmatron = (Agmatron) orglit;
 
 				int edoliteBulletDamage = edoliteBullet.getDamage();
-				enemyBoss.reduceHealthBy(edoliteBulletDamage);
+				agmatron.reduceHealthBy(edoliteBulletDamage);
 
-				if (enemyBoss.isAlive() == false) orglits.remove(enemyBoss);
+				if (agmatron.isAlive() == false) orglits.remove(agmatron);
 
 			} else {
 				orglits.remove(orglit);
