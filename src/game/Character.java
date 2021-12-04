@@ -46,4 +46,12 @@ public class Character extends GameElement{
 	void reduceStrength(int amount){
 
 	}
+
+	void obtainEffect(){
+
+	}
+
+	void removeEffect(){
+
+	}
 }
