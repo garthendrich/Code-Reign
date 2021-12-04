@@ -136,7 +136,7 @@ public class GameTimer extends AnimationTimer{
 	private void manageGameElementCollisions() {
 		ArrayList<Bullet> edoliteBullets = edolite.getBullets();
 
-		manageCollisionOf(edolite, powerUp);
+		if (powerUp != null) manageCollisionOf(edolite, powerUp);
 
 		for (Orglit orglit: orglits) {
 			manageCollisionOf(edolite, orglit);
@@ -203,7 +203,7 @@ public class GameTimer extends AnimationTimer{
 		ArrayList<GameElement> gameElements = new ArrayList<GameElement>();
 		ArrayList<Sprite> sprites = getAllSprites();
 		gameElements.addAll(sprites);
-		gameElements.add(powerUp);
+		if (powerUp != null) gameElements.add(powerUp);
 		return gameElements;
 	}
 
