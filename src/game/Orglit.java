@@ -9,7 +9,7 @@ public class Orglit extends Sprite{
 	public final static Image ORGLIT_IMAGE = new Image("images/fish.png", Orglit.WIDTH, Orglit.HEIGHT, false, false);
 	public final static int WIDTH = 50;
 	public final static int HEIGHT = 50;
-	public final static int DAMAGE = 10;
+	public final static int ORGLIT_DAMAGE = 10;
 
 	public Orglit(int x, int y, Image image) {
 		super(x,y, ORGLIT_IMAGE);
@@ -17,7 +17,7 @@ public class Orglit extends Sprite{
 		this.movementSpeed = r.nextInt(MAX_ORGLIT_SPEED) + 1;
 	}
 
-	public int getDamage(){
-		return DAMAGE;
+	public static int getOrglitDamage(){
+		return ORGLIT_DAMAGE;
 	}
 }
