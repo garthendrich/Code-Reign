@@ -31,7 +31,7 @@ public class GameTimer extends AnimationTimer{
 	private double gameTimeDuringPreviousOrglitSpawn = 0;
 	private double gameTimeDuringPreviousPowerUpSpawn = 0;
 
-	private ArrayList<KeyCode> keysPressed = new ArrayList<KeyCode>();
+	private ArrayList<KeyCode> keysHeld = new ArrayList<KeyCode>();
 
 	GameTimer(GraphicsContext graphicsContext){
 		this.graphicsContext = graphicsContext;
@@ -244,28 +244,30 @@ public class GameTimer extends AnimationTimer{
 	public void handleKeyPress(KeyCode key) {
 		if (keysPressed.contains(key)) return;
 
-		keysPressed.add(key);
-		updateEdoliteMovement();
+		if (keysHeld.contains(key) == false) {
+			keysHeld.add(key);
+			updateEdoliteMovement();
+		}
 	}
 
 	public void handleKeyRelease(KeyCode key) {
-		keysPressed.remove(key);
+		keysHeld.remove(key);
 		updateEdoliteMovement();
 	}
 
 	private void updateEdoliteMovement() {
-		if (isKeyPressed(KeyCode.UP) && isKeyPressed(KeyCode.DOWN)) edolite.stopMovingVertically();
-		else if (isKeyPressed(KeyCode.UP)) edolite.moveUp();
-		else if (isKeyPressed(KeyCode.DOWN)) edolite.moveDown();
+		if (isKeyHeld(KeyCode.UP) && isKeyHeld(KeyCode.DOWN)) edolite.stopMovingVertically();
+		else if (isKeyHeld(KeyCode.UP)) edolite.moveUp();
+		else if (isKeyHeld(KeyCode.DOWN)) edolite.moveDown();
 		else edolite.stopMovingVertically();
 
-		if (isKeyPressed(KeyCode.LEFT) && isKeyPressed(KeyCode.RIGHT)) edolite.stopMovingHorizontally();
-		else if (isKeyPressed(KeyCode.LEFT)) edolite.moveLeft();
-		else if (isKeyPressed(KeyCode.RIGHT)) edolite.moveRight();
+		if (isKeyHeld(KeyCode.LEFT) && isKeyHeld(KeyCode.RIGHT)) edolite.stopMovingHorizontally();
+		else if (isKeyHeld(KeyCode.LEFT)) edolite.moveLeft();
+		else if (isKeyHeld(KeyCode.RIGHT)) edolite.moveRight();
 		else edolite.stopMovingHorizontally();
 	}
 
-	private boolean isKeyPressed(KeyCode key) {
-		return keysPressed.contains(key);
+	private boolean isKeyHeld(KeyCode key) {
+		return keysHeld.contains(key);
 	}
 }
