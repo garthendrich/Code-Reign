@@ -8,5 +8,5 @@ abstract class PowerUp extends GameElement{
 		super(x, y, image);
 	}
 
-	abstract void applyTo(Character character);
+	abstract void applyTo(Edolite edolite);
 }

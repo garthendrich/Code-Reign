@@ -4,15 +4,15 @@ import java.util.ArrayList;
 import java.util.Random;
 import javafx.scene.image.Image;
 
-public class Character extends Sprite{
+public class Edolite extends Sprite{
 	private int strength;
 	private ArrayList<Bullet> bullets;
-	public final static Image CHARACTER_IMAGE = new Image("images/ship.png", 25, 25, false, false);
+	public final static Image EDOLITE_IMAGE = new Image("images/ship.png", 25, 25, false, false);
 	private final static Image BULLET_IMAGE = new Image("images/bullet.png", 25, 25, false, false);
 	private final static int MIN_STRENGTH = 100;
 	private final static int MAX_STRENGTH = 150;
 
-	public Character(String name, int x, int y, Image image){
+	public Edolite(String name, int x, int y, Image image){
 		super(x,y, image);
 		Random r = new Random();
 		this.strength = r.nextInt(MAX_STRENGTH - MIN_STRENGTH) + 101;
