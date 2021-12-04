@@ -12,10 +12,13 @@ public class Edolite extends Sprite{
 	private final static int MOVEMENT_SPEED = 3;
 
 	private int strength;
-	private ArrayList<Bullet> bullets;
+	private ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 
 	public Edolite(int x, int y) {
 		super(x,y, EDOLITE_IMAGE);
+
+		Random randomizer = new Random();
+		strength = MIN_STRENGTH + randomizer.nextInt(MAX_STRENGTH - MIN_STRENGTH + 1);
 
 		setMovementSpeed(MOVEMENT_SPEED);
 	}
