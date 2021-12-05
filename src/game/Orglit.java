@@ -3,20 +3,21 @@ package game;
 import javafx.scene.image.Image;
 import java.util.Random;
 
-public class Orglit extends Sprite{
+public class Orglit extends Sprite {
 
-	private final static int MIN_MOVEMENT_SPEED = 1;
-	private final static int MAX_MOVEMENT_SPEED = 5;
-	public final static Image ORGLIT_IMAGE = new Image("images/fish.png", Orglit.WIDTH, Orglit.HEIGHT, false, false);
 	public final static int WIDTH = 50;
 	public final static int HEIGHT = 50;
+	public final static Image IMAGE = new Image("images/fish.png", WIDTH, HEIGHT, false, false);
+	private final static int MIN_MOVEMENT_SPEED = 1;
+	private final static int MAX_MOVEMENT_SPEED = 5;
 
 	private boolean isAlive = true;
 	protected int damage = 30;
 
 	public Orglit(int x, int y) {
-		super(x,y, ORGLIT_IMAGE);
+		super(x,y);
 
+		setImage(IMAGE);
 		setRandomMovementSpeed();
 		setRandomInitialMovement();
 	}

@@ -4,19 +4,25 @@ import javafx.scene.image.Image;
 
 public class Agmatron extends Orglit {
 
-	public final static int AGMATRON_DAMAGE = 50;
-	private final static int AGMATRON_HEALTH = 3000;
-	protected int health = AGMATRON_HEALTH;
+	public final static int WIDTH = 100;
+	public final static int HEIGHT = 100;
+	public final static Image IMAGE = new Image("images/fish.png", WIDTH, HEIGHT, false, false);
+	public final static int DAMAGE = 50;
+
+	private int health = 3000;
 
 	public Agmatron(int x, int y) {
 		super(x, y);
 
-		damage = AGMATRON_DAMAGE;
+		setImage(IMAGE);
+
+		damage = DAMAGE;
 	}
 
 	void reduceHealthBy(int amount) {
 		health -= amount;
-		if (health <= 0){
+
+		if (health <= 0) {
 			die();
 		}
 	}

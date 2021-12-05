@@ -3,16 +3,19 @@ package game;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 
-public class GameElement {
+public abstract class GameElement {
 	protected Image image;
 	protected int xPos, yPos, width, height;
 
-	public GameElement(int xPos, int yPos, Image image){
+	public GameElement(int xPos, int yPos) {
 		this.xPos = xPos;
 		this.yPos = yPos;
+	}
+
+	protected void setImage(Image image) {
 		this.image = image;
-		width = (int) image.getWidth();
-		height = (int) image.getHeight();
+		this.width = (int) image.getWidth();
+		this.height = (int) image.getHeight();
 	}
 
 	//method that will check for collision of two sprites

@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.Random;
 import javafx.scene.image.Image;
 
-public class Edolite extends Sprite{
+public class Edolite extends Sprite {
 
-	public final static Image EDOLITE_IMAGE = new Image("images/ship.png", 25, 25, false, false);
+	private final static int WIDTH = 25;
+	private final static int HEIGHT = 25;
+	public final static Image IMAGE = new Image("images/ship.png", WIDTH, HEIGHT, false, false);
+
 	private final static int MIN_STRENGTH = 100;
 	private final static int MAX_STRENGTH = 150;
 	private final static int MOVEMENT_SPEED = 3;
@@ -15,7 +18,9 @@ public class Edolite extends Sprite{
 	private ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 
 	public Edolite(int x, int y) {
-		super(x,y, EDOLITE_IMAGE);
+		super(x,y);
+
+		setImage(IMAGE);
 
 		Random randomizer = new Random();
 		strength = MIN_STRENGTH + randomizer.nextInt(MAX_STRENGTH - MIN_STRENGTH + 1);

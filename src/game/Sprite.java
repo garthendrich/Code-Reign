@@ -2,13 +2,13 @@ package game;
 
 import javafx.scene.image.Image;
 
-public class Sprite extends GameElement {
+public abstract class Sprite extends GameElement {
 
 	private int dX, dY;
 	private int movementSpeed;
 
-	public Sprite(int xPos, int yPos, Image image) {
-		super(xPos, yPos, image);
+	public Sprite(int xPos, int yPos) {
+		super(xPos, yPos);
 	}
 
 	protected void setMovementSpeed(int movementSpeed) {
