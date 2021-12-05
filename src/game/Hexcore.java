@@ -2,12 +2,12 @@ package game;
 
 import javafx.scene.image.Image;
 
-class Pearl extends PowerUp {
+class Hexcore extends PowerUp {
 
-	public final static Image IMAGE = new Image("assets/images/biscuit.png", PowerUp.SIZE, PowerUp.SIZE, false, false);
+	public final static Image IMAGE = new Image("assets/images/hexcore.png", PowerUp.SIZE, PowerUp.SIZE, false, false);
 	public final static int STRENGTH_BONUS = 50;
 
-	Pearl(int x, int y){
+	Hexcore(int x, int y){
 		super(x, y);
 
 		setImage(IMAGE);
