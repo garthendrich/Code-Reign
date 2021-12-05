@@ -134,7 +134,7 @@ class GameTimer extends AnimationTimer {
 		int randomPowerUpIndex = randomizer.nextInt(2);
 		switch(randomPowerUpIndex) {
 			case 0: powerUp = new Pearl(xPos, yPos);
-			case 1: powerUp = new Star(xPos, yPos);
+			case 1: powerUp = new Gemstone(xPos, yPos);
 		}
 
 		return powerUp;

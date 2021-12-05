@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 
 abstract class PowerUp extends GameElement {
 
-	public final static int SIZE = 25;
+	public final static int SIZE = 24;
 
 	public PowerUp(int x, int y) {
 		super(x, y);
