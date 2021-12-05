@@ -26,7 +26,7 @@ class GameStage {
 		StackPane root = new StackPane();
 		Canvas canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
 		root.getChildren().add(canvas);
-		scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
+		scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT, Color.valueOf("F6C27D"));
 
 		setupSceneEventHandlers();
 
