@@ -9,10 +9,10 @@ class Edolite extends Sprite {
 	private final static int WIDTH = 32;
 	private final static int HEIGHT = 44;
 	public final static Image IMAGE = new Image("assets/images/edolite.png", WIDTH, HEIGHT, false, false);
-
 	private final static int MIN_STRENGTH = 100;
 	private final static int MAX_STRENGTH = 150;
 	private final static int MOVEMENT_SPEED = 3;
+	private final static int GUN_ELEVATION_ON_SHOOT = 30;
 
 	private int strength;
 	private ArrayList<Bullet> bullets = new ArrayList<Bullet>();
@@ -37,8 +37,8 @@ class Edolite extends Sprite {
 	//method called if spacebar is pressed
 	public void shoot(){
 		//compute for the x and y initial position of the bullet
-		int bulletXPos = this.xPos + (this.width + 16);
-		int bulletYPos = this.yPos + (this.height / 2) - (Bullet.WIDTH / 2);
+		int bulletXPos = this.xPos + this.width;
+		int bulletYPos = this.yPos + this.height - GUN_ELEVATION_ON_SHOOT - (Bullet.HEIGHT / 2);
 
 		Bullet bullet = new Bullet(bulletXPos, bulletYPos, strength);
 		bullets.add(bullet);
