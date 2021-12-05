@@ -44,6 +44,7 @@ class GameTimer extends AnimationTimer {
 	private double orglitSpawnGameTime = 0;
 	private double powerUpSpawnGameTime = 0;
 	private boolean isAgmatronSpawned = false;
+	private int orglitsKilled = 0;
 
 	private ArrayList<KeyCode> keysHeld = new ArrayList<KeyCode>();
 
@@ -184,7 +185,10 @@ class GameTimer extends AnimationTimer {
 			int orglitDamage = orglit.getDamage();
 			edolite.reduceStrengthBy(orglitDamage);
 
-			if (orglit instanceof Agmatron == false) orglit.die();
+			if (orglit instanceof Agmatron == false){
+				orglit.die();
+				orglitsKilled += 1;
+			}
 		}
 	}
 
@@ -200,6 +204,7 @@ class GameTimer extends AnimationTimer {
 			}
 
 			edoliteBullet.collide();
+			orglitsKilled += 1;
 		}
 	}
 
@@ -264,12 +269,20 @@ class GameTimer extends AnimationTimer {
 		if(edolite.isAlive() == true && gameTime >= MAX_GAME_TIME){
 			graphicsContext.setFill(Color.GREEN);
 			graphicsContext.setFont(Font.font("Impact", FontWeight.EXTRA_BOLD, 50));
-			graphicsContext.fillText("CONGRATULATIONS! YOU WIN!", GameStage.WINDOW_WIDTH / 8.75, GameStage.WINDOW_HEIGHT / 2);
+			graphicsContext.fillText("CONGRATULATIONS! YOU WIN!", GameStage.WINDOW_WIDTH / 8.75, GameStage.WINDOW_HEIGHT / 4);
+			displayGameOverStats();
 		}else{
 			graphicsContext.setFill(Color.RED);
 			graphicsContext.setFont(Font.font("Impact", FontWeight.EXTRA_BOLD, 50));
-			graphicsContext.fillText("GAME OVER! YOU LOSE!", GameStage.WINDOW_WIDTH / 5, GameStage.WINDOW_HEIGHT / 2);
+			graphicsContext.fillText("GAME OVER! YOU LOSE!", GameStage.WINDOW_WIDTH / 5, GameStage.WINDOW_HEIGHT / 4);
+			displayGameOverStats();
 		}
+	}
+
+	private void displayGameOverStats(){
+		graphicsContext.setFill(Color.WHITE);
+		graphicsContext.setFont(Font.font("Cambria Math", FontWeight.MEDIUM, 30));
+		graphicsContext.fillText("Orglits Killed: " + orglitsKilled, GameStage.WINDOW_WIDTH / 5, GameStage.WINDOW_HEIGHT / 2);
 	}
 
 	private int generateRandomNumber(int min, int max) {
