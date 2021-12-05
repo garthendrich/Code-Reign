@@ -19,7 +19,7 @@ import javafx.util.Duration;
 
 class GameTimer extends AnimationTimer {
 
-	public static final int MAX_GAME_TIME = 5;
+	public static final int MAX_GAME_TIME = 60;
 
 	public static final int EDOLITE_INITIAL_X_POS = 150;
 	public static final int EDOLITE_INITIAL_Y_POS = 250;
