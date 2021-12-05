@@ -22,6 +22,8 @@ public class GameTimer extends AnimationTimer {
 	public static final int ORGLIT_SPAWN_COUNT = 3;
 	public static final int ORGLIT_SPAWN_INTERVAL_SECONDS = 5;
 
+	public static final int AGMATRON_SPAWN_GAME_TIME = 30;
+
 	public static final int POWER_UP_SPAWN_INTERVAL_SECONDS = 10;
 	public static final int POWER_UP_OCCURENCE_SECONDS = 5;
 
@@ -35,6 +37,7 @@ public class GameTimer extends AnimationTimer {
 	private double gameTime;
 	private double orglitSpawnGameTime = 0;
 	private double powerUpSpawnGameTime = 0;
+	private boolean isAgmatronSpawned = false;
 
 	private ArrayList<KeyCode> keysHeld = new ArrayList<KeyCode>();
 
@@ -70,6 +73,11 @@ public class GameTimer extends AnimationTimer {
 			spawnOrglits(ORGLIT_SPAWN_COUNT);
 			orglitSpawnGameTime = gameTime;
 		}
+
+		if (gameTime > AGMATRON_SPAWN_GAME_TIME && !isAgmatronSpawned) {
+			spawnAgmatron();
+			isAgmatronSpawned = true;
+		}
 	}
 
 	private void spawnOrglits(int spawnCount) {
@@ -83,6 +91,17 @@ public class GameTimer extends AnimationTimer {
 
 			orglits.add(new Orglit(randomXPos, randomYPos));
 		}
+	}
+
+	private void spawnAgmatron() {
+		int canvasMiddleX = GameStage.CANVAS_WIDTH / 2;
+		int highestXPos = GameStage.CANVAS_WIDTH - Agmatron.WIDTH;
+		int randomXPos = generateRandomNumber(canvasMiddleX, highestXPos);
+
+		int highestYPos = GameStage.CANVAS_HEIGHT - Agmatron.HEIGHT;
+		int randomYPos = generateRandomNumber(0, highestYPos);
+
+		orglits.add(new Agmatron(randomXPos, randomYPos));
 	}
 
 	private void managePowerUpSpawns() {
