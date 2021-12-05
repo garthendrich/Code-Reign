@@ -8,7 +8,7 @@ class Edolite extends Sprite {
 
 	private final static int WIDTH = 25;
 	private final static int HEIGHT = 25;
-	public final static Image IMAGE = new Image("images/ship.png", WIDTH, HEIGHT, false, false);
+	public final static Image IMAGE = new Image("assets/images/ship.png", WIDTH, HEIGHT, false, false);
 
 	private final static int MIN_STRENGTH = 100;
 	private final static int MAX_STRENGTH = 150;
