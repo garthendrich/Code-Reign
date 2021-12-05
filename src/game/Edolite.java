@@ -66,4 +66,8 @@ class Edolite extends Sprite {
 	void removeEffect(){
 
 	}
+
+	public int getStrength(){
+		return strength;
+	}
 }
