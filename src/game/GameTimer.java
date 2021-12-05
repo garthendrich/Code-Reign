@@ -51,7 +51,7 @@ public class GameTimer extends AnimationTimer {
 		managePowerUpSpawns();
 		updateSpritePositions();
 		manageGameElementCollisions();
-		reRenderGameElements();
+		updateCanvas();
 		checkGameEnd();
 	}
 
@@ -200,11 +200,13 @@ public class GameTimer extends AnimationTimer {
 		}
 	}
 
-	private void reRenderGameElements() {
+	private void updateCanvas() {
 		clearGameCanvas();
 
 		ArrayList<GameElement> gameElements = getAllGameElements();
 		for (GameElement gameElement : gameElements) render(gameElement);
+
+		displayGameStats();
 	}
 
 	private void clearGameCanvas() {
@@ -216,6 +218,10 @@ public class GameTimer extends AnimationTimer {
 		int gameElementXPos = gameElement.getXPos();
 		int gameElementYPos = gameElement.getYPos();
 		graphicsContext.drawImage(gameElementImage, gameElementXPos, gameElementYPos);
+	}
+
+	private void displayGameStats() {
+		// TODO
 	}
 
 	private void checkGameEnd() {
