@@ -176,7 +176,7 @@ class GameTimer extends AnimationTimer {
 	private void manageCollisionOf(Edolite edolite, Orglit orglit) {
 		if (edolite.collidesWith(orglit)) {
 			int orglitDamage = orglit.getDamage();
-			edolite.reduceStrengthBy(orglitDamage);
+			edolite.receiveDamage(orglitDamage);
 
 			if (orglit instanceof Agmatron == false) orglit.die();
 		}

@@ -14,7 +14,7 @@ class Star extends PowerUp {
 
 	@Override
 	void applyTo(Edolite edolite) {
-		// TODO Auto-generated method stub
-
+		StatusEffect invulnerability = new StatusEffect(StatusEffect.INVULNERABILITY, 3, edolite);
+		edolite.obtainStatusEffect(invulnerability);
 	}
 }

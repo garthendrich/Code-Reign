@@ -16,6 +16,7 @@ class Edolite extends Sprite {
 
 	private int strength;
 	private ArrayList<Bullet> bullets = new ArrayList<Bullet>();
+	private StatusEffect statusEffect;
 
 	public Edolite(int x, int y) {
 		super(x,y);
@@ -43,8 +44,10 @@ class Edolite extends Sprite {
 		bullets.add(bullet);
     }
 
-	void reduceStrengthBy(int damage){
-		strength -= damage;
+	void receiveDamage(int damage) {
+		if (!hasStatusEffect(StatusEffect.INVULNERABILITY)) {
+			strength -= damage;
+		}
 	}
 
 	boolean isAlive() {
@@ -59,11 +62,22 @@ class Edolite extends Sprite {
 		strength += amount;
 	}
 
-	void obtainEffect(){
-
+	void obtainStatusEffect(StatusEffect statusEffect) {
+		this.statusEffect = statusEffect;
+		statusEffect.start();
 	}
 
-	void removeEffect(){
+	void removeStatusEffect() {
+		statusEffect = null;
+	}
 
+	private boolean hasStatusEffect(String statusEffectType) {
+		if (statusEffect == null) return false;
+
+		String currentStatusEffectType = this.statusEffect.getType();
+		if (currentStatusEffectType == statusEffectType) {
+			return true;
+		}
+		return false;
 	}
 }
