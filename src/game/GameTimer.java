@@ -282,7 +282,10 @@ class GameTimer extends AnimationTimer {
 	private void displayGameOverStats(){
 		graphicsContext.setFill(Color.WHITE);
 		graphicsContext.setFont(Font.font("Cambria Math", FontWeight.MEDIUM, 30));
-		graphicsContext.fillText("Orglits Killed: " + orglitsKilled, GameStage.WINDOW_WIDTH / 5, GameStage.WINDOW_HEIGHT / 2);
+		graphicsContext.fillText("Game Time: " + gameTime, GameStage.WINDOW_WIDTH / 5, GameStage.WINDOW_HEIGHT / 3);
+		graphicsContext.fillText("Edolite Strength: " + edolite.getStrength(), GameStage.WINDOW_WIDTH / 5, GameStage.WINDOW_HEIGHT / 2.5);
+		graphicsContext.fillText("Orglits Killed: " + orglitsKilled, GameStage.WINDOW_WIDTH / 5, GameStage.WINDOW_HEIGHT / 2.15);
+
 	}
 
 	private int generateRandomNumber(int min, int max) {
