@@ -11,6 +11,10 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
 
 class GameTimer extends AnimationTimer {
@@ -249,19 +253,23 @@ class GameTimer extends AnimationTimer {
 		if (edolite.isAlive() == false || gameTime >= MAX_GAME_TIME) {
 			this.stop();
 			// TODO Display game over
+			displayGameOver();
 		}
 	}
 
-	private void displayGameOver(int state){
-		PauseTransition transition = new PauseTransition(Duration.seconds(1));
-		transition.play();
-
-		transition.setOnFinished(new EventHandler<ActionEvent>(){
-			public void handle(ActionEvent arg0){
-				GameOver gameover = new GameOver(state);
-				GameStage.loadTo(gameover.getGameOverScene());
-			}
-		});
+	private void displayGameOver(){
+		clearGameCanvas();
+		graphicsContext.setFill(Color.BLACK);	//TODO: Replace with background image of the game
+		graphicsContext.fillRect(0, 0, GameStage.WINDOW_WIDTH, GameStage.WINDOW_HEIGHT);
+		if(edolite.isAlive() == true && gameTime >= MAX_GAME_TIME){
+			graphicsContext.setFill(Color.GREEN);
+			graphicsContext.setFont(Font.font("Impact", FontWeight.EXTRA_BOLD, 50));
+			graphicsContext.fillText("CONGRATULATIONS! YOU WIN!", GameStage.WINDOW_WIDTH / 2, GameStage.WINDOW_HEIGHT / 2);
+		}else{
+			graphicsContext.setFill(Color.RED);
+			graphicsContext.setFont(Font.font("Impact", FontWeight.EXTRA_BOLD, 50));
+			graphicsContext.fillText("GAME OVER! YOU LOSE!", GameStage.WINDOW_WIDTH / 2, GameStage.WINDOW_HEIGHT / 2);
+		}
 	}
 
 	private int generateRandomNumber(int min, int max) {
