@@ -2,7 +2,7 @@ package game;
 
 import javafx.scene.image.Image;
 
-public abstract class Sprite extends GameElement {
+abstract class Sprite extends GameElement {
 
 	private int dX, dY;
 	private int movementSpeed;

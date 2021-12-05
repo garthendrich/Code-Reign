@@ -3,7 +3,7 @@ package game;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 
-public abstract class GameElement {
+abstract class GameElement {
 	protected Image image;
 	protected int xPos, yPos, width, height;
 

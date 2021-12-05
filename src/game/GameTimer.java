@@ -11,7 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
-public class GameTimer extends AnimationTimer {
+class GameTimer extends AnimationTimer {
 
 	public static final int MAX_GAME_TIME = 60;
 

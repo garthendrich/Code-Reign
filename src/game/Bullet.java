@@ -2,7 +2,7 @@ package game;
 
 import javafx.scene.image.Image;
 
-public class Bullet extends Sprite{
+class Bullet extends Sprite {
 
 	public final static int WIDTH = 25;
 	public final static int HEIGHT = 25;

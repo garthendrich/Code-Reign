@@ -2,7 +2,7 @@ package game;
 
 import javafx.scene.image.Image;
 
-public class Agmatron extends Orglit {
+class Agmatron extends Orglit {
 
 	public final static int WIDTH = 100;
 	public final static int HEIGHT = 100;

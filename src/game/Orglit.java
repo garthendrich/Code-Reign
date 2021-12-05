@@ -3,7 +3,7 @@ package game;
 import javafx.scene.image.Image;
 import java.util.Random;
 
-public class Orglit extends Sprite {
+class Orglit extends Sprite {
 
 	public final static int WIDTH = 50;
 	public final static int HEIGHT = 50;
