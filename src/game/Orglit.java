@@ -5,9 +5,9 @@ import java.util.Random;
 
 class Orglit extends Sprite {
 
-	public final static int WIDTH = 50;
-	public final static int HEIGHT = 50;
-	public final static Image IMAGE = new Image("assets/images/fish.png", WIDTH, HEIGHT, false, false);
+	public final static int WIDTH = 24;
+	public final static int HEIGHT = 28;
+	public final static Image IMAGE = new Image("assets/images/orglit.png", WIDTH, HEIGHT, false, false);
 	private final static int MIN_MOVEMENT_SPEED = 1;
 	private final static int MAX_MOVEMENT_SPEED = 5;
 
