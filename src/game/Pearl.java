@@ -2,10 +2,10 @@ package game;
 
 import javafx.scene.image.Image;
 
-	public final static int PEARL_STRENGTH = 50;
 class Pearl extends PowerUp {
 
 	public final static Image IMAGE = new Image("images/biscuit.png", PowerUp.SIZE, PowerUp.SIZE, false, false);
+	public final static int STRENGTH_BONUS = 50;
 
 	Pearl(int x, int y){
 		super(x, y);
@@ -15,6 +15,6 @@ class Pearl extends PowerUp {
 
 	@Override
 	void applyTo(Edolite edolite) {
-		edolite.gainStrength(PEARL_STRENGTH);
+		edolite.gainStrength(STRENGTH_BONUS);
 	}
 }
