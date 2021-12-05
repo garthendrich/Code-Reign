@@ -3,6 +3,7 @@ package game;
 import java.util.ArrayList;
 import java.util.Random;
 import javafx.animation.AnimationTimer;
+import javafx.animation.PauseTransition;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -10,6 +11,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.util.Duration;
 
 class GameTimer extends AnimationTimer {
 
@@ -248,6 +250,18 @@ class GameTimer extends AnimationTimer {
 			this.stop();
 			// TODO Display game over
 		}
+	}
+
+	private void displayGameOver(int state){
+		PauseTransition transition = new PauseTransition(Duration.seconds(1));
+		transition.play();
+
+		transition.setOnFinished(new EventHandler<ActionEvent>(){
+			public void handle(ActionEvent arg0){
+				GameOver gameover = new GameOver(state);
+				GameStage.loadTo(gameover.getGameOverScene());
+			}
+		});
 	}
 
 	private int generateRandomNumber(int min, int max) {
