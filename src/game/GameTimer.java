@@ -19,7 +19,7 @@ import javafx.util.Duration;
 
 class GameTimer extends AnimationTimer {
 
-	public static final int MAX_GAME_TIME = 60;
+	public static final int MAX_GAME_TIME = 5;
 
 	public static final int EDOLITE_INITIAL_X_POS = 150;
 	public static final int EDOLITE_INITIAL_Y_POS = 250;
@@ -264,11 +264,11 @@ class GameTimer extends AnimationTimer {
 		if(edolite.isAlive() == true && gameTime >= MAX_GAME_TIME){
 			graphicsContext.setFill(Color.GREEN);
 			graphicsContext.setFont(Font.font("Impact", FontWeight.EXTRA_BOLD, 50));
-			graphicsContext.fillText("CONGRATULATIONS! YOU WIN!", GameStage.WINDOW_WIDTH / 2, GameStage.WINDOW_HEIGHT / 2);
+			graphicsContext.fillText("CONGRATULATIONS! YOU WIN!", GameStage.WINDOW_WIDTH / 8.75, GameStage.WINDOW_HEIGHT / 2);
 		}else{
 			graphicsContext.setFill(Color.RED);
 			graphicsContext.setFont(Font.font("Impact", FontWeight.EXTRA_BOLD, 50));
-			graphicsContext.fillText("GAME OVER! YOU LOSE!", GameStage.WINDOW_WIDTH / 2, GameStage.WINDOW_HEIGHT / 2);
+			graphicsContext.fillText("GAME OVER! YOU LOSE!", GameStage.WINDOW_WIDTH / 5, GameStage.WINDOW_HEIGHT / 2);
 		}
 	}
 
