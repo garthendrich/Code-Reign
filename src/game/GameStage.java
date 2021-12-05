@@ -17,7 +17,7 @@ class GameStage {
 	public static final int WINDOW_HEIGHT = 500;
 
 	public static final int CANVAS_WIDTH = 750;
-	public static final int CANVAS_HEIGHT = 460;
+	public static final int CANVAS_HEIGHT = 500;
 
 	private Scene scene;
 	private GameTimer gameTimer;
