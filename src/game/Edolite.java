@@ -6,13 +6,13 @@ import javafx.scene.image.Image;
 
 class Edolite extends Sprite {
 
-	private final static int WIDTH = 32;
-	private final static int HEIGHT = 44;
+	public final static int WIDTH = 32;
+	public final static int HEIGHT = 44;
 	public final static Image IMAGE = new Image("assets/images/edolite.png", WIDTH, HEIGHT, false, false);
-	private final static int MIN_STRENGTH = 100;
-	private final static int MAX_STRENGTH = 150;
-	private final static int MOVEMENT_SPEED = 3;
-	private final static int GUN_ELEVATION_ON_SHOOT = 30;
+	public final static int MIN_STRENGTH = 100;
+	public final static int MAX_STRENGTH = 150;
+	public final static int MOVEMENT_SPEED = 3;
+	public final static int GUN_ELEVATION_ON_SHOOT = 30;
 
 	private int strength;
 	private ArrayList<Bullet> bullets = new ArrayList<Bullet>();
@@ -81,7 +81,7 @@ class Edolite extends Sprite {
 		return false;
 	}
 
-	public int getStrength(){
+	int getStrength() {
 		return strength;
 	}
 }

@@ -5,6 +5,7 @@ import java.util.Random;
 import javafx.animation.AnimationTimer;
 import javafx.animation.PauseTransition;
 import javafx.event.EventHandler;
+import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -16,6 +17,8 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 
 class GameTimer extends AnimationTimer {
 
@@ -50,6 +53,8 @@ class GameTimer extends AnimationTimer {
 
 	GameTimer(GraphicsContext graphicsContext){
 		this.graphicsContext = graphicsContext;
+		graphicsContext.setFont(Font.loadFont("file:src/assets/fonts/Notalot60.ttf", 20));
+		graphicsContext.setTextBaseline(VPos.TOP);
 
 		spawnOrglits(ORGLIT_INITIAL_SPAWN_COUNT);
 	}
@@ -204,7 +209,10 @@ class GameTimer extends AnimationTimer {
 			}
 
 			edoliteBullet.collide();
-			orglitsKilled++;
+
+			if (orglit.isAlive() == false) {
+				orglitsKilled++;
+			}
 		}
 	}
 
@@ -251,7 +259,37 @@ class GameTimer extends AnimationTimer {
 	}
 
 	private void displayGameStats() {
-		// TODO
+		displayStrengthBar();
+		displayOrglitsKilled();
+		displayGameTimeLeft();
+	}
+
+	private void displayStrengthBar() {
+		int edoliteStrength = edolite.getStrength();
+
+		graphicsContext.setGlobalAlpha(0.75);
+		graphicsContext.setFill(Color.valueOf("69CD2E"));
+		graphicsContext.fillRect(16, 16, edoliteStrength, 32);
+		graphicsContext.setGlobalAlpha(1);
+
+		displayGameStatText(edoliteStrength + " strength", 24, 20);
+	}
+
+	private void displayOrglitsKilled() {
+		displayGameStatText(orglitsKilled + " orglits killed", 24, 52);
+	}
+
+	private void displayGameTimeLeft() {
+		graphicsContext.setTextAlign(TextAlignment.CENTER);
+		displayGameStatText("Time left", GameStage.WINDOW_WIDTH / 2, 16);
+		displayGameStatText((MAX_GAME_TIME - (int) gameTime) + "", GameStage.WINDOW_WIDTH / 2, 40);
+		graphicsContext.setTextAlign(TextAlignment.LEFT);
+	}
+
+	private void displayGameStatText(String text, double x, double y) {
+		graphicsContext.setFill(Color.WHITE);
+		graphicsContext.fillText(text, x, y);
+		graphicsContext.strokeText(text, x, y);
 	}
 
 	private void checkGameEnd() {
