@@ -185,9 +185,8 @@ class GameTimer extends AnimationTimer {
 			int orglitDamage = orglit.getDamage();
 			edolite.reduceStrengthBy(orglitDamage);
 
-			if (orglit instanceof Agmatron == false){
+			if (orglit instanceof Agmatron == false) {
 				orglit.die();
-				orglitsKilled += 1;
 			}
 		}
 	}
@@ -204,7 +203,7 @@ class GameTimer extends AnimationTimer {
 			}
 
 			edoliteBullet.collide();
-			orglitsKilled += 1;
+			orglitsKilled++;
 		}
 	}
 
