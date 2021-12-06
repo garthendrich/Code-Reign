@@ -1,7 +1,5 @@
 package game;
 
-import javafx.scene.image.Image;
-
 abstract class Sprite extends GameElement {
 
 	private int dX, dY;

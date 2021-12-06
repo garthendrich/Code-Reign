@@ -1,7 +1,5 @@
 package game;
 
-import javafx.scene.image.Image;
-
 abstract class PowerUp extends GameElement {
 
 	public final static int SIZE = 24;
