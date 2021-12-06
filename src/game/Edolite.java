@@ -80,4 +80,8 @@ class Edolite extends Sprite {
 		}
 		return false;
 	}
+
+	public int getStrength(){
+		return strength;
+	}
 }
