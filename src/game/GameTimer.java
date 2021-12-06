@@ -314,15 +314,15 @@ class GameTimer extends AnimationTimer {
 		case 1:
 			graphicsContext.setFill(Color.WHITE);
 			graphicsContext.setFont(Font.font("Cambria Math", FontWeight.MEDIUM, 30));
-			graphicsContext.fillText("Game Time: " + gameTime, GameStage.WINDOW_WIDTH / 5, GameStage.WINDOW_HEIGHT / 3);
-			graphicsContext.fillText("Edolite Strength: " + edolite.getStrength(), GameStage.WINDOW_WIDTH / 5, GameStage.WINDOW_HEIGHT / 2.5);
-			graphicsContext.fillText("Orglits Killed: " + orglitsKilled, GameStage.WINDOW_WIDTH / 5, GameStage.WINDOW_HEIGHT / 2.15);
+			graphicsContext.fillText("Game Time: " + (int) gameTime, GameStage.WINDOW_WIDTH / 3.1, GameStage.WINDOW_HEIGHT / 2.15);
+			graphicsContext.fillText("Edolite Strength: " + edolite.getStrength(), GameStage.WINDOW_WIDTH / 3.1, GameStage.WINDOW_HEIGHT / 1.9);
+			graphicsContext.fillText("Orglits Killed: " + orglitsKilled, GameStage.WINDOW_WIDTH / 3.1, GameStage.WINDOW_HEIGHT / 1.7);
 			break;
 		case 0:
 			graphicsContext.setFill(Color.WHITE);
 			graphicsContext.setFont(Font.font("Cambria Math", FontWeight.MEDIUM, 30));
-			graphicsContext.fillText("Game Time: " + gameTime, GameStage.WINDOW_WIDTH / 5, GameStage.WINDOW_HEIGHT / 3);
-			graphicsContext.fillText("Orglits Killed: " + orglitsKilled, GameStage.WINDOW_WIDTH / 5, GameStage.WINDOW_HEIGHT / 2.15);
+			graphicsContext.fillText("Game Time: " + (int) gameTime, GameStage.WINDOW_WIDTH / 2.8, GameStage.WINDOW_HEIGHT / 2.15);
+			graphicsContext.fillText("Orglits Killed: " + orglitsKilled, GameStage.WINDOW_WIDTH / 2.8, GameStage.WINDOW_HEIGHT / 1.9);
 		}
 	}
 
