@@ -18,6 +18,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
 import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 
 class GameTimer extends AnimationTimer {
 
@@ -260,6 +261,7 @@ class GameTimer extends AnimationTimer {
 	private void displayGameStats() {
 		displayStrengthBar();
 		displayOrglitsKilled();
+		displayGameTimeLeft();
 	}
 
 	private void displayStrengthBar() {
@@ -275,6 +277,13 @@ class GameTimer extends AnimationTimer {
 
 	private void displayOrglitsKilled() {
 		displayGameStatText(orglitsKilled + " orglits killed", 24, 52);
+	}
+
+	private void displayGameTimeLeft() {
+		graphicsContext.setTextAlign(TextAlignment.CENTER);
+		displayGameStatText("Time left", GameStage.WINDOW_WIDTH / 2, 16);
+		displayGameStatText((MAX_GAME_TIME - (int) gameTime) + "", GameStage.WINDOW_WIDTH / 2, 40);
+		graphicsContext.setTextAlign(TextAlignment.LEFT);
 	}
 
 	private void displayGameStatText(String text, double x, double y) {
