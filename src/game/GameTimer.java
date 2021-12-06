@@ -16,6 +16,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
+import javafx.scene.text.Font;
 
 class GameTimer extends AnimationTimer {
 
@@ -50,6 +51,7 @@ class GameTimer extends AnimationTimer {
 
 	GameTimer(GraphicsContext graphicsContext){
 		this.graphicsContext = graphicsContext;
+		graphicsContext.setFont(Font.loadFont("file:src/assets/fonts/Notalot60.ttf", 20));
 
 		spawnOrglits(ORGLIT_INITIAL_SPAWN_COUNT);
 	}
