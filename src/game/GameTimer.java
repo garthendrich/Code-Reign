@@ -300,22 +300,30 @@ class GameTimer extends AnimationTimer {
 			graphicsContext.setFill(Color.GREEN);
 			graphicsContext.setFont(Font.font("Impact", FontWeight.EXTRA_BOLD, 50));
 			graphicsContext.fillText("CONGRATULATIONS! YOU WIN!", GameStage.WINDOW_WIDTH / 8.75, GameStage.WINDOW_HEIGHT / 4);
-			displayGameOverStats();
+			displayGameOverStats(1);
 		}else{
 			graphicsContext.setFill(Color.RED);
 			graphicsContext.setFont(Font.font("Impact", FontWeight.EXTRA_BOLD, 50));
 			graphicsContext.fillText("GAME OVER! YOU LOSE!", GameStage.WINDOW_WIDTH / 5, GameStage.WINDOW_HEIGHT / 4);
-			displayGameOverStats();
+			displayGameOverStats(0);
 		}
 	}
 
-	private void displayGameOverStats(){
-		graphicsContext.setFill(Color.WHITE);
-		graphicsContext.setFont(Font.font("Cambria Math", FontWeight.MEDIUM, 30));
-		graphicsContext.fillText("Game Time: " + gameTime, GameStage.WINDOW_WIDTH / 5, GameStage.WINDOW_HEIGHT / 3);
-		graphicsContext.fillText("Edolite Strength: " + edolite.getStrength(), GameStage.WINDOW_WIDTH / 5, GameStage.WINDOW_HEIGHT / 2.5);
-		graphicsContext.fillText("Orglits Killed: " + orglitsKilled, GameStage.WINDOW_WIDTH / 5, GameStage.WINDOW_HEIGHT / 2.15);
-
+	private void displayGameOverStats(int state){
+		switch(state){
+		case 1:
+			graphicsContext.setFill(Color.WHITE);
+			graphicsContext.setFont(Font.font("Cambria Math", FontWeight.MEDIUM, 30));
+			graphicsContext.fillText("Game Time: " + gameTime, GameStage.WINDOW_WIDTH / 5, GameStage.WINDOW_HEIGHT / 3);
+			graphicsContext.fillText("Edolite Strength: " + edolite.getStrength(), GameStage.WINDOW_WIDTH / 5, GameStage.WINDOW_HEIGHT / 2.5);
+			graphicsContext.fillText("Orglits Killed: " + orglitsKilled, GameStage.WINDOW_WIDTH / 5, GameStage.WINDOW_HEIGHT / 2.15);
+			break;
+		case 0:
+			graphicsContext.setFill(Color.WHITE);
+			graphicsContext.setFont(Font.font("Cambria Math", FontWeight.MEDIUM, 30));
+			graphicsContext.fillText("Game Time: " + gameTime, GameStage.WINDOW_WIDTH / 5, GameStage.WINDOW_HEIGHT / 3);
+			graphicsContext.fillText("Orglits Killed: " + orglitsKilled, GameStage.WINDOW_WIDTH / 5, GameStage.WINDOW_HEIGHT / 2.15);
+		}
 	}
 
 	private int generateRandomNumber(int min, int max) {
