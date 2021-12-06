@@ -204,7 +204,10 @@ class GameTimer extends AnimationTimer {
 			}
 
 			edoliteBullet.collide();
-			orglitsKilled++;
+
+			if (orglit.isAlive() == false) {
+				orglitsKilled++;
+			}
 		}
 	}
 
