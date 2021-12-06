@@ -298,13 +298,13 @@ class GameTimer extends AnimationTimer {
 		graphicsContext.fillRect(0, 0, GameStage.WINDOW_WIDTH, GameStage.WINDOW_HEIGHT);
 		if(edolite.isAlive() == true && gameTime >= MAX_GAME_TIME){
 			graphicsContext.setFill(Color.GREEN);
-			graphicsContext.setFont(Font.font("Impact", FontWeight.EXTRA_BOLD, 50));
-			graphicsContext.fillText("CONGRATULATIONS! YOU WIN!", GameStage.WINDOW_WIDTH / 8.75, GameStage.WINDOW_HEIGHT / 4);
+			graphicsContext.setFont(Font.loadFont("file:src/assets/fonts/Notalot60.ttf", 50));
+			graphicsContext.fillText("CONGRATULATIONS! YOU WIN!", GameStage.WINDOW_WIDTH / 25, GameStage.WINDOW_HEIGHT / 4);
 			displayGameOverStats(1);
 		}else{
 			graphicsContext.setFill(Color.RED);
-			graphicsContext.setFont(Font.font("Impact", FontWeight.EXTRA_BOLD, 50));
-			graphicsContext.fillText("GAME OVER! YOU LOSE!", GameStage.WINDOW_WIDTH / 5, GameStage.WINDOW_HEIGHT / 4);
+			graphicsContext.setFont(Font.loadFont("file:src/assets/fonts/Notalot60.ttf", 50));
+			graphicsContext.fillText("GAME OVER! YOU LOSE!", GameStage.WINDOW_WIDTH / 6, GameStage.WINDOW_HEIGHT / 4);
 			displayGameOverStats(0);
 		}
 	}
@@ -313,14 +313,14 @@ class GameTimer extends AnimationTimer {
 		switch(state){
 		case 1:
 			graphicsContext.setFill(Color.WHITE);
-			graphicsContext.setFont(Font.font("Cambria Math", FontWeight.MEDIUM, 30));
+			graphicsContext.setFont(Font.loadFont("file:src/assets/fonts/Notalot60.ttf", 30));
 			graphicsContext.fillText("Game Time: " + (int) gameTime, GameStage.WINDOW_WIDTH / 3.1, GameStage.WINDOW_HEIGHT / 2.15);
 			graphicsContext.fillText("Edolite Strength: " + edolite.getStrength(), GameStage.WINDOW_WIDTH / 3.1, GameStage.WINDOW_HEIGHT / 1.9);
 			graphicsContext.fillText("Orglits Killed: " + orglitsKilled, GameStage.WINDOW_WIDTH / 3.1, GameStage.WINDOW_HEIGHT / 1.7);
 			break;
 		case 0:
 			graphicsContext.setFill(Color.WHITE);
-			graphicsContext.setFont(Font.font("Cambria Math", FontWeight.MEDIUM, 30));
+			graphicsContext.setFont(Font.loadFont("file:src/assets/fonts/Notalot60.ttf", 30));
 			graphicsContext.fillText("Game Time: " + (int) gameTime, GameStage.WINDOW_WIDTH / 2.8, GameStage.WINDOW_HEIGHT / 2.15);
 			graphicsContext.fillText("Orglits Killed: " + orglitsKilled, GameStage.WINDOW_WIDTH / 2.8, GameStage.WINDOW_HEIGHT / 1.9);
 		}
