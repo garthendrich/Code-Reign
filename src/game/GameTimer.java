@@ -258,8 +258,8 @@ class GameTimer extends AnimationTimer {
 	}
 
 	private void displayGameStats() {
-		// TODO
 		displayStrengthBar();
+		displayOrglitsKilled();
 	}
 
 	private void displayStrengthBar() {
@@ -271,6 +271,10 @@ class GameTimer extends AnimationTimer {
 		graphicsContext.setGlobalAlpha(1);
 
 		displayGameStatText(edoliteStrength + " strength", 24, 20);
+	}
+
+	private void displayOrglitsKilled() {
+		displayGameStatText(orglitsKilled + " orglits killed", 24, 52);
 	}
 
 	private void displayGameStatText(String text, double x, double y) {
