@@ -57,7 +57,7 @@ class GameStage {
 	 * @param stage (Stage) : window where the scene will be loaded
 	 */
 	public void loadTo(Stage stage) {
-		stage.setTitle("Sci-fi Shooting Game");
+		stage.setTitle("Code:Reign");
 		stage.setScene(scene);
 		stage.show();
 
