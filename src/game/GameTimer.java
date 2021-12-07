@@ -293,7 +293,7 @@ class GameTimer extends AnimationTimer {
 
 	private void displayGameOver(){
 		clearGameCanvas();
-		graphicsContext.setFill(Color.BLACK);	//TODO: Replace with background image of the game
+		graphicsContext.setFill(Color.valueOf("F6C27D"));
 		graphicsContext.fillRect(0, 0, GameStage.WINDOW_WIDTH, GameStage.WINDOW_HEIGHT);
 		if(edolite.isAlive() == true && gameTime >= MAX_GAME_TIME){
 			graphicsContext.setFill(Color.GREEN);
@@ -311,14 +311,14 @@ class GameTimer extends AnimationTimer {
 	private void displayGameOverStats(int state){
 		switch(state){
 		case 1:
-			graphicsContext.setFill(Color.WHITE);
+			graphicsContext.setFill(Color.BLACK);
 			graphicsContext.setFont(Font.loadFont("file:src/assets/fonts/Notalot60.ttf", 30));
 			graphicsContext.fillText("Game Time: " + (int) gameTime, GameStage.WINDOW_WIDTH / 3.1, GameStage.WINDOW_HEIGHT / 2.15);
 			graphicsContext.fillText("Edolite Strength: " + edolite.getStrength(), GameStage.WINDOW_WIDTH / 3.1, GameStage.WINDOW_HEIGHT / 1.9);
 			graphicsContext.fillText("Orglits Killed: " + orglitsKilled, GameStage.WINDOW_WIDTH / 3.1, GameStage.WINDOW_HEIGHT / 1.7);
 			break;
 		case 0:
-			graphicsContext.setFill(Color.WHITE);
+			graphicsContext.setFill(Color.BLACK);
 			graphicsContext.setFont(Font.loadFont("file:src/assets/fonts/Notalot60.ttf", 30));
 			graphicsContext.fillText("Game Time: " + (int) gameTime, GameStage.WINDOW_WIDTH / 2.8, GameStage.WINDOW_HEIGHT / 2.15);
 			graphicsContext.fillText("Orglits Killed: " + orglitsKilled, GameStage.WINDOW_WIDTH / 2.8, GameStage.WINDOW_HEIGHT / 1.9);
