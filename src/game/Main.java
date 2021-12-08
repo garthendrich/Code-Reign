@@ -6,8 +6,8 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
 	public void start(Stage stage){
-		GameStage theGameStage = new GameStage();
-		theGameStage.setStage(stage);
+		Splash splashScreen = new Splash();
+		splashScreen.setSplashStage(stage);;
 	}
 
 	public static void main(String[] args) {
