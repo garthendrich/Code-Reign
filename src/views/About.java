@@ -75,8 +75,8 @@ class About {
 		returnToMain.setOnMouseClicked(new EventHandler<MouseEvent>(){
 			@Override
 			public void handle(MouseEvent arg0) {
-				Splash splashScreen = new Splash();
-				splashScreen.setSplashStage(stage);
+				TitleView splashScreen = new TitleView();
+				splashScreen.loadTo(stage);
 			}
 		});
 
