@@ -54,8 +54,8 @@ public class TitleView extends View {
 				public void handle(MouseEvent event) {
 					Stage stage = getStage();
 
-					About aboutScreen = new About();
-					aboutScreen.loadAbout(stage);
+					AboutView aboutView = new AboutView();
+					aboutView.loadTo(stage);
 				}
 			}
 		);
