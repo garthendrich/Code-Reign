@@ -30,8 +30,8 @@ public class TitleView extends View {
 				public void handle(MouseEvent event) {
 					Stage stage = getStage();
 
-					GameStage gameStage = new GameStage();
-					gameStage.loadGame(stage);
+					GameView gameStage = new GameView();
+					gameStage.loadTo(stage);
 				}
 			}
 		);
