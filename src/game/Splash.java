@@ -14,7 +14,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-class Splash {
+public class Splash {
 	private Group root;
 	private Stage stage;
 	private Scene splash;
