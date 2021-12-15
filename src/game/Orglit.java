@@ -1,7 +1,10 @@
 package game;
 
-import javafx.scene.image.Image;
 import java.util.Random;
+import javafx.scene.image.Image;
+
+import views.GameStage;
+
 
 class Orglit extends Sprite {
 

@@ -1,4 +1,4 @@
-package game;
+package views;
 
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -17,28 +17,28 @@ import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
-class About {
+class Instructions {
 	private Group root;
 	private Scene instructions;
 	private GraphicsContext gc;
 	private Canvas canvas;
 	private Stage stage;
 
-	public About(){
+	public Instructions(){
 		this.root = new Group();
 		this.canvas = new Canvas(GameStage.CANVAS_WIDTH, GameStage.CANVAS_HEIGHT);
 		root.getChildren().add(this.canvas);
 		gc = canvas.getGraphicsContext2D();
 	}
 
-	public void loadAbout(Stage stage){
+	public void loadInstructions(Stage stage){
 		this.stage = stage;
-		initAbout(stage);
+		initInstructions(stage);
 		stage.setScene(instructions);
 		stage.show();
 	}
 
-	private void initAbout(Stage stage){
+	private void initInstructions(Stage stage){
 		StackPane root = new StackPane();
 		root.getChildren().addAll(createCanvas(), createVBox());
 		instructions = new Scene(root, GameStage.WINDOW_WIDTH, GameStage.WINDOW_HEIGHT);

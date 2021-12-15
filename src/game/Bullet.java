@@ -2,6 +2,8 @@ package game;
 
 import javafx.scene.image.Image;
 
+import views.GameStage;
+
 class Bullet extends Sprite {
 
 	public final static int WIDTH = 20;

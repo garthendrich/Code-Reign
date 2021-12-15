@@ -3,7 +3,7 @@ package main;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-import game.Splash;
+import views.Splash;
 
 public class Main extends Application {
 

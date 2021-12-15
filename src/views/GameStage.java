@@ -1,4 +1,4 @@
-package game;
+package views;
 
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -10,7 +10,9 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-class GameStage {
+import game.GameTimer;
+
+public class GameStage {
 	public static final int WINDOW_WIDTH = 750;
 	public static final int WINDOW_HEIGHT = 500;
 

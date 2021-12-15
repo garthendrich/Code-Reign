@@ -1,5 +1,7 @@
 package game;
 
+import views.GameStage;
+
 abstract class Sprite extends GameElement {
 
 	private int dX, dY;

@@ -1,4 +1,4 @@
-package game;
+package views;
 
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;

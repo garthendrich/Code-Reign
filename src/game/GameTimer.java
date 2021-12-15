@@ -11,7 +11,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 
-class GameTimer extends AnimationTimer {
+import views.GameStage;
+
+public class GameTimer extends AnimationTimer {
 
 	public static final int MAX_GAME_TIME = 60;
 
@@ -42,7 +44,7 @@ class GameTimer extends AnimationTimer {
 
 	private ArrayList<KeyCode> keysHeld = new ArrayList<KeyCode>();
 
-	GameTimer(GraphicsContext graphicsContext){
+	public GameTimer(GraphicsContext graphicsContext){
 		this.graphicsContext = graphicsContext;
 		graphicsContext.setFont(Font.loadFont("file:src/assets/fonts/Notalot60.ttf", 20));
 		graphicsContext.setTextBaseline(VPos.TOP);
