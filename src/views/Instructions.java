@@ -17,6 +17,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
+import main.Main;
+
 class Instructions {
 	private Group root;
 	private Scene instructions;
@@ -26,7 +28,7 @@ class Instructions {
 
 	public Instructions(){
 		this.root = new Group();
-		this.canvas = new Canvas(GameStage.CANVAS_WIDTH, GameStage.CANVAS_HEIGHT);
+		this.canvas = new Canvas(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
 		root.getChildren().add(this.canvas);
 		gc = canvas.getGraphicsContext2D();
 	}
@@ -41,14 +43,14 @@ class Instructions {
 	private void initInstructions(Stage stage){
 		StackPane root = new StackPane();
 		root.getChildren().addAll(createCanvas(), createVBox());
-		instructions = new Scene(root, GameStage.WINDOW_WIDTH, GameStage.WINDOW_HEIGHT);
+		instructions = new Scene(root, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
 		displayInstructions();
 	}
 
 	private Canvas createCanvas(){
-		Canvas canvas = new Canvas(GameStage.CANVAS_WIDTH, GameStage.CANVAS_HEIGHT);
+		Canvas canvas = new Canvas(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
 		gc.setFill(Color.valueOf("F6C27D"));
-		gc.fillRect(0, 0, GameStage.CANVAS_WIDTH, GameStage.CANVAS_HEIGHT);
+		gc.fillRect(0, 0, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
 		return canvas;
 	}
 
@@ -57,7 +59,7 @@ class Instructions {
 		gc.setFont(Font.loadFont("file:src/assets/fonts/Notalot60.ttf", 50));
 		gc.setTextBaseline(VPos.CENTER);
 		gc.setTextAlign(TextAlignment.CENTER);
-		gc.fillText("Hello", GameStage.WINDOW_WIDTH, GameStage.WINDOW_HEIGHT);
+		gc.fillText("Hello", Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
 	}
 
 	private VBox createVBox(){

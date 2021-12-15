@@ -2,7 +2,7 @@ package game;
 
 import javafx.scene.image.Image;
 
-import views.GameStage;
+import main.Main;;
 
 class Bullet extends Sprite {
 
@@ -40,7 +40,7 @@ class Bullet extends Sprite {
 	void updatePosition() {
 		super.updatePosition();
 
-		boolean isBulletAtRightmostEdge = (xPos == GameStage.CANVAS_WIDTH - this.width);
+		boolean isBulletAtRightmostEdge = (xPos == Main.WINDOW_WIDTH - this.width);
 		if (isBulletAtRightmostEdge) collide();
 	}
 }

@@ -7,6 +7,9 @@ import views.Splash;
 
 public class Main extends Application {
 
+	public static final int WINDOW_WIDTH = 750;
+	public static final int WINDOW_HEIGHT = 500;
+
 	public void start(Stage stage){
 		Splash splashScreen = new Splash();
 		splashScreen.setSplashStage(stage);

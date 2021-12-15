@@ -14,6 +14,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import main.Main;
+
 public class Splash {
 	private Group root;
 	private Stage stage;
@@ -22,7 +24,7 @@ public class Splash {
 
 	public Splash() {
 		this.root = new Group();
-		this.canvas = new Canvas(GameStage.CANVAS_WIDTH, GameStage.CANVAS_HEIGHT);
+		this.canvas = new Canvas(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
 		this.root.getChildren().add(this.canvas);
 	}
 
@@ -42,10 +44,10 @@ public class Splash {
 	}
 
 	public Canvas createCanvas(){
-		Canvas canvas = new Canvas(GameStage.CANVAS_WIDTH, GameStage.CANVAS_HEIGHT);
+		Canvas canvas = new Canvas(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		gc.setFill(Color.valueOf("F6C27D"));
-		gc.fillRect(0, 0, GameStage.CANVAS_WIDTH, GameStage.CANVAS_HEIGHT);
+		gc.fillRect(0, 0, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
 		return canvas;
 	}
 

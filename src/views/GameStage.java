@@ -10,23 +10,19 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import main.Main;
 import game.GameTimer;
 
 public class GameStage {
-	public static final int WINDOW_WIDTH = 750;
-	public static final int WINDOW_HEIGHT = 500;
-
-	public static final int CANVAS_WIDTH = 750;
-	public static final int CANVAS_HEIGHT = 500;
 
 	private Scene scene;
 	private GameTimer gameTimer;
 
 	public GameStage() {
 		StackPane root = new StackPane();
-		Canvas canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+		Canvas canvas = new Canvas(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
 		root.getChildren().add(canvas);
-		scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT, Color.valueOf("F6C27D"));
+		scene = new Scene(root, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT, Color.valueOf("F6C27D"));
 
 		setupSceneEventHandlers();
 

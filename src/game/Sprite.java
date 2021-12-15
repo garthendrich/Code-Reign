@@ -1,6 +1,6 @@
 package game;
 
-import views.GameStage;
+import main.Main;
 
 abstract class Sprite extends GameElement {
 
@@ -40,8 +40,8 @@ abstract class Sprite extends GameElement {
 	}
 
 	void updatePosition() {
-		int highestXPos = GameStage.CANVAS_WIDTH - this.width;
-		int highestYPos = GameStage.CANVAS_HEIGHT - this.height;
+		int highestXPos = Main.WINDOW_WIDTH - this.width;
+		int highestYPos = Main.WINDOW_HEIGHT - this.height;
 
 		xPos += dX;
 		if (xPos < 0) xPos = 0;

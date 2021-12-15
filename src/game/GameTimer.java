@@ -11,7 +11,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 
-import views.GameStage;
+import main.Main;
 
 public class GameTimer extends AnimationTimer {
 
@@ -87,11 +87,11 @@ public class GameTimer extends AnimationTimer {
 
 	private void spawnOrglits(int spawnCount) {
 		for (int spawned = 0; spawned < spawnCount; spawned++) {
-			int canvasMiddleX = GameStage.CANVAS_WIDTH / 2;
-			int highestXPos = GameStage.CANVAS_WIDTH - Orglit.WIDTH;
+			int canvasMiddleX = Main.WINDOW_WIDTH / 2;
+			int highestXPos = Main.WINDOW_WIDTH - Orglit.WIDTH;
 			int randomXPos = generateRandomNumber(canvasMiddleX, highestXPos);
 
-			int highestYPos = GameStage.CANVAS_HEIGHT - Orglit.HEIGHT;
+			int highestYPos = Main.WINDOW_HEIGHT - Orglit.HEIGHT;
 			int randomYPos = generateRandomNumber(0, highestYPos);
 
 			orglits.add(new Orglit(randomXPos, randomYPos));
@@ -99,11 +99,11 @@ public class GameTimer extends AnimationTimer {
 	}
 
 	private void spawnAgmatron() {
-		int canvasMiddleX = GameStage.CANVAS_WIDTH / 2;
-		int highestXPos = GameStage.CANVAS_WIDTH - Agmatron.WIDTH;
+		int canvasMiddleX = Main.WINDOW_WIDTH / 2;
+		int highestXPos = Main.WINDOW_WIDTH - Agmatron.WIDTH;
 		int randomXPos = generateRandomNumber(canvasMiddleX, highestXPos);
 
-		int highestYPos = GameStage.CANVAS_HEIGHT - Agmatron.HEIGHT;
+		int highestYPos = Main.WINDOW_HEIGHT - Agmatron.HEIGHT;
 		int randomYPos = generateRandomNumber(0, highestYPos);
 
 		orglits.add(new Agmatron(randomXPos, randomYPos));
@@ -123,10 +123,10 @@ public class GameTimer extends AnimationTimer {
 	}
 
 	private void spawnPowerUp() {
-		int canvasMiddleX = GameStage.CANVAS_WIDTH / 2;
+		int canvasMiddleX = Main.WINDOW_WIDTH / 2;
 		int randomXPos = generateRandomNumber(0, canvasMiddleX);
 
-		int highestYPos = GameStage.CANVAS_HEIGHT - PowerUp.SIZE;
+		int highestYPos = Main.WINDOW_HEIGHT - PowerUp.SIZE;
 		int randomYPos = generateRandomNumber(0, highestYPos);
 
 		powerUp = createRandomPowerUpAt(randomXPos, randomYPos);
@@ -241,7 +241,7 @@ public class GameTimer extends AnimationTimer {
 	}
 
 	private void clearGameCanvas() {
-		graphicsContext.clearRect(0, 0, GameStage.CANVAS_WIDTH, GameStage.CANVAS_HEIGHT);
+		graphicsContext.clearRect(0, 0, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
 	}
 
 	private void render(GameElement gameElement) {
@@ -274,8 +274,8 @@ public class GameTimer extends AnimationTimer {
 
 	private void displayGameTimeLeft() {
 		graphicsContext.setTextAlign(TextAlignment.CENTER);
-		displayGameStatText("Time left", GameStage.WINDOW_WIDTH / 2, 16);
-		displayGameStatText((MAX_GAME_TIME - (int) gameTime) + "", GameStage.WINDOW_WIDTH / 2, 40);
+		displayGameStatText("Time left", Main.WINDOW_WIDTH / 2, 16);
+		displayGameStatText((MAX_GAME_TIME - (int) gameTime) + "", Main.WINDOW_WIDTH / 2, 40);
 		graphicsContext.setTextAlign(TextAlignment.LEFT);
 	}
 
@@ -296,16 +296,16 @@ public class GameTimer extends AnimationTimer {
 	private void displayGameOver(){
 		clearGameCanvas();
 		graphicsContext.setFill(Color.valueOf("F6C27D"));
-		graphicsContext.fillRect(0, 0, GameStage.WINDOW_WIDTH, GameStage.WINDOW_HEIGHT);
+		graphicsContext.fillRect(0, 0, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
 		if(edolite.isAlive() == true && gameTime >= MAX_GAME_TIME){
 			graphicsContext.setFill(Color.GREEN);
 			graphicsContext.setFont(Font.loadFont("file:src/assets/fonts/Notalot60.ttf", 50));
-			graphicsContext.fillText("CONGRATULATIONS! YOU WIN!", GameStage.WINDOW_WIDTH / 25, GameStage.WINDOW_HEIGHT / 4);
+			graphicsContext.fillText("CONGRATULATIONS! YOU WIN!", Main.WINDOW_WIDTH / 25, Main.WINDOW_HEIGHT / 4);
 			displayGameOverStats(1);
 		}else{
 			graphicsContext.setFill(Color.RED);
 			graphicsContext.setFont(Font.loadFont("file:src/assets/fonts/Notalot60.ttf", 50));
-			graphicsContext.fillText("GAME OVER! YOU LOSE!", GameStage.WINDOW_WIDTH / 6, GameStage.WINDOW_HEIGHT / 4);
+			graphicsContext.fillText("GAME OVER! YOU LOSE!", Main.WINDOW_WIDTH / 6, Main.WINDOW_HEIGHT / 4);
 			displayGameOverStats(0);
 		}
 	}
@@ -315,15 +315,15 @@ public class GameTimer extends AnimationTimer {
 		case 1:
 			graphicsContext.setFill(Color.BLACK);
 			graphicsContext.setFont(Font.loadFont("file:src/assets/fonts/Notalot60.ttf", 30));
-			graphicsContext.fillText("Game Time: " + (int) gameTime, GameStage.WINDOW_WIDTH / 3.1, GameStage.WINDOW_HEIGHT / 2.15);
-			graphicsContext.fillText("Edolite Strength: " + edolite.getStrength(), GameStage.WINDOW_WIDTH / 3.1, GameStage.WINDOW_HEIGHT / 1.9);
-			graphicsContext.fillText("Orglits Killed: " + orglitsKilled, GameStage.WINDOW_WIDTH / 3.1, GameStage.WINDOW_HEIGHT / 1.7);
+			graphicsContext.fillText("Game Time: " + (int) gameTime, Main.WINDOW_WIDTH / 3.1, Main.WINDOW_HEIGHT / 2.15);
+			graphicsContext.fillText("Edolite Strength: " + edolite.getStrength(), Main.WINDOW_WIDTH / 3.1, Main.WINDOW_HEIGHT / 1.9);
+			graphicsContext.fillText("Orglits Killed: " + orglitsKilled, Main.WINDOW_WIDTH / 3.1, Main.WINDOW_HEIGHT / 1.7);
 			break;
 		case 0:
 			graphicsContext.setFill(Color.BLACK);
 			graphicsContext.setFont(Font.loadFont("file:src/assets/fonts/Notalot60.ttf", 30));
-			graphicsContext.fillText("Game Time: " + (int) gameTime, GameStage.WINDOW_WIDTH / 2.8, GameStage.WINDOW_HEIGHT / 2.15);
-			graphicsContext.fillText("Orglits Killed: " + orglitsKilled, GameStage.WINDOW_WIDTH / 2.8, GameStage.WINDOW_HEIGHT / 1.9);
+			graphicsContext.fillText("Game Time: " + (int) gameTime, Main.WINDOW_WIDTH / 2.8, Main.WINDOW_HEIGHT / 2.15);
+			graphicsContext.fillText("Orglits Killed: " + orglitsKilled, Main.WINDOW_WIDTH / 2.8, Main.WINDOW_HEIGHT / 1.9);
 		}
 	}
 
