@@ -36,25 +36,29 @@ public class TitleView extends View {
 			}
 		);
 
-		instructionsButton.setOnMouseClicked(new EventHandler<MouseEvent>(){
-			@Override
-			public void handle(MouseEvent event) {
-				Stage stage = getStage();
+		instructionsButton.setOnMouseClicked(
+			new EventHandler<MouseEvent>() {
+				@Override
+				public void handle(MouseEvent event) {
+					Stage stage = getStage();
 
-				Instructions instructionScreen = new Instructions();
-				instructionScreen.loadInstructions(stage);
+					InstructionsView instructionsView = new InstructionsView();
+					instructionsView.loadTo(stage);
+				}
 			}
-		});
+		);
 
-		aboutButton.setOnMouseClicked(new EventHandler<MouseEvent>(){
-			@Override
-			public void handle(MouseEvent event) {
-				Stage stage = getStage();
+		aboutButton.setOnMouseClicked(
+			new EventHandler<MouseEvent>() {
+				@Override
+				public void handle(MouseEvent event) {
+					Stage stage = getStage();
 
-				About aboutScreen = new About();
-				aboutScreen.loadAbout(stage);
+					About aboutScreen = new About();
+					aboutScreen.loadAbout(stage);
+				}
 			}
-		});
+		);
 
 		return new Scene(root, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
 	}
