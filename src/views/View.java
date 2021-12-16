@@ -5,16 +5,12 @@ import javafx.stage.Stage;
 
 abstract class View {
 
-	private Scene scene;
 	private Stage stage;
-
-	View() {
-		scene = createScene();
-	}
 
 	abstract protected Scene createScene();
 
 	public void loadTo(Stage stage) {
+		Scene scene = createScene();
 		stage.setScene(scene);
 		this.stage = stage;
 	}
