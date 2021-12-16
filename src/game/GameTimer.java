@@ -27,6 +27,7 @@ public class GameTimer extends AnimationTimer {
 	public static final int ORGLIT_SPAWN_INTERVAL_SECONDS = 5;
 
 	public static final int AGMATRON_SPAWN_GAME_TIME = 30;
+	public static final int AGMATRON_ATTACK_DELAY_SECONDS = 1;
 
 	public static final int POWER_UP_SPAWN_INTERVAL_SECONDS = 10;
 	public static final int POWER_UP_OCCURENCE_SECONDS = 5;
@@ -42,6 +43,7 @@ public class GameTimer extends AnimationTimer {
 	private double gameTime;
 	private double orglitSpawnGameTime = 0;
 	private double powerUpSpawnGameTime = 0;
+	private double agmatronAttackGameTime = 0;
 	private boolean isAgmatronSpawned = false;
 	private int orglitsKilled = 0;
 
@@ -189,12 +191,18 @@ public class GameTimer extends AnimationTimer {
 
 	private void manageCollisionOf(Edolite edolite, Orglit orglit) {
 		if (edolite.collidesWith(orglit)) {
-			int orglitDamage = orglit.getDamage();
-			edolite.receiveDamage(orglitDamage);
 
-			if (orglit instanceof Agmatron == false) {
+			if (orglit instanceof Agmatron) {
+				double agmatronAttackElapsedSeconds = gameTime - agmatronAttackGameTime;
+				if (agmatronAttackElapsedSeconds <= AGMATRON_ATTACK_DELAY_SECONDS) return;
+
+				agmatronAttackGameTime = gameTime;
+			} else {
 				orglit.die();
 			}
+
+			int orglitDamage = orglit.getDamage();
+			edolite.receiveDamage(orglitDamage);
 		}
 	}
 
