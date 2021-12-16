@@ -9,7 +9,7 @@ class Bullet extends Sprite {
 	public final static int WIDTH = 20;
 	public final static int HEIGHT = 20;
 	public final static Image IMAGE = new Image("assets/images/bullet.png", WIDTH, HEIGHT, false, false);
-	private final static int MOVEMENT_SPEED = 20;
+	private final static int MOVEMENT_SPEED = 8;
 
 	private int damage;
 	private boolean hasCollided = false;
