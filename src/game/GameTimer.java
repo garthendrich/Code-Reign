@@ -182,46 +182,45 @@ public class GameTimer extends AnimationTimer {
 	}
 
 	private void manageCollisionOf(Edolite edolite, PowerUp powerUp) {
-		if (edolite.collidesWith(powerUp)) {
-			powerUp.applyTo(edolite);
+		if (edolite.collidesWith(powerUp) == false) return;
 
-			deSpawnPowerUp();
-		}
+		powerUp.applyTo(edolite);
+
+		deSpawnPowerUp();
 	}
 
 	private void manageCollisionOf(Edolite edolite, Orglit orglit) {
-		if (edolite.collidesWith(orglit)) {
+		if (edolite.collidesWith(orglit) == false) return;
 
-			if (orglit instanceof Agmatron) {
-				double agmatronAttackElapsedSeconds = gameTime - agmatronAttackGameTime;
-				if (agmatronAttackElapsedSeconds <= AGMATRON_ATTACK_DELAY_SECONDS) return;
+		if (orglit instanceof Agmatron) {
+			double agmatronAttackElapsedSeconds = gameTime - agmatronAttackGameTime;
+			if (agmatronAttackElapsedSeconds <= AGMATRON_ATTACK_DELAY_SECONDS) return;
 
-				agmatronAttackGameTime = gameTime;
-			} else {
-				orglit.die();
-			}
-
-			int orglitDamage = orglit.getDamage();
-			edolite.receiveDamage(orglitDamage);
+			agmatronAttackGameTime = gameTime;
+		} else {
+			orglit.die();
 		}
+
+		int orglitDamage = orglit.getDamage();
+		edolite.receiveDamage(orglitDamage);
 	}
 
 	private void manageCollisionOf(Orglit orglit, Bullet edoliteBullet) {
-		if (edoliteBullet.collidesWith(orglit)) {
-			if (orglit instanceof Agmatron) {
-				int edoliteBulletDamage = edoliteBullet.getDamage();
+		if (edoliteBullet.collidesWith(orglit) == false) return;
 
-				Agmatron agmatron = (Agmatron) orglit;
-				agmatron.reduceHealthBy(edoliteBulletDamage);
-			} else {
-				orglit.die();
-			}
+		if (orglit instanceof Agmatron) {
+			int edoliteBulletDamage = edoliteBullet.getDamage();
 
-			edoliteBullet.collide();
+			Agmatron agmatron = (Agmatron) orglit;
+			agmatron.reduceHealthBy(edoliteBulletDamage);
+		} else {
+			orglit.die();
+		}
 
-			if (orglit.isAlive() == false) {
-				orglitsKilled++;
-			}
+		edoliteBullet.collide();
+
+		if (orglit.isAlive() == false) {
+			orglitsKilled++;
 		}
 	}
 
