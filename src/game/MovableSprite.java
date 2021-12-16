@@ -7,30 +7,25 @@ import main.Main;
 abstract class MovableSprite extends Sprite {
 
 	private int dX, dY;
-	private int movementSpeed;
 
 	public MovableSprite(int xPos, int yPos, Image image) {
 		super(xPos, yPos, image);
 	}
 
-	protected void setMovementSpeed(int movementSpeed) {
-		this.movementSpeed = movementSpeed;
+	void moveUp(int distance) {
+		dY = -1 * distance;
 	}
 
-	void moveUp() {
-		dY = -1 * movementSpeed;
+	void moveDown(int distance) {
+		dY = distance;
 	}
 
-	void moveDown() {
-		dY = movementSpeed;
+	void moveLeft(int distance) {
+		dX = -1 * distance;
 	}
 
-	void moveLeft() {
-		dX = -1 * movementSpeed;
-	}
-
-	void moveRight() {
-		dX = movementSpeed;
+	void moveRight(int distance) {
+		dX = distance;
 	}
 
 	void stopMovingHorizontally() {

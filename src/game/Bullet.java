@@ -18,8 +18,8 @@ class Bullet extends MovableSprite {
 		super(xPos, yPos, IMAGE);
 
 		this.damage = damage;
-		setMovementSpeed(MOVEMENT_SPEED);
-		moveRight();
+
+		moveRight(MOVEMENT_SPEED);
 	}
 
 	@Override

@@ -21,8 +21,6 @@ class Edolite extends MovableSprite {
 	public Edolite(int xPos, int yPos) {
 		super(xPos, yPos, IMAGE);
 
-		setMovementSpeed(MOVEMENT_SPEED);
-
 		Random randomizer = new Random();
 		strength = MIN_STRENGTH + randomizer.nextInt(MAX_STRENGTH - MIN_STRENGTH + 1);
 	}
