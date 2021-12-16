@@ -6,7 +6,10 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import main.Main;
@@ -19,6 +22,7 @@ class GameView extends View {
 	@Override
 	protected Scene createScene() {
 		StackPane root = new StackPane();
+		root.setBackground(new Background(new BackgroundFill(Color.valueOf("F6C27D"), null, null)));
 
 		Canvas canvas = new Canvas(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
 		GraphicsContext graphicsContext = canvas.getGraphicsContext2D();
