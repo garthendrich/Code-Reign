@@ -54,6 +54,8 @@ class GameView extends View {
 	@Override
 	public void loadTo(Stage stage) {
 		super.loadTo(stage);
+
+		gameTimer.receiveStage(stage);
 		gameTimer.start();
 	}
 }

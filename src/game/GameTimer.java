@@ -10,8 +10,10 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Stage;
 
 import main.Main;
+import views.GameOverView;
 
 public class GameTimer extends AnimationTimer {
 
@@ -29,6 +31,7 @@ public class GameTimer extends AnimationTimer {
 	public static final int POWER_UP_SPAWN_INTERVAL_SECONDS = 10;
 	public static final int POWER_UP_OCCURENCE_SECONDS = 5;
 
+	private Stage stage;
 	private GraphicsContext graphicsContext;
 
 	private Edolite edolite = new Edolite(EDOLITE_INITIAL_X_POS, EDOLITE_INITIAL_Y_POS);
@@ -46,10 +49,15 @@ public class GameTimer extends AnimationTimer {
 
 	public GameTimer(GraphicsContext graphicsContext){
 		this.graphicsContext = graphicsContext;
+
 		graphicsContext.setFont(Font.font(Main.NOTALOT60, 20));
 		graphicsContext.setTextBaseline(VPos.TOP);
 
 		spawnOrglits(ORGLIT_INITIAL_SPAWN_COUNT);
+	}
+
+	public void receiveStage(Stage stage) {
+		this.stage = stage;
 	}
 
 	@Override
@@ -288,42 +296,10 @@ public class GameTimer extends AnimationTimer {
 	private void checkGameEnd() {
 		if (edolite.isAlive() == false || gameTime >= MAX_GAME_TIME) {
 			this.stop();
-			// TODO Display game over
-			displayGameOver();
-		}
-	}
 
-	private void displayGameOver(){
-		clearGameCanvas();
-		graphicsContext.setFill(Color.valueOf("F6C27D"));
-		graphicsContext.fillRect(0, 0, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
-		if(edolite.isAlive() == true && gameTime >= MAX_GAME_TIME){
-			graphicsContext.setFill(Color.GREEN);
-			graphicsContext.setFont(Font.font(Main.NOTALOT60, 48));
-			graphicsContext.fillText("CONGRATULATIONS! YOU WIN!", Main.WINDOW_WIDTH / 25, Main.WINDOW_HEIGHT / 4);
-			displayGameOverStats(1);
-		}else{
-			graphicsContext.setFill(Color.RED);
-			graphicsContext.setFont(Font.font(Main.NOTALOT60, 48));
-			graphicsContext.fillText("GAME OVER! YOU LOSE!", Main.WINDOW_WIDTH / 6, Main.WINDOW_HEIGHT / 4);
-			displayGameOverStats(0);
-		}
-	}
-
-	private void displayGameOverStats(int state){
-		switch(state){
-		case 1:
-			graphicsContext.setFill(Color.BLACK);
-			graphicsContext.setFont(Font.font(Main.NOTALOT60, 32));
-			graphicsContext.fillText("Game Time: " + (int) gameTime, Main.WINDOW_WIDTH / 3.1, Main.WINDOW_HEIGHT / 2.15);
-			graphicsContext.fillText("Edolite Strength: " + edolite.getStrength(), Main.WINDOW_WIDTH / 3.1, Main.WINDOW_HEIGHT / 1.9);
-			graphicsContext.fillText("Orglits Killed: " + orglitsKilled, Main.WINDOW_WIDTH / 3.1, Main.WINDOW_HEIGHT / 1.7);
-			break;
-		case 0:
-			graphicsContext.setFill(Color.BLACK);
-			graphicsContext.setFont(Font.font(Main.NOTALOT60, 32));
-			graphicsContext.fillText("Game Time: " + (int) gameTime, Main.WINDOW_WIDTH / 2.8, Main.WINDOW_HEIGHT / 2.15);
-			graphicsContext.fillText("Orglits Killed: " + orglitsKilled, Main.WINDOW_WIDTH / 2.8, Main.WINDOW_HEIGHT / 1.9);
+			int edoliteStrength = edolite.getStrength();
+			GameOverView gameOverView = new GameOverView(edoliteStrength, orglitsKilled);
+			gameOverView.loadTo(stage);
 		}
 	}
 
