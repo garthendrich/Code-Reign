@@ -10,8 +10,12 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Stage;
 
-class GameTimer extends AnimationTimer {
+import main.Main;
+import views.GameOverView;
+
+public class GameTimer extends AnimationTimer {
 
 	public static final int MAX_GAME_TIME = 60;
 
@@ -27,6 +31,7 @@ class GameTimer extends AnimationTimer {
 	public static final int POWER_UP_SPAWN_INTERVAL_SECONDS = 10;
 	public static final int POWER_UP_OCCURENCE_SECONDS = 5;
 
+	private Stage stage;
 	private GraphicsContext graphicsContext;
 
 	private Edolite edolite = new Edolite(EDOLITE_INITIAL_X_POS, EDOLITE_INITIAL_Y_POS);
@@ -42,12 +47,17 @@ class GameTimer extends AnimationTimer {
 
 	private ArrayList<KeyCode> keysHeld = new ArrayList<KeyCode>();
 
-	GameTimer(GraphicsContext graphicsContext){
+	public GameTimer(GraphicsContext graphicsContext){
 		this.graphicsContext = graphicsContext;
-		graphicsContext.setFont(Font.loadFont("file:src/assets/fonts/Notalot60.ttf", 20));
+
+		graphicsContext.setFont(Font.font(Main.NOTALOT60, 20));
 		graphicsContext.setTextBaseline(VPos.TOP);
 
 		spawnOrglits(ORGLIT_INITIAL_SPAWN_COUNT);
+	}
+
+	public void receiveStage(Stage stage) {
+		this.stage = stage;
 	}
 
 	@Override
@@ -85,11 +95,11 @@ class GameTimer extends AnimationTimer {
 
 	private void spawnOrglits(int spawnCount) {
 		for (int spawned = 0; spawned < spawnCount; spawned++) {
-			int canvasMiddleX = GameStage.CANVAS_WIDTH / 2;
-			int highestXPos = GameStage.CANVAS_WIDTH - Orglit.WIDTH;
+			int canvasMiddleX = Main.WINDOW_WIDTH / 2;
+			int highestXPos = Main.WINDOW_WIDTH - Orglit.WIDTH;
 			int randomXPos = generateRandomNumber(canvasMiddleX, highestXPos);
 
-			int highestYPos = GameStage.CANVAS_HEIGHT - Orglit.HEIGHT;
+			int highestYPos = Main.WINDOW_HEIGHT - Orglit.HEIGHT;
 			int randomYPos = generateRandomNumber(0, highestYPos);
 
 			orglits.add(new Orglit(randomXPos, randomYPos));
@@ -97,11 +107,11 @@ class GameTimer extends AnimationTimer {
 	}
 
 	private void spawnAgmatron() {
-		int canvasMiddleX = GameStage.CANVAS_WIDTH / 2;
-		int highestXPos = GameStage.CANVAS_WIDTH - Agmatron.WIDTH;
+		int canvasMiddleX = Main.WINDOW_WIDTH / 2;
+		int highestXPos = Main.WINDOW_WIDTH - Agmatron.WIDTH;
 		int randomXPos = generateRandomNumber(canvasMiddleX, highestXPos);
 
-		int highestYPos = GameStage.CANVAS_HEIGHT - Agmatron.HEIGHT;
+		int highestYPos = Main.WINDOW_HEIGHT - Agmatron.HEIGHT;
 		int randomYPos = generateRandomNumber(0, highestYPos);
 
 		orglits.add(new Agmatron(randomXPos, randomYPos));
@@ -121,10 +131,10 @@ class GameTimer extends AnimationTimer {
 	}
 
 	private void spawnPowerUp() {
-		int canvasMiddleX = GameStage.CANVAS_WIDTH / 2;
+		int canvasMiddleX = Main.WINDOW_WIDTH / 2;
 		int randomXPos = generateRandomNumber(0, canvasMiddleX);
 
-		int highestYPos = GameStage.CANVAS_HEIGHT - PowerUp.SIZE;
+		int highestYPos = Main.WINDOW_HEIGHT - PowerUp.SIZE;
 		int randomYPos = generateRandomNumber(0, highestYPos);
 
 		powerUp = createRandomPowerUpAt(randomXPos, randomYPos);
@@ -239,7 +249,7 @@ class GameTimer extends AnimationTimer {
 	}
 
 	private void clearGameCanvas() {
-		graphicsContext.clearRect(0, 0, GameStage.CANVAS_WIDTH, GameStage.CANVAS_HEIGHT);
+		graphicsContext.clearRect(0, 0, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
 	}
 
 	private void render(GameElement gameElement) {
@@ -272,8 +282,8 @@ class GameTimer extends AnimationTimer {
 
 	private void displayGameTimeLeft() {
 		graphicsContext.setTextAlign(TextAlignment.CENTER);
-		displayGameStatText("Time left", GameStage.WINDOW_WIDTH / 2, 16);
-		displayGameStatText((MAX_GAME_TIME - (int) gameTime) + "", GameStage.WINDOW_WIDTH / 2, 40);
+		displayGameStatText("Time left", Main.WINDOW_WIDTH / 2, 16);
+		displayGameStatText((MAX_GAME_TIME - (int) gameTime) + "", Main.WINDOW_WIDTH / 2, 40);
 		graphicsContext.setTextAlign(TextAlignment.LEFT);
 	}
 
@@ -286,42 +296,10 @@ class GameTimer extends AnimationTimer {
 	private void checkGameEnd() {
 		if (edolite.isAlive() == false || gameTime >= MAX_GAME_TIME) {
 			this.stop();
-			// TODO Display game over
-			displayGameOver();
-		}
-	}
 
-	private void displayGameOver(){
-		clearGameCanvas();
-		graphicsContext.setFill(Color.valueOf("F6C27D"));
-		graphicsContext.fillRect(0, 0, GameStage.WINDOW_WIDTH, GameStage.WINDOW_HEIGHT);
-		if(edolite.isAlive() == true && gameTime >= MAX_GAME_TIME){
-			graphicsContext.setFill(Color.GREEN);
-			graphicsContext.setFont(Font.loadFont("file:src/assets/fonts/Notalot60.ttf", 50));
-			graphicsContext.fillText("CONGRATULATIONS! YOU WIN!", GameStage.WINDOW_WIDTH / 25, GameStage.WINDOW_HEIGHT / 4);
-			displayGameOverStats(1);
-		}else{
-			graphicsContext.setFill(Color.RED);
-			graphicsContext.setFont(Font.loadFont("file:src/assets/fonts/Notalot60.ttf", 50));
-			graphicsContext.fillText("GAME OVER! YOU LOSE!", GameStage.WINDOW_WIDTH / 6, GameStage.WINDOW_HEIGHT / 4);
-			displayGameOverStats(0);
-		}
-	}
-
-	private void displayGameOverStats(int state){
-		switch(state){
-		case 1:
-			graphicsContext.setFill(Color.BLACK);
-			graphicsContext.setFont(Font.loadFont("file:src/assets/fonts/Notalot60.ttf", 30));
-			graphicsContext.fillText("Game Time: " + (int) gameTime, GameStage.WINDOW_WIDTH / 3.1, GameStage.WINDOW_HEIGHT / 2.15);
-			graphicsContext.fillText("Edolite Strength: " + edolite.getStrength(), GameStage.WINDOW_WIDTH / 3.1, GameStage.WINDOW_HEIGHT / 1.9);
-			graphicsContext.fillText("Orglits Killed: " + orglitsKilled, GameStage.WINDOW_WIDTH / 3.1, GameStage.WINDOW_HEIGHT / 1.7);
-			break;
-		case 0:
-			graphicsContext.setFill(Color.BLACK);
-			graphicsContext.setFont(Font.loadFont("file:src/assets/fonts/Notalot60.ttf", 30));
-			graphicsContext.fillText("Game Time: " + (int) gameTime, GameStage.WINDOW_WIDTH / 2.8, GameStage.WINDOW_HEIGHT / 2.15);
-			graphicsContext.fillText("Orglits Killed: " + orglitsKilled, GameStage.WINDOW_WIDTH / 2.8, GameStage.WINDOW_HEIGHT / 1.9);
+			int edoliteStrength = edolite.getStrength();
+			GameOverView gameOverView = new GameOverView(edoliteStrength, orglitsKilled);
+			gameOverView.loadTo(stage);
 		}
 	}
 

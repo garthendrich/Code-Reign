@@ -1,7 +1,9 @@
 package game;
 
-import javafx.scene.image.Image;
 import java.util.Random;
+import javafx.scene.image.Image;
+
+import main.Main;
 
 class Orglit extends Sprite {
 
@@ -58,7 +60,7 @@ class Orglit extends Sprite {
 
 	void updateMovement() {
 		boolean isOrglitAtLeftmostEdge = (xPos == 0);
-		boolean isOrglitAtRightmostEdge = (xPos == GameStage.CANVAS_WIDTH - this.width);
+		boolean isOrglitAtRightmostEdge = (xPos == Main.WINDOW_WIDTH - this.width);
 
 		if (isOrglitAtLeftmostEdge) moveRight();
 		else if (isOrglitAtRightmostEdge) moveLeft();
