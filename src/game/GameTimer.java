@@ -243,20 +243,13 @@ public class GameTimer extends AnimationTimer {
 		clearGameCanvas();
 
 		ArrayList<GameElement> gameElements = getAllGameElements();
-		for (GameElement gameElement : gameElements) render(gameElement);
+		for (GameElement gameElement : gameElements) gameElement.render(graphicsContext);
 
 		displayGameStats();
 	}
 
 	private void clearGameCanvas() {
 		graphicsContext.clearRect(0, 0, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
-	}
-
-	private void render(GameElement gameElement) {
-		Image gameElementImage = gameElement.getImage();
-		int gameElementXPos = gameElement.getXPos();
-		int gameElementYPos = gameElement.getYPos();
-		graphicsContext.drawImage(gameElementImage, gameElementXPos, gameElementYPos);
 	}
 
 	private void displayGameStats() {

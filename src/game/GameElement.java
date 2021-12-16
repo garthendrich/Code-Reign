@@ -1,6 +1,7 @@
 package game;
 
 import javafx.geometry.Rectangle2D;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 abstract class GameElement {
@@ -29,17 +30,8 @@ abstract class GameElement {
 		return new Rectangle2D(xPos, yPos, width, height);
 	}
 
-	//method to return the image
-	Image getImage(){
-		return image;
-	}
-	//getters
-	public int getXPos() {
-    	return xPos;
-	}
-
-	public int getYPos() {
-    	return yPos;
+	void render(GraphicsContext graphicsContext) {
+		graphicsContext.drawImage(image, xPos, yPos);
 	}
 
 	public int getWidth(){
