@@ -1,54 +1,44 @@
 package game;
 
-import main.Main;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 
-abstract class Sprite extends GameElement {
-
-	private int dX, dY;
-	private int movementSpeed;
+abstract class Sprite {
+	protected Image image;
+	protected int xPos, yPos, width, height;
 
 	public Sprite(int xPos, int yPos) {
-		super(xPos, yPos);
+		this.xPos = xPos;
+		this.yPos = yPos;
 	}
 
-	protected void setMovementSpeed(int movementSpeed) {
-		this.movementSpeed = movementSpeed;
+	protected void setImage(Image image) {
+		this.image = image;
+		this.width = (int) image.getWidth();
+		this.height = (int) image.getHeight();
 	}
 
-	void moveUp() {
-		dY = -1 * movementSpeed;
+	//method that will check for collision of two sprites
+	public boolean collidesWith(Sprite rect2)	{
+		Rectangle2D rectangle1 = getHitBox();
+		Rectangle2D rectangle2 = rect2.getHitBox();
+		return rectangle1.intersects(rectangle2);
+	}
+	//method that will return the bounds of an image
+	private Rectangle2D getHitBox(){
+		return new Rectangle2D(xPos, yPos, width, height);
 	}
 
-	void moveDown() {
-		dY = movementSpeed;
+	void render(GraphicsContext graphicsContext) {
+		graphicsContext.drawImage(image, xPos, yPos);
 	}
 
-	void moveLeft() {
-		dX = -1 * movementSpeed;
+	public int getWidth(){
+		return width;
 	}
 
-	void moveRight() {
-		dX = movementSpeed;
-	}
-
-	void stopMovingHorizontally() {
-		dX = 0;
-	}
-
-	void stopMovingVertically() {
-		dY = 0;
-	}
-
-	void updatePosition() {
-		int highestXPos = Main.WINDOW_WIDTH - this.width;
-		int highestYPos = Main.WINDOW_HEIGHT - this.height;
-
-		xPos += dX;
-		if (xPos < 0) xPos = 0;
-		else if (xPos > highestXPos) xPos = highestXPos;
-
-		yPos += dY;
-		if (yPos < 0) yPos = 0;
-		else if (yPos > highestYPos) yPos = highestYPos;
+	public int getHeight(){
+		return height;
 	}
 }

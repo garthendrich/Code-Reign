@@ -67,8 +67,8 @@ public class GameTimer extends AnimationTimer {
 		updateGameTime(currentTimeInNanos);
 		manageOrglitSpawns();
 		managePowerUpSpawns();
-		updateSpritePositions();
-		manageGameElementCollisions();
+		updateMovableSpritePositions();
+		manageSpriteCollisions();
 		updateCanvas();
 		checkGameEnd();
 	}
@@ -160,12 +160,12 @@ public class GameTimer extends AnimationTimer {
 		powerUp = null;
 	}
 
-	private void updateSpritePositions() {
-		ArrayList<Sprite> sprites = getAllSprites();
-		for (Sprite sprite : sprites) sprite.updatePosition();
+	private void updateMovableSpritePositions() {
+		ArrayList<MovableSprite> movableSprites = getAllMovableSprites();
+		for (MovableSprite movableSprite : movableSprites) movableSprite.updatePosition();
 	}
 
-	private void manageGameElementCollisions() {
+	private void manageSpriteCollisions() {
 		ArrayList<Bullet> edoliteBullets = edolite.getBullets();
 
 		if (powerUp != null) manageCollisionOf(edolite, powerUp);
@@ -185,7 +185,6 @@ public class GameTimer extends AnimationTimer {
 		if (edolite.collidesWith(powerUp) == false) return;
 
 		powerUp.applyTo(edolite);
-
 		deSpawnPowerUp();
 	}
 
@@ -249,8 +248,8 @@ public class GameTimer extends AnimationTimer {
 	private void updateCanvas() {
 		clearGameCanvas();
 
-		ArrayList<GameElement> gameElements = getAllGameElements();
-		for (GameElement gameElement : gameElements) gameElement.render(graphicsContext);
+		ArrayList<Sprite> sprites = getAllSprites();
+		for (Sprite sprite : sprites) sprite.render(graphicsContext);
 
 		displayGameStats();
 	}
@@ -308,21 +307,25 @@ public class GameTimer extends AnimationTimer {
 		return min + randomizer.nextInt(max - min + 1);
 	}
 
-	private ArrayList<GameElement> getAllGameElements() {
-		ArrayList<GameElement> gameElements = new ArrayList<GameElement>();
-		if (powerUp != null) gameElements.add(powerUp);
-		ArrayList<Sprite> sprites = getAllSprites();
-		gameElements.addAll(sprites);
-		return gameElements;
-	}
-
 	private ArrayList<Sprite> getAllSprites() {
 		ArrayList<Sprite> sprites = new ArrayList<Sprite>();
-		sprites.add(edolite);
-		ArrayList<Bullet> edoliteBullets = edolite.getBullets();
-		sprites.addAll(edoliteBullets);
-		sprites.addAll(orglits);
+
+		if (powerUp != null) sprites.add(powerUp);
+		ArrayList<MovableSprite> movableSprites = getAllMovableSprites();
+		sprites.addAll(movableSprites);
+
 		return sprites;
+	}
+
+	private ArrayList<MovableSprite> getAllMovableSprites() {
+		ArrayList<MovableSprite> movableSprites = new ArrayList<MovableSprite>();
+
+		movableSprites.add(edolite);
+		ArrayList<Bullet> edoliteBullets = edolite.getBullets();
+		movableSprites.addAll(edoliteBullets);
+		movableSprites.addAll(orglits);
+
+		return movableSprites;
 	}
 
 	public void handleKeyPress(KeyCode key) {

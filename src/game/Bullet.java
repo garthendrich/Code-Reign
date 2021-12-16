@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 
 import main.Main;;
 
-class Bullet extends Sprite {
+class Bullet extends MovableSprite {
 
 	public final static int WIDTH = 20;
 	public final static int HEIGHT = 20;

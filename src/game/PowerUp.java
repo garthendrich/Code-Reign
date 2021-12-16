@@ -1,6 +1,6 @@
 package game;
 
-abstract class PowerUp extends GameElement {
+abstract class PowerUp extends Sprite {
 
 	public final static int SIZE = 24;
 

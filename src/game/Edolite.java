@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import javafx.scene.image.Image;
 
-class Edolite extends Sprite {
+class Edolite extends MovableSprite {
 
 	public final static int WIDTH = 32;
 	public final static int HEIGHT = 44;

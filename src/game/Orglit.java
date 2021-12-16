@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 
 import main.Main;
 
-class Orglit extends Sprite {
+class Orglit extends MovableSprite {
 
 	public final static int WIDTH = 24;
 	public final static int HEIGHT = 28;
