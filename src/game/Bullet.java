@@ -28,7 +28,7 @@ class Bullet extends Sprite {
 	void updatePosition() {
 		super.updatePosition();
 
-		boolean isBulletAtRightmostEdge = (xPos == GameStage.WINDOW_WIDTH - this.width);
+		boolean isBulletAtRightmostEdge = (xPos == Main.WINDOW_WIDTH - this.width);
 		if (isBulletAtRightmostEdge) collide();
 	}
 
