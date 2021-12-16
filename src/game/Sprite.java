@@ -8,12 +8,9 @@ abstract class Sprite {
 	protected Image image;
 	protected int xPos, yPos, width, height;
 
-	public Sprite(int xPos, int yPos) {
+	public Sprite(int xPos, int yPos, Image image) {
 		this.xPos = xPos;
 		this.yPos = yPos;
-	}
-
-	protected void setImage(Image image) {
 		this.image = image;
 		this.width = (int) image.getWidth();
 		this.height = (int) image.getHeight();

@@ -1,11 +1,13 @@
 package game;
 
+import javafx.scene.image.Image;
+
 abstract class PowerUp extends Sprite {
 
 	public final static int SIZE = 24;
 
-	public PowerUp(int x, int y) {
-		super(x, y);
+	public PowerUp(int xPos, int yPos, Image image) {
+		super(xPos, yPos, image);
 	}
 
 	abstract void applyTo(Edolite edolite);

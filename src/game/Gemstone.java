@@ -6,10 +6,8 @@ class Gemstone extends PowerUp {
 
 	public final static Image IMAGE = new Image("assets/images/gemstone.png", PowerUp.SIZE, PowerUp.SIZE, false, false);
 
-	Gemstone(int x, int y){
-		super(x, y);
-
-		setImage(IMAGE);
+	Gemstone(int xPos, int yPos){
+		super(xPos, yPos, IMAGE);
 	}
 
 	@Override

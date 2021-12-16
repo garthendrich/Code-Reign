@@ -16,10 +16,13 @@ class Orglit extends MovableSprite {
 	private boolean isAlive = true;
 	protected int damage = 30;
 
-	public Orglit(int x, int y) {
-		super(x,y);
+	public Orglit(int xPos, int yPos) {
+		this(xPos, yPos, IMAGE);
+	}
 
-		setImage(IMAGE);
+	public Orglit(int xPos, int yPos, Image image) {
+		super(xPos, yPos, image);
+
 		setRandomMovementSpeed();
 		setRandomInitialMovement();
 	}

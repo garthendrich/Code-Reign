@@ -1,5 +1,7 @@
 package game;
 
+import javafx.scene.image.Image;
+
 import main.Main;
 
 abstract class MovableSprite extends Sprite {
@@ -7,8 +9,8 @@ abstract class MovableSprite extends Sprite {
 	private int dX, dY;
 	private int movementSpeed;
 
-	public MovableSprite(int xPos, int yPos) {
-		super(xPos, yPos);
+	public MovableSprite(int xPos, int yPos, Image image) {
+		super(xPos, yPos, image);
 	}
 
 	protected void setMovementSpeed(int movementSpeed) {

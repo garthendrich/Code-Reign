@@ -18,10 +18,9 @@ class Edolite extends MovableSprite {
 	private ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 	private StatusEffect statusEffect;
 
-	public Edolite(int x, int y) {
-		super(x,y);
+	public Edolite(int xPos, int yPos) {
+		super(xPos, yPos, IMAGE);
 
-		setImage(IMAGE);
 		setMovementSpeed(MOVEMENT_SPEED);
 
 		Random randomizer = new Random();

@@ -11,10 +11,8 @@ class Agmatron extends Orglit {
 
 	private int health = 3000;
 
-	public Agmatron(int x, int y) {
-		super(x, y);
-
-		setImage(IMAGE);
+	public Agmatron(int xPos, int yPos) {
+		super(xPos, yPos, IMAGE);
 
 		damage = DAMAGE;
 	}

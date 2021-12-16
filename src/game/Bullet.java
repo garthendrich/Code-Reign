@@ -14,10 +14,8 @@ class Bullet extends MovableSprite {
 	private int damage;
 	private boolean hasCollided = false;
 
-	public Bullet(int x, int y, int damage){
-		super(x,y);
-
-		setImage(IMAGE);
+	public Bullet(int xPos, int yPos, int damage){
+		super(xPos, yPos, IMAGE);
 
 		this.damage = damage;
 		setMovementSpeed(MOVEMENT_SPEED);
