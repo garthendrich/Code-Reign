@@ -31,12 +31,12 @@ class Edolite extends MovableSprite {
 	}
 
 	//method called if spacebar is pressed
-	public void shoot(){
-		//compute for the x and y initial position of the bullet
+	void shoot(){
 		int bulletXPos = this.xPos + this.width;
 		int bulletYPos = this.yPos + this.height - GUN_ELEVATION_ON_SHOOT - (Bullet.HEIGHT / 2);
-
 		Bullet bullet = new Bullet(bulletXPos, bulletYPos, strength);
+		bullet.moveRight(Bullet.MOVEMENT_SPEED);
+
 		bullets.add(bullet);
     }
 
