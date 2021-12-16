@@ -12,7 +12,7 @@ abstract class View {
 		scene = createScene();
 	}
 
-	abstract Scene createScene();
+	abstract protected Scene createScene();
 
 	public void loadTo(Stage stage) {
 		stage.setScene(scene);

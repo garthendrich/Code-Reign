@@ -17,7 +17,7 @@ class GameView extends View {
 	private GameTimer gameTimer;
 
 	@Override
-	Scene createScene() {
+	protected Scene createScene() {
 		StackPane root = new StackPane();
 
 		Canvas canvas = new Canvas(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);

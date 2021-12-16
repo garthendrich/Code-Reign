@@ -13,7 +13,7 @@ import main.Main;
 class AboutView extends View {
 
 	@Override
-	Scene createScene() {
+	protected Scene createScene() {
 		VBox root = new VBox();
 		root.setAlignment(Pos.CENTER);
 		root.setSpacing(8);
