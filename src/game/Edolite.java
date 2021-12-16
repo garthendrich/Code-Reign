@@ -22,11 +22,10 @@ class Edolite extends Sprite {
 		super(x,y);
 
 		setImage(IMAGE);
+		setMovementSpeed(MOVEMENT_SPEED);
 
 		Random randomizer = new Random();
 		strength = MIN_STRENGTH + randomizer.nextInt(MAX_STRENGTH - MIN_STRENGTH + 1);
-
-		setMovementSpeed(MOVEMENT_SPEED);
 	}
 
 	//method that will get the bullets 'shot' by the ship

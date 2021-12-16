@@ -24,23 +24,23 @@ class Bullet extends Sprite {
 		moveRight();
 	}
 
-	int getDamage() {
-		return damage;
+	@Override
+	void updatePosition() {
+		super.updatePosition();
+
+		boolean isBulletAtRightmostEdge = (xPos == GameStage.WINDOW_WIDTH - this.width);
+		if (isBulletAtRightmostEdge) collide();
 	}
 
 	void collide() {
 		hasCollided = true;
 	}
 
-	boolean hasCollided() {
-		return hasCollided;
+	int getDamage() {
+		return damage;
 	}
 
-	@Override
-	void updatePosition() {
-		super.updatePosition();
-
-		boolean isBulletAtRightmostEdge = (xPos == Main.WINDOW_WIDTH - this.width);
-		if (isBulletAtRightmostEdge) collide();
+	boolean hasCollided() {
+		return hasCollided;
 	}
 }
