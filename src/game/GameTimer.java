@@ -44,7 +44,7 @@ public class GameTimer extends AnimationTimer {
 
 	private long gameStartTimeInNanos = -1;
 	private double gameTime;
-	private double orglitSpawnGameTime = 0;
+	private double smallOrglitSpawnGameTime = 0;
 	private double powerUpSpawnGameTime = 0;
 	private double agmatronSmashGameTime = 0;
 	private double agmatronShootGameTime = 0;
@@ -59,7 +59,7 @@ public class GameTimer extends AnimationTimer {
 		graphicsContext.setFont(Font.font(Main.NOTALOT60, 20));
 		graphicsContext.setTextBaseline(VPos.TOP);
 
-		spawnOrglits(ORGLIT_INITIAL_SPAWN_COUNT);
+		spawnSmallOrglits(ORGLIT_INITIAL_SPAWN_COUNT);
 	}
 
 	public void receiveStage(Stage stage) {
@@ -90,11 +90,11 @@ public class GameTimer extends AnimationTimer {
 	}
 
 	private void manageOrglitSpawns() {
-		double orglitSpawnElapsedSeconds = gameTime - orglitSpawnGameTime;
-		if (orglitSpawnElapsedSeconds > ORGLIT_SPAWN_INTERVAL_SECONDS) {
-			spawnOrglits(ORGLIT_SPAWN_COUNT);
+		double smallOrglitSpawnElapsedSeconds = gameTime - smallOrglitSpawnGameTime;
+		if (smallOrglitSpawnElapsedSeconds > ORGLIT_SPAWN_INTERVAL_SECONDS) {
+			spawnSmallOrglits(ORGLIT_SPAWN_COUNT);
 
-			orglitSpawnGameTime = gameTime;
+			smallOrglitSpawnGameTime = gameTime;
 		}
 
 		if (gameTime > AGMATRON_SPAWN_GAME_TIME && !isAgmatronSpawned) {
@@ -104,7 +104,7 @@ public class GameTimer extends AnimationTimer {
 		}
 	}
 
-	private void spawnOrglits(int spawnCount) {
+	private void spawnSmallOrglits(int spawnCount) {
 		for (int spawned = 0; spawned < spawnCount; spawned++) {
 			int canvasMiddleX = Main.WINDOW_WIDTH / 2;
 			int highestXPos = Main.WINDOW_WIDTH - Orglit.WIDTH;
