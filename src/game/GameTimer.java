@@ -157,7 +157,7 @@ public class GameTimer extends AnimationTimer {
 		int randomPowerUpIndex = randomizer.nextInt(2);
 		switch(randomPowerUpIndex) {
 			case 0: powerUp = new Hexcore(xPos, yPos); break;
-			case 1: powerUp = new Gemstone(xPos, yPos); break;
+			case 1: powerUp = new ElixirOfAeons(xPos, yPos); break;
 			default:
 		}
 
