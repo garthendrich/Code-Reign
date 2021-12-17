@@ -147,21 +147,13 @@ public class GameTimer extends AnimationTimer {
 		int highestYPos = Main.WINDOW_HEIGHT - PowerUp.SIZE;
 		int randomYPos = generateRandomNumber(0, highestYPos);
 
-		powerUp = createRandomPowerUpAt(randomXPos, randomYPos);
-	}
-
-	private PowerUp createRandomPowerUpAt(int xPos, int yPos) {
-		PowerUp powerUp = null;
-
 		Random randomizer = new Random();
-		int randomPowerUpIndex = randomizer.nextInt(2);
-		switch(randomPowerUpIndex) {
-			case 0: powerUp = new Hexcore(xPos, yPos); break;
-			case 1: powerUp = new ElixirOfAeons(xPos, yPos); break;
+		switch(randomizer.nextInt(3)) {
+			case 0: powerUp = new Hexcore(randomXPos, randomYPos); break;
+			case 1: powerUp = new ElixirOfAeons(randomXPos, randomYPos); break;
+			case 2: powerUp = new Gemstone(randomXPos, randomYPos); break;
 			default:
 		}
-
-		return powerUp;
 	}
 
 	private void deSpawnPowerUp() {

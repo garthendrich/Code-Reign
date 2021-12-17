@@ -3,6 +3,7 @@ package game;
 class StatusEffect extends Thread {
 
     public static final String INVULNERABILITY = "invulnerability";
+    public static final String WARRIORS_FURY = "warrior's fury";
 
     private String type;
     private double durationSeconds;
