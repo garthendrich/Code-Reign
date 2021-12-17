@@ -3,6 +3,7 @@ package game;
 class StatusEffect extends Thread {
 
     public static final String INVULNERABILITY = "invulnerability";
+    public static final String WARRIORS_FURY = "warrior's fury";
 
     private String type;
     private double durationSeconds;
@@ -21,10 +22,10 @@ class StatusEffect extends Thread {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		affectedEdolite.removeStatusEffect();
+		affectedEdolite.removeStatusEffect(this);
 	}
 
-    String getType() {
-    	return type;
-    }
+	boolean isOfType(String typeToCompare) {
+		return (this.type == typeToCompare);
+	}
 }

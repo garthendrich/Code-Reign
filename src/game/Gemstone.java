@@ -12,7 +12,8 @@ class Gemstone extends PowerUp {
 
 	@Override
 	void applyTo(Edolite edolite) {
-		StatusEffect invulnerability = new StatusEffect(StatusEffect.INVULNERABILITY, 3, edolite);
-		edolite.obtainStatusEffect(invulnerability);
+		StatusEffect warriorsFury = new StatusEffect(StatusEffect.WARRIORS_FURY, 5, edolite);
+		edolite.obtainStatusEffect(warriorsFury);
 	}
+
 }

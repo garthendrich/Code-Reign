@@ -12,11 +12,12 @@ class Edolite extends MovableSprite {
 	public final static int MIN_STRENGTH = 100;
 	public final static int MAX_STRENGTH = 150;
 	public final static int MOVEMENT_SPEED = 3;
-	public final static int GUN_ELEVATION_ON_SHOOT = 30;
+	public final static int GUN_ELEVATION = 30;
+	public final static int MULTIPLE_BULLETS_GAP = 16;
 
 	private int strength;
 	private ArrayList<Bullet> bullets = new ArrayList<Bullet>();
-	private StatusEffect statusEffect;
+	private ArrayList<StatusEffect> statusEffects = new ArrayList<StatusEffect>();
 
 	public Edolite(int xPos, int yPos) {
 		super(xPos, yPos, IMAGE);
@@ -33,11 +34,25 @@ class Edolite extends MovableSprite {
 	//method called if spacebar is pressed
 	void shoot(){
 		int bulletXPos = this.xPos + this.width;
-		int bulletYPos = this.yPos + this.height - GUN_ELEVATION_ON_SHOOT - (Bullet.HEIGHT / 2);
+		int bulletYPos = this.yPos + this.height - GUN_ELEVATION - (Bullet.HEIGHT / 2);
 		Bullet bullet = new Bullet(bulletXPos, bulletYPos, strength);
 		bullet.moveRight(Bullet.MOVEMENT_SPEED);
 
 		bullets.add(bullet);
+
+		if (hasStatusEffect(StatusEffect.WARRIORS_FURY)) {
+			int upperBulletYPos = this.yPos + this.height - GUN_ELEVATION - Bullet.HEIGHT - MULTIPLE_BULLETS_GAP;
+			Bullet upperBullet = new Bullet(bulletXPos, upperBulletYPos, strength);
+
+			int lowerBulletYPos = this.yPos + this.height - GUN_ELEVATION + MULTIPLE_BULLETS_GAP;
+			Bullet lowerBullet = new Bullet(bulletXPos, lowerBulletYPos, strength);
+
+			lowerBullet.moveRight(Bullet.MOVEMENT_SPEED);
+			upperBullet.moveRight(Bullet.MOVEMENT_SPEED);
+
+			bullets.add(upperBullet);
+			bullets.add(lowerBullet);
+		}
     }
 
 	void receiveDamage(int damage) {
@@ -59,20 +74,19 @@ class Edolite extends MovableSprite {
 	}
 
 	void obtainStatusEffect(StatusEffect statusEffect) {
-		this.statusEffect = statusEffect;
+		statusEffects.add(statusEffect);
 		statusEffect.start();
 	}
 
-	void removeStatusEffect() {
-		statusEffect = null;
+	void removeStatusEffect(StatusEffect statusEffect) {
+		statusEffects.remove(statusEffect);
 	}
 
 	private boolean hasStatusEffect(String statusEffectType) {
-		if (statusEffect == null) return false;
-
-		String currentStatusEffectType = this.statusEffect.getType();
-		if (currentStatusEffectType == statusEffectType) {
-			return true;
+		for (StatusEffect currentStatusEffect : statusEffects) {
+			if (currentStatusEffect.isOfType(statusEffectType)) {
+				return true;
+			}
 		}
 		return false;
 	}
