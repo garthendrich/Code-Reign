@@ -29,10 +29,11 @@ class InstructionsView extends View {
 		Text instructionsTitle = new Text();
 		instructionsTitle.setText("Instructions");
 		instructionsTitle.setFont(Font.font(Main.NOTALOT60, 50));
+		instructionsTitle.setTextAlignment(TextAlignment.CENTER);
 		instructionsTitle.setTextOrigin(VPos.TOP);
 
 		Text instructions = new Text();
-		instructions.setText("Press WASD to move the Edolite. \n "
+		instructions.setText("Press the arrow keys to move the Edolite. \n "
 				+ "Press Spacebar to shoot. \n "
 				+ "Avoid colliding with enemies. \n "
 				+ "Pickup power-ups to help you survive. \n "
