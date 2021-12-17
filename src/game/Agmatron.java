@@ -22,13 +22,12 @@ class Agmatron extends Orglit {
 	}
 
 	void shoot() {
-		Random randomizer = new Random();
-
 		int bulletXPos = this.xPos - Bullet.WIDTH;
-		int bulletYPos = this.yPos - Bullet.HEIGHT + randomizer.nextInt(this.height);
+		int bulletYPos = this.yPos - Bullet.HEIGHT + (this.height / 2);
 		Bullet bullet = new CorruptedBullet(bulletXPos, bulletYPos);
 		bullet.moveLeft(CorruptedBullet.MOVEMENT_SPEED);
 
+		Random randomizer = new Random();
 		switch(randomizer.nextInt(2)) {
 			case 0: bullet.moveUp(CorruptedBullet.MOVEMENT_SPEED); break;
 			case 1: bullet.moveDown(CorruptedBullet.MOVEMENT_SPEED); break;
