@@ -7,6 +7,7 @@ import javafx.scene.image.Image;
 abstract class Sprite {
 	protected Image image;
 	protected int xPos, yPos, width, height;
+	protected boolean isHorizontallyFlipped = false;
 
 	public Sprite(int xPos, int yPos, Image image) {
 		this.xPos = xPos;
@@ -28,7 +29,20 @@ abstract class Sprite {
 	}
 
 	void render(GraphicsContext graphicsContext) {
-		graphicsContext.drawImage(image, xPos, yPos);
+		if (!isHorizontallyFlipped) {
+			graphicsContext.drawImage(image, xPos, yPos);
+		}
+		else {
+			graphicsContext.drawImage(image, 0, 0, width, height, xPos + width, yPos, -width, height);
+		}
+	}
+
+	protected void faceLeft() {
+		isHorizontallyFlipped = true;
+	}
+
+	protected void faceRight() {
+		isHorizontallyFlipped = false;
 	}
 
 	public int getWidth(){

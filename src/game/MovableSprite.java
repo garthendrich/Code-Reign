@@ -22,10 +22,12 @@ abstract class MovableSprite extends Sprite {
 
 	void moveLeft(int distance) {
 		dX = -1 * distance;
+		faceLeft();
 	}
 
 	void moveRight(int distance) {
 		dX = distance;
+		faceRight();
 	}
 
 	void stopMovingHorizontally() {
