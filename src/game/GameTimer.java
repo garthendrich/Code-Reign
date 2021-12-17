@@ -5,7 +5,6 @@ import java.util.Random;
 import javafx.animation.AnimationTimer;
 import javafx.geometry.VPos;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -211,10 +210,11 @@ public class GameTimer extends AnimationTimer {
 			for (Bullet agmatronBullet : agmatronBullets) {
 				manageCollisionOf(agmatronBullet, edolite);
 			}
+			deleteCollidedBullets(agmatronBullets);
 		}
 
 		deleteDeadOrglits();
-		deleteCollidedBullets();
+		deleteCollidedBullets(edoliteBullets);
 	}
 
 	private void manageCollisionOf(Edolite edolite, PowerUp powerUp) {
@@ -281,27 +281,17 @@ public class GameTimer extends AnimationTimer {
 		for (Orglit deadOrglit : deadOrglits) smallOrglits.remove(deadOrglit);
 	}
 
-	private void deleteCollidedBullets() {
+	private void deleteCollidedBullets(ArrayList<Bullet> bullets) {
 		ArrayList<Bullet> collidedBullets = new ArrayList<Bullet>();
 
-		ArrayList<Bullet> edoliteBullets = edolite.getBullets();
-		for (Bullet edoliteBullet : edoliteBullets) {
-			if (edoliteBullet.hasCollided()) collidedBullets.add(edoliteBullet);
+		for (Bullet bullet : bullets) {
+			if (bullet.hasCollided()) {
+				collidedBullets.add(bullet);
+			}
 		}
 
 		for (Bullet collidedBullet : collidedBullets) {
-			edoliteBullets.remove(collidedBullet);
-		}
-
-		if (agmatron != null) {
-			ArrayList<Bullet> agmatronBullets = agmatron.getBullets();
-			for (Bullet agmatronBullet : agmatronBullets) {
-				if (agmatronBullet.hasCollided()) collidedBullets.add(agmatronBullet);
-			}
-
-			for (Bullet collidedBullet : collidedBullets) {
-				agmatronBullets.remove(collidedBullet);
-			}
+			bullets.remove(collidedBullet);
 		}
 	}
 
