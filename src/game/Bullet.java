@@ -27,9 +27,18 @@ class Bullet extends MovableSprite {
 	@Override
 	void updatePosition() {
 		super.updatePosition();
+		manageCollisionToEdge();
+	}
 
+	private void manageCollisionToEdge() {
+		boolean isBulletAtLeftmostEdge = (xPos == 0);
 		boolean isBulletAtRightmostEdge = (xPos == Main.WINDOW_WIDTH - this.width);
-		if (isBulletAtRightmostEdge) collide();
+		boolean isBulletAtTopmostEdge = (yPos == 0);
+		boolean isBulletAtBottommostEdge = (yPos == Main.WINDOW_HEIGHT - this.height);
+
+		if (isBulletAtLeftmostEdge || isBulletAtRightmostEdge || isBulletAtTopmostEdge || isBulletAtBottommostEdge) {
+			collide();
+		}
 	}
 
 	void collide() {

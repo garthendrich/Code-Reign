@@ -27,7 +27,8 @@ public class GameTimer extends AnimationTimer {
 	public static final int ORGLIT_SPAWN_INTERVAL_SECONDS = 5;
 
 	public static final int AGMATRON_SPAWN_GAME_TIME = 30;
-	public static final int AGMATRON_ATTACK_DELAY_SECONDS = 1;
+	public static final int AGMATRON_SMASH_DELAY_SECONDS = 1;
+	public static final int AGMATRON_SHOOT_INTERVAL_SECONDS = 1;
 
 	public static final int POWER_UP_SPAWN_INTERVAL_SECONDS = 10;
 	public static final int POWER_UP_OCCURENCE_SECONDS = 5;
@@ -36,14 +37,16 @@ public class GameTimer extends AnimationTimer {
 	private GraphicsContext graphicsContext;
 
 	private Edolite edolite = new Edolite(EDOLITE_INITIAL_X_POS, EDOLITE_INITIAL_Y_POS);
-	private ArrayList<Orglit> orglits = new ArrayList<Orglit>();
-	private PowerUp powerUp;
+	private Agmatron agmatron = null;
+	private ArrayList<Orglit> smallOrglits = new ArrayList<Orglit>();
+	private PowerUp powerUp = null;
 
 	private long gameStartTimeInNanos = -1;
 	private double gameTime;
 	private double orglitSpawnGameTime = 0;
 	private double powerUpSpawnGameTime = 0;
-	private double agmatronAttackGameTime = 0;
+	private double agmatronSmashGameTime = 0;
+	private double agmatronShootGameTime = 0;
 	private boolean isAgmatronSpawned = false;
 	private int orglitsKilled = 0;
 
@@ -65,11 +68,15 @@ public class GameTimer extends AnimationTimer {
 	@Override
 	public void handle(long currentTimeInNanos) {
 		updateGameTime(currentTimeInNanos);
+
 		manageOrglitSpawns();
 		managePowerUpSpawns();
+		manageAgmatronAttacks();
+
 		updateMovableSpritePositions();
 		manageSpriteCollisions();
 		updateCanvas();
+
 		checkGameEnd();
 	}
 
@@ -83,14 +90,15 @@ public class GameTimer extends AnimationTimer {
 
 	private void manageOrglitSpawns() {
 		double orglitSpawnElapsedSeconds = gameTime - orglitSpawnGameTime;
-
 		if (orglitSpawnElapsedSeconds > ORGLIT_SPAWN_INTERVAL_SECONDS) {
 			spawnOrglits(ORGLIT_SPAWN_COUNT);
+
 			orglitSpawnGameTime = gameTime;
 		}
 
 		if (gameTime > AGMATRON_SPAWN_GAME_TIME && !isAgmatronSpawned) {
 			spawnAgmatron();
+
 			isAgmatronSpawned = true;
 		}
 	}
@@ -104,7 +112,7 @@ public class GameTimer extends AnimationTimer {
 			int highestYPos = Main.WINDOW_HEIGHT - Orglit.HEIGHT;
 			int randomYPos = generateRandomNumber(0, highestYPos);
 
-			orglits.add(new Orglit(randomXPos, randomYPos));
+			smallOrglits.add(new Orglit(randomXPos, randomYPos));
 		}
 	}
 
@@ -116,7 +124,7 @@ public class GameTimer extends AnimationTimer {
 		int highestYPos = Main.WINDOW_HEIGHT - Agmatron.HEIGHT;
 		int randomYPos = generateRandomNumber(0, highestYPos);
 
-		orglits.add(new Agmatron(randomXPos, randomYPos));
+		agmatron = new Agmatron(randomXPos, randomYPos);
 	}
 
 	private void managePowerUpSpawns() {
@@ -128,6 +136,7 @@ public class GameTimer extends AnimationTimer {
 
 		if (powerUpSpawnElapsedSeconds > POWER_UP_SPAWN_INTERVAL_SECONDS) {
 			spawnPowerUp();
+
 			powerUpSpawnGameTime = gameTime;
 		}
 	}
@@ -160,6 +169,17 @@ public class GameTimer extends AnimationTimer {
 		powerUp = null;
 	}
 
+	private void manageAgmatronAttacks() {
+		if (agmatron == null) return;
+
+		double agmatronShootElapsedSeconds = gameTime - agmatronShootGameTime;
+		if (agmatronShootElapsedSeconds > AGMATRON_SHOOT_INTERVAL_SECONDS) {
+			agmatron.shoot();
+
+			agmatronShootGameTime = gameTime;
+		}
+	}
+
 	private void updateMovableSpritePositions() {
 		ArrayList<MovableSprite> movableSprites = getAllMovableSprites();
 		for (MovableSprite movableSprite : movableSprites) movableSprite.updatePosition();
@@ -170,11 +190,27 @@ public class GameTimer extends AnimationTimer {
 
 		if (powerUp != null) manageCollisionOf(edolite, powerUp);
 
-		for (Orglit orglit : orglits) manageCollisionOf(edolite, orglit);
+		for (Orglit smallOrglit : smallOrglits) {
+			manageCollisionOf(edolite, smallOrglit);
 
-		for (Orglit orglit : orglits) for (Bullet edoliteBullet : edoliteBullets) {
-			if (orglit.isAlive() == false) break;
-			manageCollisionOf(orglit, edoliteBullet);
+			for (Bullet edoliteBullet : edoliteBullets) {
+				if (smallOrglit.isAlive()) {
+					manageCollisionOf(smallOrglit, edoliteBullet);
+				}
+			}
+		}
+
+		if (agmatron != null) {
+			manageCollisionOf(edolite, agmatron);
+
+			for (Bullet edoliteBullet : edoliteBullets) {
+				manageCollisionOf(agmatron, edoliteBullet);
+			}
+
+			ArrayList<Bullet> agmatronBullets = agmatron.getBullets();
+			for (Bullet agmatronBullet : agmatronBullets) {
+				manageCollisionOf(edolite, agmatronBullet);
+			}
 		}
 
 		deleteDeadOrglits();
@@ -192,10 +228,11 @@ public class GameTimer extends AnimationTimer {
 		if (edolite.collidesWith(orglit) == false) return;
 
 		if (orglit instanceof Agmatron) {
-			double agmatronAttackElapsedSeconds = gameTime - agmatronAttackGameTime;
-			if (agmatronAttackElapsedSeconds <= AGMATRON_ATTACK_DELAY_SECONDS) return;
+			double agmatronSmashElapsedSeconds = gameTime - agmatronSmashGameTime;
+			if (agmatronSmashElapsedSeconds <= AGMATRON_SMASH_DELAY_SECONDS) return;
 
-			agmatronAttackGameTime = gameTime;
+			agmatronSmashGameTime = gameTime;
+
 		} else {
 			orglit.die();
 		}
@@ -204,44 +241,67 @@ public class GameTimer extends AnimationTimer {
 		edolite.receiveDamage(orglitDamage);
 	}
 
-	private void manageCollisionOf(Orglit orglit, Bullet edoliteBullet) {
-		if (edoliteBullet.collidesWith(orglit) == false) return;
+	private void manageCollisionOf(Orglit orglit, Bullet bullet) {
+		if (bullet.collidesWith(orglit) == false) return;
 
 		if (orglit instanceof Agmatron) {
-			int edoliteBulletDamage = edoliteBullet.getDamage();
+			int bulletDamage = bullet.getDamage();
 
 			Agmatron agmatron = (Agmatron) orglit;
-			agmatron.reduceHealthBy(edoliteBulletDamage);
+			agmatron.reduceHealthBy(bulletDamage);
 		} else {
 			orglit.die();
 		}
 
-		edoliteBullet.collide();
+		bullet.collide();
 
 		if (orglit.isAlive() == false) {
 			orglitsKilled++;
 		}
 	}
 
+	private void manageCollisionOf(Edolite edolite, Bullet bullet) {
+		if (edolite.collidesWith(bullet) == false) return;
+
+		int bulletDamage = bullet.getDamage();
+		edolite.receiveDamage(bulletDamage);
+
+		bullet.collide();
+	}
+
 	private void deleteDeadOrglits() {
+		if (agmatron != null && agmatron.isAlive() == false) agmatron = null;
+
 		ArrayList<Orglit> deadOrglits = new ArrayList<Orglit>();
 
-		for (Orglit orglit : orglits) if (orglit.isAlive() == false) deadOrglits.add(orglit);
+		for (Orglit smallOrglit : smallOrglits) if (smallOrglit.isAlive() == false) {
+			deadOrglits.add(smallOrglit);
+		}
 
-		for (Orglit deadOrglit : deadOrglits) orglits.remove(deadOrglit);
+		for (Orglit deadOrglit : deadOrglits) smallOrglits.remove(deadOrglit);
 	}
 
 	private void deleteCollidedBullets() {
 		ArrayList<Bullet> collidedBullets = new ArrayList<Bullet>();
 
 		ArrayList<Bullet> edoliteBullets = edolite.getBullets();
-
 		for (Bullet edoliteBullet : edoliteBullets) {
 			if (edoliteBullet.hasCollided()) collidedBullets.add(edoliteBullet);
 		}
 
 		for (Bullet collidedBullet : collidedBullets) {
 			edoliteBullets.remove(collidedBullet);
+		}
+
+		if (agmatron != null) {
+			ArrayList<Bullet> agmatronBullets = agmatron.getBullets();
+			for (Bullet agmatronBullet : agmatronBullets) {
+				if (agmatronBullet.hasCollided()) collidedBullets.add(agmatronBullet);
+			}
+
+			for (Bullet collidedBullet : collidedBullets) {
+				agmatronBullets.remove(collidedBullet);
+			}
 		}
 	}
 
@@ -311,6 +371,7 @@ public class GameTimer extends AnimationTimer {
 		ArrayList<Sprite> sprites = new ArrayList<Sprite>();
 
 		if (powerUp != null) sprites.add(powerUp);
+
 		ArrayList<MovableSprite> movableSprites = getAllMovableSprites();
 		sprites.addAll(movableSprites);
 
@@ -320,10 +381,17 @@ public class GameTimer extends AnimationTimer {
 	private ArrayList<MovableSprite> getAllMovableSprites() {
 		ArrayList<MovableSprite> movableSprites = new ArrayList<MovableSprite>();
 
-		movableSprites.add(edolite);
 		ArrayList<Bullet> edoliteBullets = edolite.getBullets();
+		movableSprites.add(edolite);
 		movableSprites.addAll(edoliteBullets);
-		movableSprites.addAll(orglits);
+
+		movableSprites.addAll(smallOrglits);
+
+		if (agmatron != null) {
+			ArrayList<Bullet> agmatronBullets = agmatron.getBullets();
+			movableSprites.add(agmatron);
+			movableSprites.addAll(agmatronBullets);
+		}
 
 		return movableSprites;
 	}
