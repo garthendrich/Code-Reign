@@ -16,7 +16,7 @@ class Edolite extends MovableSprite {
 
 	private int strength;
 	private ArrayList<Bullet> bullets = new ArrayList<Bullet>();
-	private StatusEffect statusEffect;
+	private ArrayList<StatusEffect> statusEffects = new ArrayList<StatusEffect>();
 
 	public Edolite(int xPos, int yPos) {
 		super(xPos, yPos, IMAGE);
@@ -59,20 +59,19 @@ class Edolite extends MovableSprite {
 	}
 
 	void obtainStatusEffect(StatusEffect statusEffect) {
-		this.statusEffect = statusEffect;
+		statusEffects.add(statusEffect);
 		statusEffect.start();
 	}
 
-	void removeStatusEffect() {
-		statusEffect = null;
+	void removeStatusEffect(StatusEffect statusEffect) {
+		statusEffects.remove(statusEffect);
 	}
 
 	private boolean hasStatusEffect(String statusEffectType) {
-		if (statusEffect == null) return false;
-
-		String currentStatusEffectType = this.statusEffect.getType();
-		if (currentStatusEffectType == statusEffectType) {
-			return true;
+		for (StatusEffect currentStatusEffect : statusEffects) {
+			if (currentStatusEffect.isOfType(statusEffectType)) {
+				return true;
+			}
 		}
 		return false;
 	}

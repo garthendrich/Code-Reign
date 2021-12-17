@@ -21,10 +21,10 @@ class StatusEffect extends Thread {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		affectedEdolite.removeStatusEffect();
+		affectedEdolite.removeStatusEffect(this);
 	}
 
-    String getType() {
-    	return type;
-    }
+	boolean isOfType(String typeToCompare) {
+		return (this.type == typeToCompare);
+	}
 }
