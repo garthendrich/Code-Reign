@@ -311,6 +311,15 @@ public class GameTimer extends AnimationTimer {
 	private void displayAllStatusBars() {
 		int edoliteStrength = edolite.getStrength();
 		displayStatusBar(16, 16, "strength", edoliteStrength, Edolite.MAX_INITIAL_STRENGTH + 100, "69CD2E");
+
+		if (agmatron != null) {
+			int agmatronStatusBarXPos = Main.WINDOW_WIDTH - STATUS_BAR_MAX_LENGTH - 16;
+
+			displayGameStatusText("Agmatron:", agmatronStatusBarXPos + 4, 16);
+
+			int agmatronHealth = agmatron.getHealth();
+			displayStatusBar(agmatronStatusBarXPos, 44, "health", agmatronHealth, Agmatron.MAX_HEALTH, "CC2D2D");
+		}
 	}
 
 	private void displayStatusBar(
