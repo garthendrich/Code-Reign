@@ -191,25 +191,25 @@ public class GameTimer extends AnimationTimer {
 		if (powerUp != null) manageCollisionOf(edolite, powerUp);
 
 		for (Orglit smallOrglit : smallOrglits) {
-			manageCollisionOf(edolite, smallOrglit);
+			manageCollisionOf(smallOrglit, edolite);
 
 			for (Bullet edoliteBullet : edoliteBullets) {
 				if (smallOrglit.isAlive()) {
-					manageCollisionOf(smallOrglit, edoliteBullet);
+					manageCollisionOf(edoliteBullet, smallOrglit);
 				}
 			}
 		}
 
 		if (agmatron != null) {
-			manageCollisionOf(edolite, agmatron);
+			manageCollisionOf(agmatron, edolite);
 
 			for (Bullet edoliteBullet : edoliteBullets) {
-				manageCollisionOf(agmatron, edoliteBullet);
+				manageCollisionOf(edoliteBullet, agmatron);
 			}
 
 			ArrayList<Bullet> agmatronBullets = agmatron.getBullets();
 			for (Bullet agmatronBullet : agmatronBullets) {
-				manageCollisionOf(edolite, agmatronBullet);
+				manageCollisionOf(agmatronBullet, edolite);
 			}
 		}
 
@@ -224,8 +224,8 @@ public class GameTimer extends AnimationTimer {
 		deSpawnPowerUp();
 	}
 
-	private void manageCollisionOf(Edolite edolite, Orglit orglit) {
-		if (edolite.collidesWith(orglit) == false) return;
+	private void manageCollisionOf(Orglit orglit, Edolite edolite) {
+		if (orglit.collidesWith(edolite) == false) return;
 
 		if (orglit instanceof Agmatron) {
 			double agmatronSmashElapsedSeconds = gameTime - agmatronSmashGameTime;
@@ -241,7 +241,7 @@ public class GameTimer extends AnimationTimer {
 		edolite.receiveDamage(orglitDamage);
 	}
 
-	private void manageCollisionOf(Orglit orglit, Bullet bullet) {
+	private void manageCollisionOf(Bullet bullet, Orglit orglit) {
 		if (bullet.collidesWith(orglit) == false) return;
 
 		if (orglit instanceof Agmatron) {
@@ -260,8 +260,8 @@ public class GameTimer extends AnimationTimer {
 		}
 	}
 
-	private void manageCollisionOf(Edolite edolite, Bullet bullet) {
-		if (edolite.collidesWith(bullet) == false) return;
+	private void manageCollisionOf(Bullet bullet, Edolite edolite) {
+		if (bullet.collidesWith(edolite) == false) return;
 
 		int bulletDamage = bullet.getDamage();
 		edolite.receiveDamage(bulletDamage);
