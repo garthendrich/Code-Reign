@@ -32,6 +32,8 @@ public class GameTimer extends AnimationTimer {
 	public static final int POWER_UP_SPAWN_INTERVAL_SECONDS = 10;
 	public static final int POWER_UP_OCCURENCE_SECONDS = 5;
 
+	public static final int STATUS_BAR_MAX_LENGTH = 240;
+
 	private Stage stage;
 	private GraphicsContext graphicsContext;
 
@@ -293,45 +295,65 @@ public class GameTimer extends AnimationTimer {
 		ArrayList<Sprite> sprites = getAllSprites();
 		for (Sprite sprite : sprites) sprite.render(graphicsContext);
 
-		displayGameStats();
+		displayGameStatus();
 	}
 
 	private void clearGameCanvas() {
 		graphicsContext.clearRect(0, 0, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
 	}
 
-	private void displayGameStats() {
-		displayStrengthBar();
+	private void displayGameStatus() {
+		displayAllStatusBars();
 		displayOrglitsKilled();
 		displayGameTimeLeft();
 	}
 
-	private void displayStrengthBar() {
+	private void displayAllStatusBars() {
 		int edoliteStrength = edolite.getStrength();
+		displayStatusBar(16, 16, "strength", edoliteStrength, Edolite.MAX_INITIAL_STRENGTH + 100, "69CD2E");
+	}
+
+	private void displayStatusBar(
+			int xPos,
+			int yPos,
+			String statusLabel,
+			int statusValue,
+			int maxStatusValue,
+			String hexColor) {
+
+		double statusBarPercentage = statusValue / (double) maxStatusValue;
+		int statusBarLength =  (int) (statusBarPercentage * STATUS_BAR_MAX_LENGTH);
+		if (statusBarPercentage > 1) {
+			statusBarLength = STATUS_BAR_MAX_LENGTH;
+		}
 
 		graphicsContext.setGlobalAlpha(0.75);
-		graphicsContext.setFill(Color.valueOf("69CD2E"));
-		graphicsContext.fillRect(16, 16, edoliteStrength, 32);
+		graphicsContext.setFill(Color.valueOf(hexColor));
+		graphicsContext.fillRect(xPos, yPos, statusBarLength, 32);
 		graphicsContext.setGlobalAlpha(1);
 
-		displayGameStatText(edoliteStrength + " strength", 24, 20);
+		displayGameStatusText(statusValue + " " + statusLabel, xPos + 8, yPos + 4);
 	}
 
 	private void displayOrglitsKilled() {
-		displayGameStatText(orglitsKilled + " orglits killed", 24, 52);
+		displayGameStatusText(orglitsKilled + " orglits killed", 24, 56);
 	}
 
 	private void displayGameTimeLeft() {
 		graphicsContext.setTextAlign(TextAlignment.CENTER);
-		displayGameStatText("Time left", Main.WINDOW_WIDTH / 2, 16);
-		displayGameStatText((MAX_GAME_TIME - (int) gameTime) + "", Main.WINDOW_WIDTH / 2, 40);
+		displayGameStatusText("Time left", Main.WINDOW_WIDTH / 2, 16);
+
+		graphicsContext.setFont(Font.font(Main.NOTALOT60, 28));
+		displayGameStatusText("" + (MAX_GAME_TIME - (int) gameTime), Main.WINDOW_WIDTH / 2, 40);
+
+		graphicsContext.setFont(Font.font(Main.NOTALOT60, 20));
 		graphicsContext.setTextAlign(TextAlignment.LEFT);
 	}
 
-	private void displayGameStatText(String text, double x, double y) {
+	private void displayGameStatusText(String text, int xPos, int yPos) {
 		graphicsContext.setFill(Color.WHITE);
-		graphicsContext.fillText(text, x, y);
-		graphicsContext.strokeText(text, x, y);
+		graphicsContext.fillText(text, xPos, yPos);
+		graphicsContext.strokeText(text, xPos, yPos);
 	}
 
 	private void checkGameEnd() {

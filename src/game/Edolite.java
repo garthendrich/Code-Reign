@@ -9,8 +9,8 @@ class Edolite extends MovableSprite {
 	public final static int WIDTH = 32;
 	public final static int HEIGHT = 44;
 	public final static Image IMAGE = new Image("assets/images/edolite.png", WIDTH, HEIGHT, false, false);
-	public final static int MIN_STRENGTH = 100;
-	public final static int MAX_STRENGTH = 150;
+	public final static int MIN_INITIAL_STRENGTH = 100;
+	public final static int MAX_INITIAL_STRENGTH = 150;
 	public final static int MOVEMENT_SPEED = 3;
 	public final static int GUN_ELEVATION = 30;
 	public final static int MULTIPLE_BULLETS_GAP = 16;
@@ -23,7 +23,7 @@ class Edolite extends MovableSprite {
 		super(xPos, yPos, IMAGE);
 
 		Random randomizer = new Random();
-		strength = MIN_STRENGTH + randomizer.nextInt(MAX_STRENGTH - MIN_STRENGTH + 1);
+		strength = MIN_INITIAL_STRENGTH + randomizer.nextInt(MAX_INITIAL_STRENGTH - MIN_INITIAL_STRENGTH + 1);
 	}
 
 	//method that will get the bullets 'shot' by the ship
