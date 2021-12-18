@@ -10,9 +10,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
-
-import main.Main;
 import views.GameOverView;
+import views.View;
 
 public class GameTimer extends AnimationTimer {
 
@@ -32,6 +31,10 @@ public class GameTimer extends AnimationTimer {
 	public static final int POWER_UP_SPAWN_INTERVAL_SECONDS = 10;
 	public static final int POWER_UP_OCCURENCE_SECONDS = 5;
 
+	public static final int STATUS_BAR_MAX_LENGTH = 240;
+	public static final Color GREEN_COLOR = Color.valueOf("69CD2E");
+	public static final Color RED_COLOR = Color.valueOf("CC2D2D");
+
 	private Stage stage;
 	private GraphicsContext graphicsContext;
 
@@ -42,7 +45,7 @@ public class GameTimer extends AnimationTimer {
 
 	private long gameStartTimeInNanos = -1;
 	private double gameTime;
-	private double orglitSpawnGameTime = 0;
+	private double smallOrglitSpawnGameTime = 0;
 	private double powerUpSpawnGameTime = 0;
 	private double agmatronSmashGameTime = 0;
 	private double agmatronShootGameTime = 0;
@@ -54,10 +57,10 @@ public class GameTimer extends AnimationTimer {
 	public GameTimer(GraphicsContext graphicsContext){
 		this.graphicsContext = graphicsContext;
 
-		graphicsContext.setFont(Font.font(Main.NOTALOT60, 20));
+		graphicsContext.setFont(Font.font(View.NOTALOT60, 20));
 		graphicsContext.setTextBaseline(VPos.TOP);
 
-		spawnOrglits(ORGLIT_INITIAL_SPAWN_COUNT);
+		spawnSmallOrglits(ORGLIT_INITIAL_SPAWN_COUNT);
 	}
 
 	public void receiveStage(Stage stage) {
@@ -88,11 +91,11 @@ public class GameTimer extends AnimationTimer {
 	}
 
 	private void manageOrglitSpawns() {
-		double orglitSpawnElapsedSeconds = gameTime - orglitSpawnGameTime;
-		if (orglitSpawnElapsedSeconds > ORGLIT_SPAWN_INTERVAL_SECONDS) {
-			spawnOrglits(ORGLIT_SPAWN_COUNT);
+		double smallOrglitSpawnElapsedSeconds = gameTime - smallOrglitSpawnGameTime;
+		if (smallOrglitSpawnElapsedSeconds > ORGLIT_SPAWN_INTERVAL_SECONDS) {
+			spawnSmallOrglits(ORGLIT_SPAWN_COUNT);
 
-			orglitSpawnGameTime = gameTime;
+			smallOrglitSpawnGameTime = gameTime;
 		}
 
 		if (gameTime > AGMATRON_SPAWN_GAME_TIME && !isAgmatronSpawned) {
@@ -102,13 +105,13 @@ public class GameTimer extends AnimationTimer {
 		}
 	}
 
-	private void spawnOrglits(int spawnCount) {
+	private void spawnSmallOrglits(int spawnCount) {
 		for (int spawned = 0; spawned < spawnCount; spawned++) {
-			int canvasMiddleX = Main.WINDOW_WIDTH / 2;
-			int highestXPos = Main.WINDOW_WIDTH - Orglit.WIDTH;
+			int canvasMiddleX = View.WINDOW_WIDTH / 2;
+			int highestXPos = View.WINDOW_WIDTH - Orglit.WIDTH;
 			int randomXPos = generateRandomNumber(canvasMiddleX, highestXPos);
 
-			int highestYPos = Main.WINDOW_HEIGHT - Orglit.HEIGHT;
+			int highestYPos = View.WINDOW_HEIGHT - Orglit.HEIGHT;
 			int randomYPos = generateRandomNumber(0, highestYPos);
 
 			smallOrglits.add(new Orglit(randomXPos, randomYPos));
@@ -116,11 +119,11 @@ public class GameTimer extends AnimationTimer {
 	}
 
 	private void spawnAgmatron() {
-		int canvasMiddleX = Main.WINDOW_WIDTH / 2;
-		int highestXPos = Main.WINDOW_WIDTH - Agmatron.WIDTH;
+		int canvasMiddleX = View.WINDOW_WIDTH / 2;
+		int highestXPos = View.WINDOW_WIDTH - Agmatron.WIDTH;
 		int randomXPos = generateRandomNumber(canvasMiddleX, highestXPos);
 
-		int highestYPos = Main.WINDOW_HEIGHT - Agmatron.HEIGHT;
+		int highestYPos = View.WINDOW_HEIGHT - Agmatron.HEIGHT;
 		int randomYPos = generateRandomNumber(0, highestYPos);
 
 		agmatron = new Agmatron(randomXPos, randomYPos);
@@ -141,10 +144,10 @@ public class GameTimer extends AnimationTimer {
 	}
 
 	private void spawnPowerUp() {
-		int canvasMiddleX = Main.WINDOW_WIDTH / 2;
+		int canvasMiddleX = View.WINDOW_WIDTH / 2;
 		int randomXPos = generateRandomNumber(0, canvasMiddleX);
 
-		int highestYPos = Main.WINDOW_HEIGHT - PowerUp.SIZE;
+		int highestYPos = View.WINDOW_HEIGHT - PowerUp.SIZE;
 		int randomYPos = generateRandomNumber(0, highestYPos);
 
 		Random randomizer = new Random();
@@ -293,45 +296,75 @@ public class GameTimer extends AnimationTimer {
 		ArrayList<Sprite> sprites = getAllSprites();
 		for (Sprite sprite : sprites) sprite.render(graphicsContext);
 
-		displayGameStats();
+		displayGameStatus();
 	}
 
 	private void clearGameCanvas() {
-		graphicsContext.clearRect(0, 0, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
+		graphicsContext.clearRect(0, 0, View.WINDOW_WIDTH, View.WINDOW_HEIGHT);
 	}
 
-	private void displayGameStats() {
-		displayStrengthBar();
+	private void displayGameStatus() {
+		displayAllStatusBars();
 		displayOrglitsKilled();
 		displayGameTimeLeft();
 	}
 
-	private void displayStrengthBar() {
+	private void displayAllStatusBars() {
 		int edoliteStrength = edolite.getStrength();
+		displayStatusBar(16, 16, "strength", edoliteStrength, Edolite.MAX_INITIAL_STRENGTH + 100, GREEN_COLOR);
+
+		if (agmatron != null) {
+			int agmatronStatusBarXPos = View.WINDOW_WIDTH - STATUS_BAR_MAX_LENGTH - 16;
+
+			displayGameStatusText("Agmatron:", agmatronStatusBarXPos + 4, 16);
+
+			int agmatronHealth = agmatron.getHealth();
+			displayStatusBar(agmatronStatusBarXPos, 44, "health", agmatronHealth, Agmatron.MAX_HEALTH, RED_COLOR);
+		}
+	}
+
+	private void displayStatusBar(
+			int xPos,
+			int yPos,
+			String statusLabel,
+			int statusValue,
+			int maxStatusValue,
+			Color color) {
+
+		double statusBarPercentage = statusValue / (double) maxStatusValue;
+		int statusBarLength =  (int) (statusBarPercentage * STATUS_BAR_MAX_LENGTH);
+		if (statusBarPercentage > 1) {
+			statusBarLength = STATUS_BAR_MAX_LENGTH;
+		}
 
 		graphicsContext.setGlobalAlpha(0.75);
-		graphicsContext.setFill(Color.valueOf("69CD2E"));
-		graphicsContext.fillRect(16, 16, edoliteStrength, 32);
+		graphicsContext.setFill(color);
+		graphicsContext.fillRect(xPos, yPos, statusBarLength, 32);
 		graphicsContext.setGlobalAlpha(1);
 
-		displayGameStatText(edoliteStrength + " strength", 24, 20);
+		displayGameStatusText(statusValue + " " + statusLabel, xPos + 8, yPos + 4);
 	}
 
 	private void displayOrglitsKilled() {
-		displayGameStatText(orglitsKilled + " orglits killed", 24, 52);
+		displayGameStatusText(orglitsKilled + " orglits killed", 24, 56);
 	}
 
 	private void displayGameTimeLeft() {
 		graphicsContext.setTextAlign(TextAlignment.CENTER);
-		displayGameStatText("Time left", Main.WINDOW_WIDTH / 2, 16);
-		displayGameStatText((MAX_GAME_TIME - (int) gameTime) + "", Main.WINDOW_WIDTH / 2, 40);
+		displayGameStatusText("Time left", View.WINDOW_WIDTH / 2, 16);
+
+		graphicsContext.setFont(Font.font(View.NOTALOT60, 28));
+		displayGameStatusText("" + (MAX_GAME_TIME - (int) gameTime), View.WINDOW_WIDTH / 2, 40);
+
+		graphicsContext.setFont(Font.font(View.NOTALOT60, 20));
 		graphicsContext.setTextAlign(TextAlignment.LEFT);
 	}
 
-	private void displayGameStatText(String text, double x, double y) {
+	private void displayGameStatusText(String text, int xPos, int yPos) {
 		graphicsContext.setFill(Color.WHITE);
-		graphicsContext.fillText(text, x, y);
-		graphicsContext.strokeText(text, x, y);
+		graphicsContext.setStroke(View.STROKE_COLOR);
+		graphicsContext.fillText(text, xPos, yPos);
+		graphicsContext.strokeText(text, xPos, yPos);
 	}
 
 	private void checkGameEnd() {

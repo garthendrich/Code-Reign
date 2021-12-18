@@ -2,83 +2,56 @@ package views;
 
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.geometry.VPos;
-import javafx.scene.Scene;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
-import javafx.stage.Stage;
-
-import main.Main;
 
 class AboutView extends View {
 
 	@Override
-	protected Scene createScene() {
+	protected Parent createRoot() {
 		VBox root = new VBox();
-		root.setBackground(new Background(new BackgroundFill(Color.valueOf("F6C27D"), null, null)));
+		root.setBackground(new Background(new BackgroundFill(BG_COLOR, null, null)));
 		root.setAlignment(Pos.CENTER);
-		root.setSpacing(20);
+		root.setSpacing(16);
 
-		Text aboutTitle = new Text();
-		aboutTitle.setText("About");
-		aboutTitle.setFont(Font.font(Main.NOTALOT60, 50));
-		aboutTitle.setTextAlignment(TextAlignment.CENTER);
-		aboutTitle.setTextOrigin(VPos.TOP);
+		Text header = createThemedText("About", 48, 2);
 
-		Text devsTitle = new Text();
-		devsTitle.setText("Game Developers");
-		devsTitle.setFont(Font.font(Main.NOTALOT60, 30));
-		devsTitle.setTextAlignment(TextAlignment.CENTER);
-		devsTitle.setTextOrigin(VPos.CENTER);
+		Text devsHeader = createThemedText("Game Developers", 28, 1);
 
-		Text aboutDevs = new Text();
-		aboutDevs.setText("Garth Hendrich Lapitan \n "
-				+ "2nd Year, BS Computer Science, UPLB \n\n "
-				+ "Alesundreau Dale Ratuiste \n "
-				+ "2nd Year, BS Computer Science, UPLB");
-		aboutDevs.setFont(Font.font(Main.NOTALOT60, 20));
-		aboutDevs.setTextAlignment(TextAlignment.CENTER);
-		aboutDevs.setTextOrigin(VPos.CENTER);
+		String devsInfoString = "Alesundreau Dale Ratuiste and Garth Hendrich Lapitan\n"
+				+ "Sophomores, BS Computer Science\n"
+				+ "University of the Philippines - Los Banos";
+		Text devsInfo = createThemedText(devsInfoString, 24, 1);
+		devsInfo.setTextAlignment(TextAlignment.CENTER);
 
-		Text referencesTitle = new Text();
-		referencesTitle.setText("References");
-		referencesTitle.setFont(Font.font(Main.NOTALOT60, 30));
-		referencesTitle.setTextAlignment(TextAlignment.CENTER);
-		referencesTitle.setTextOrigin(VPos.CENTER);
+		Text referencesHeader = createThemedText("References", 28, 1);
 
-		Text references = new Text();
-		references.setText("Inspiration/Template: CMSC 22 Everwing \n"
-				+ "Sprite Images: Penusbmic (penusbmic.itch.io) \n"
-				+ "Power-up Images: Garth Hendrich Lapitan \n"
-				+ "Pixel Font: Notalot60 by Chequered Ink (chequered.ink)");
-		references.setFont(Font.font(Main.NOTALOT60, 20));
-		references.setTextAlignment(TextAlignment.CENTER);
-		references.setTextOrigin(VPos.CENTER);
+		String referencesInfoString = "Guide code: CMSC 22 Everwing by Ma'am Miyah Queliste\n"
+				+ "Sprite Images: by Penusbmic (penusbmic.itch.io)\n"
+				+ "Pixel Font: Notalot60 by Chequered Ink (chequered.ink)";
+		Text referencesInfo = createThemedText(referencesInfoString, 24, 1);
+		referencesInfo.setTextAlignment(TextAlignment.CENTER);
 
-		Button backButton = new Button("Return to Main Menu");
-		backButton.setAlignment(Pos.BOTTOM_CENTER);
-
-		root.getChildren().addAll(aboutTitle, devsTitle, aboutDevs, referencesTitle, references, backButton);
+		Button backButton = createThemedButton("Return to main menu");
 
 		backButton.setOnMouseClicked(
 			new EventHandler<MouseEvent>() {
 				@Override
 				public void handle(MouseEvent event) {
-					Stage stage = getStage();
-
-					TitleView titleView = new TitleView();
-					titleView.loadTo(stage);
+					MainMenuView mainMenuView = new MainMenuView();
+					mainMenuView.loadTo(stage);
 				}
 			}
 		);
 
-		return new Scene(root, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
+		root.getChildren().addAll(header, devsHeader, devsInfo, referencesHeader, referencesInfo, backButton);
+
+		return root;
 	}
 }

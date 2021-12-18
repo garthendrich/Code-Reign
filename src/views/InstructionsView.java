@@ -2,63 +2,51 @@ package views;
 
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.geometry.VPos;
-import javafx.scene.Scene;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
-import javafx.stage.Stage;
-
-import main.Main;
 
 class InstructionsView extends View {
 
 	@Override
-	protected Scene createScene() {
+	protected Parent createRoot() {
 		VBox root = new VBox();
-		root.setBackground(new Background(new BackgroundFill(Color.valueOf("F6C27D"), null, null)));
+		root.setBackground(new Background(new BackgroundFill(BG_COLOR, null, null)));
 		root.setAlignment(Pos.CENTER);
-		root.setSpacing(75);
+		root.setSpacing(24);
 
-		Text instructionsTitle = new Text();
-		instructionsTitle.setText("Instructions");
-		instructionsTitle.setFont(Font.font(Main.NOTALOT60, 50));
-		instructionsTitle.setTextAlignment(TextAlignment.CENTER);
-		instructionsTitle.setTextOrigin(VPos.TOP);
+		Text title = createThemedText("Invasion incoming!", 48, 2);
 
-		Text instructions = new Text();
-		instructions.setText("Press the arrow keys to move the Edolite. \n "
-				+ "Press Spacebar to shoot. \n "
-				+ "Avoid colliding with enemies. \n "
-				+ "Pickup power-ups to help you survive. \n "
-				+ "To win the game, you must survive for 60 seconds.");
-		instructions.setFont(Font.font(Main.NOTALOT60, 30));
+		String instructionsString = "As an Edolite, the destined hero of Arthane, you have to survive against the "
+				+ "insufferable Orglits and their king, the Agmatron.\n\n"
+				+ "Avoid getting hit by the enemies.\n"
+				+ "Use the arrow keys to move and space bar to shoot.\n"
+				+ "There are power-ups you can pick up to help you with your battle.\n"
+				+ "Survive for 60 seconds to win the game.\n\n "
+				+ "Defend the throne, Edolite! The fate of Arthane is in your hands.";
+		Text instructions = createThemedText(instructionsString, 24, 1);
+		instructions.setWrappingWidth(View.WINDOW_WIDTH);
 		instructions.setTextAlignment(TextAlignment.CENTER);
-		instructions.setTextOrigin(VPos.CENTER);
 
-		Button backButton = new Button("Return to Main Menu");
-		backButton.setAlignment(Pos.BOTTOM_CENTER);
-
-		root.getChildren().addAll(instructionsTitle, instructions, backButton);
+		Button backButton = createThemedButton("Return to main menu");
 
 		backButton.setOnMouseClicked(
 			new EventHandler<MouseEvent>() {
 				@Override
 				public void handle(MouseEvent event) {
-					Stage stage = getStage();
-
-					TitleView titleView = new TitleView();
-					titleView.loadTo(stage);
+					MainMenuView mainMenuView = new MainMenuView();
+					mainMenuView.loadTo(stage);
 				}
 			}
 		);
 
-		return new Scene(root, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
+		root.getChildren().addAll(title, instructions, backButton);
+
+		return root;
 	}
 }
