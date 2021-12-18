@@ -362,6 +362,7 @@ public class GameTimer extends AnimationTimer {
 
 	private void displayGameStatusText(String text, int xPos, int yPos) {
 		graphicsContext.setFill(Color.WHITE);
+		graphicsContext.setStroke(View.STROKE_COLOR);
 		graphicsContext.fillText(text, xPos, yPos);
 		graphicsContext.strokeText(text, xPos, yPos);
 	}
