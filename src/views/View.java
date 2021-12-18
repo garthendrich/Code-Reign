@@ -28,10 +28,10 @@ abstract class View {
 
 	protected Button createThemedButton(String text) {
 		Button menuButton = new Button(text);
-		menuButton.setMaxWidth(160);
+		menuButton.setMinWidth(160);
 		menuButton.setBorder(new Border(new BorderStroke(Color.valueOf(Main.STROKE_COLOR), BorderStrokeStyle.SOLID, null, new BorderWidths(2))));
 		menuButton.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
-		menuButton.setPadding(new Insets(8));
+		menuButton.setPadding(new Insets(8, 16, 8, 16));
 		menuButton.setFont(Font.font(Main.NOTALOT60, 20));
 		menuButton.setTextFill(Color.valueOf(Main.STROKE_COLOR));
 		return menuButton;

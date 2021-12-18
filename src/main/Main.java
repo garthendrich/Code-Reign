@@ -11,7 +11,8 @@ public class Main extends Application {
 	public static final int WINDOW_WIDTH = 750;
 	public static final int WINDOW_HEIGHT = 500;
 	public static final String NOTALOT60 = "Notalot60";
-	public static final String STROKE_COLOR = "806440";
+	public static final String BG_COLOR = "F6C27D";
+	public static final String STROKE_COLOR = "634E32";
 
 	@Override
 	public void start(Stage stage) {

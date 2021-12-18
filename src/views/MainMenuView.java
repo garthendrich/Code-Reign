@@ -1,7 +1,6 @@
 package views;
 
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -10,10 +9,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.BorderStrokeStyle;
-import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -27,7 +22,7 @@ public class MainMenuView extends View {
 	@Override
 	protected Scene createScene() {
 		StackPane root = new StackPane();
-		root.setBackground(new Background(new BackgroundFill(Color.valueOf("F6C27D"), null, null)));
+		root.setBackground(new Background(new BackgroundFill(Color.valueOf(Main.BG_COLOR), null, null)));
 		root.setAlignment(Pos.TOP_CENTER);
 
 		ImageView backgroundElements = new ImageView(new Image("assets/images/main_menu_bg_elements.png", 768, 290, false, false));
