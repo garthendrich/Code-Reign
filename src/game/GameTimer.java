@@ -168,7 +168,7 @@ public class GameTimer extends AnimationTimer {
 		double powerUpSpawnElapsedSeconds = gameTime - powerUpSpawnGameTime;
 
 		if (powerUp != null && powerUpSpawnElapsedSeconds > POWER_UP_OCCURENCE_SECONDS) {
-			powerUp.despawn();
+			powerUp.vanish();
 		}
 
 		if (powerUpSpawnElapsedSeconds > POWER_UP_SPAWN_INTERVAL_SECONDS) {
@@ -244,7 +244,7 @@ public class GameTimer extends AnimationTimer {
 		if (edolite.collidesWith(powerUp) == false) return;
 
 		powerUp.applyTo(edolite);
-		powerUp.despawn();
+		powerUp.vanish();
 	}
 
 	private void manageCollisionOf(Orglit orglit, Edolite edolite) {
