@@ -15,5 +15,4 @@ public class Gemstone extends PowerUp {
 		StatusEffect warriorsFury = new StatusEffect(StatusEffect.WARRIORS_FURY, 5, edolite);
 		edolite.obtainStatusEffect(warriorsFury);
 	}
-
 }

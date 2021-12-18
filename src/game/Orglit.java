@@ -41,10 +41,6 @@ class Orglit extends MovableSprite {
 		}
 	}
 
-	public int getDamage() {
-		return damage;
-	}
-
 	@Override
 	void updatePosition() {
 		super.updatePosition();
@@ -57,5 +53,9 @@ class Orglit extends MovableSprite {
 
 		if (isOrglitAtLeftmostEdge) moveRight();
 		else if (isOrglitAtRightmostEdge) moveLeft();
+	}
+
+	public int getDamage() {
+		return damage;
 	}
 }

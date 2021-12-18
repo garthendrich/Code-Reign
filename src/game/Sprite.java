@@ -5,8 +5,13 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 abstract class Sprite {
+
+	protected int xPos;
+	protected int yPos;
+	protected int width;
+	protected int height;
 	protected Image image;
-	protected int xPos, yPos, width, height;
+
 	protected boolean isHidden = false;
 	protected boolean isHorizontallyFlipped = false;
 
@@ -24,6 +29,7 @@ abstract class Sprite {
 		Rectangle2D rectangle2 = rect2.getHitBox();
 		return rectangle1.intersects(rectangle2);
 	}
+
 	//method that will return the bounds of an image
 	private Rectangle2D getHitBox(){
 		return new Rectangle2D(xPos, yPos, width, height);

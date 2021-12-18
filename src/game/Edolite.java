@@ -28,11 +28,6 @@ class Edolite extends MovableSprite {
 		strength = MIN_INITIAL_STRENGTH + randomizer.nextInt(MAX_INITIAL_STRENGTH - MIN_INITIAL_STRENGTH + 1);
 	}
 
-	//method that will get the bullets 'shot' by the ship
-	public ArrayList<Bullet> getBullets(){
-		return bullets;
-	}
-
 	void shoot() {
 		faceRight();
 
@@ -58,22 +53,14 @@ class Edolite extends MovableSprite {
 		}
     }
 
+	public void gainStrength(int amount){
+		strength += amount;
+	}
+
 	void reduceStrengthBy(int damage) {
 		if (!hasStatusEffect(StatusEffect.INVULNERABILITY)) {
 			strength -= damage;
 		}
-	}
-
-	boolean isAlive() {
-		if (strength > 0){
-			return true;
-		}else{
-			return false;
-		}
-	}
-
-	public void gainStrength(int amount){
-		strength += amount;
 	}
 
 	void obtainStatusEffect(StatusEffect statusEffect) {
@@ -96,5 +83,17 @@ class Edolite extends MovableSprite {
 
 	int getStrength() {
 		return strength;
+	}
+
+	public ArrayList<Bullet> getBullets(){
+		return bullets;
+	}
+
+	boolean isAlive() {
+		if (strength > 0){
+			return true;
+		}else{
+			return false;
+		}
 	}
 }

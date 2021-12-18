@@ -6,7 +6,9 @@ import views.View;
 
 abstract class MovableSprite extends Sprite {
 
-	private int dX, dY, movementSpeed;
+	private int dX;
+	private int dY;
+	private int movementSpeed;
 
 	public MovableSprite(int xPos, int yPos, Image image) {
 		super(xPos, yPos, image);

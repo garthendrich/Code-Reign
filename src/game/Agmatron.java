@@ -45,11 +45,11 @@ class Agmatron extends Orglit {
 		}
 	}
 
-	ArrayList<Bullet> getBullets() {
-		return bullets;
-	}
-
 	int getHealth() {
 		return health;
+	}
+
+	ArrayList<Bullet> getBullets() {
+		return bullets;
 	}
 }

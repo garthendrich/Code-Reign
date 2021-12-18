@@ -18,8 +18,15 @@ public class GameTimer extends AnimationTimer {
 
 	public static final int MAX_GAME_TIME = 60;
 
+	public static final int STATUS_BAR_MAX_LENGTH = 240;
+	public static final Color GREEN_COLOR = Color.valueOf("69CD2E");
+	public static final Color RED_COLOR = Color.valueOf("CC2D2D");
+
 	public static final int EDOLITE_INITIAL_X_POS = 150;
 	public static final int EDOLITE_INITIAL_Y_POS = 250;
+
+	public static final int POWER_UP_SPAWN_INTERVAL_SECONDS = 10;
+	public static final int POWER_UP_OCCURENCE_SECONDS = 5;
 
 	public static final int ORGLIT_INITIAL_SPAWN_COUNT = 7;
 	public static final int ORGLIT_SPAWN_COUNT = 3;
@@ -29,31 +36,25 @@ public class GameTimer extends AnimationTimer {
 	public static final int AGMATRON_SMASH_DELAY_SECONDS = 1;
 	public static final int AGMATRON_SHOOT_INTERVAL_SECONDS = 1;
 
-	public static final int POWER_UP_SPAWN_INTERVAL_SECONDS = 10;
-	public static final int POWER_UP_OCCURENCE_SECONDS = 5;
-
-	public static final int STATUS_BAR_MAX_LENGTH = 240;
-	public static final Color GREEN_COLOR = Color.valueOf("69CD2E");
-	public static final Color RED_COLOR = Color.valueOf("CC2D2D");
-
 	private Stage stage;
 	private GraphicsContext graphicsContext;
 
+	private ArrayList<KeyCode> keysHeld = new ArrayList<KeyCode>();
+
 	private Edolite edolite = new Edolite(EDOLITE_INITIAL_X_POS, EDOLITE_INITIAL_Y_POS);
-	private Agmatron agmatron = null;
-	private ArrayList<Orglit> smallOrglits = new ArrayList<Orglit>();
 	private PowerUp powerUp = null;
+	private ArrayList<Orglit> smallOrglits = new ArrayList<Orglit>();
+	private Agmatron agmatron = null;
+
+	private int orglitsKilled = 0;
+	private boolean isAgmatronSpawned = false;
 
 	private long gameStartTimeInNanos = -1;
 	private double gameTime;
-	private double smallOrglitSpawnGameTime = 0;
 	private double powerUpSpawnGameTime = 0;
+	private double smallOrglitSpawnGameTime = 0;
 	private double agmatronSmashGameTime = 0;
 	private double agmatronShootGameTime = 0;
-	private boolean isAgmatronSpawned = false;
-	private int orglitsKilled = 0;
-
-	private ArrayList<KeyCode> keysHeld = new ArrayList<KeyCode>();
 
 	public GameTimer(GraphicsContext graphicsContext){
 		this.graphicsContext = graphicsContext;
@@ -66,6 +67,38 @@ public class GameTimer extends AnimationTimer {
 
 	public void receiveStage(Stage stage) {
 		this.stage = stage;
+	}
+
+	public void handleKeyPress(KeyCode key) {
+		if ((key == KeyCode.SPACE) && !isKeyHeld(KeyCode.SPACE)) {
+			edolite.shoot();
+		}
+
+		if (keysHeld.contains(key) == false) {
+			keysHeld.add(key);
+			updateEdoliteMovement();
+		}
+	}
+
+	public void handleKeyRelease(KeyCode key) {
+		keysHeld.remove(key);
+		updateEdoliteMovement();
+	}
+
+	private void updateEdoliteMovement() {
+		if (isKeyHeld(KeyCode.UP) && isKeyHeld(KeyCode.DOWN)) edolite.stopMovingVertically();
+		else if (isKeyHeld(KeyCode.UP)) edolite.moveUp();
+		else if (isKeyHeld(KeyCode.DOWN)) edolite.moveDown();
+		else edolite.stopMovingVertically();
+
+		if (isKeyHeld(KeyCode.LEFT) && isKeyHeld(KeyCode.RIGHT)) edolite.stopMovingHorizontally();
+		else if (isKeyHeld(KeyCode.LEFT)) edolite.moveLeft();
+		else if (isKeyHeld(KeyCode.RIGHT)) edolite.moveRight();
+		else edolite.stopMovingHorizontally();
+	}
+
+	private boolean isKeyHeld(KeyCode key) {
+		return keysHeld.contains(key);
 	}
 
 	@Override
@@ -402,50 +435,18 @@ public class GameTimer extends AnimationTimer {
 	private ArrayList<MovableSprite> getAllMovableSprites() {
 		ArrayList<MovableSprite> movableSprites = new ArrayList<MovableSprite>();
 
-		ArrayList<Bullet> edoliteBullets = edolite.getBullets();
 		movableSprites.add(edolite);
+		ArrayList<Bullet> edoliteBullets = edolite.getBullets();
 		movableSprites.addAll(edoliteBullets);
 
 		movableSprites.addAll(smallOrglits);
 
 		if (agmatron != null) {
-			ArrayList<Bullet> agmatronBullets = agmatron.getBullets();
 			movableSprites.add(agmatron);
+			ArrayList<Bullet> agmatronBullets = agmatron.getBullets();
 			movableSprites.addAll(agmatronBullets);
 		}
 
 		return movableSprites;
-	}
-
-	public void handleKeyPress(KeyCode key) {
-		if ((key == KeyCode.SPACE) && !isKeyHeld(KeyCode.SPACE)) {
-			edolite.shoot();
-		}
-
-		if (keysHeld.contains(key) == false) {
-			keysHeld.add(key);
-			updateEdoliteMovement();
-		}
-	}
-
-	public void handleKeyRelease(KeyCode key) {
-		keysHeld.remove(key);
-		updateEdoliteMovement();
-	}
-
-	private void updateEdoliteMovement() {
-		if (isKeyHeld(KeyCode.UP) && isKeyHeld(KeyCode.DOWN)) edolite.stopMovingVertically();
-		else if (isKeyHeld(KeyCode.UP)) edolite.moveUp();
-		else if (isKeyHeld(KeyCode.DOWN)) edolite.moveDown();
-		else edolite.stopMovingVertically();
-
-		if (isKeyHeld(KeyCode.LEFT) && isKeyHeld(KeyCode.RIGHT)) edolite.stopMovingHorizontally();
-		else if (isKeyHeld(KeyCode.LEFT)) edolite.moveLeft();
-		else if (isKeyHeld(KeyCode.RIGHT)) edolite.moveRight();
-		else edolite.stopMovingHorizontally();
-	}
-
-	private boolean isKeyHeld(KeyCode key) {
-		return keysHeld.contains(key);
 	}
 }
