@@ -40,8 +40,8 @@ class InstructionsView extends View {
 			new EventHandler<MouseEvent>() {
 				@Override
 				public void handle(MouseEvent event) {
-					MainMenuView titleView = new MainMenuView();
-					titleView.loadTo(stage);
+					MainMenuView mainMenuView = new MainMenuView();
+					mainMenuView.loadTo(stage);
 				}
 			}
 		);
