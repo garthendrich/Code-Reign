@@ -28,6 +28,10 @@ class Orglit extends MovableSprite {
 		setupRandomInitialMovement();
 	}
 
+	/**
+	 * Sets the orglit's random movement speed between the determined values and randomly chooses
+	 * an initial movement of either left or right.
+	 */
 	private void setupRandomInitialMovement() {
 		Random randomizer = new Random();
 
@@ -47,6 +51,12 @@ class Orglit extends MovableSprite {
 		updateMovement();
 	}
 
+	/**
+	 * Updates whether the orglit will now move either to the left or right.
+	 *
+	 * When the orglit bumps into the leftmost edge of the window, it moves to the right direction;
+	 * and when it bumps into the rightmost edge of the window, it moves to the left direction.
+	 */
 	private void updateMovement() {
 		boolean isOrglitAtLeftmostEdge = (xPos == 0);
 		boolean isOrglitAtRightmostEdge = (xPos == View.WINDOW_WIDTH - this.width);
