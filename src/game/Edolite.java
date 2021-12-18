@@ -22,6 +22,8 @@ class Edolite extends MovableSprite {
 	public Edolite(int xPos, int yPos) {
 		super(xPos, yPos, IMAGE);
 
+		setMovementSpeed(MOVEMENT_SPEED);
+
 		Random randomizer = new Random();
 		strength = MIN_INITIAL_STRENGTH + randomizer.nextInt(MAX_INITIAL_STRENGTH - MIN_INITIAL_STRENGTH + 1);
 	}
@@ -37,7 +39,7 @@ class Edolite extends MovableSprite {
 		int bulletXPos = this.xPos + this.width;
 		int bulletYPos = this.yPos + this.height - GUN_ELEVATION - (Bullet.HEIGHT / 2);
 		Bullet bullet = new Bullet(bulletXPos, bulletYPos, strength);
-		bullet.moveRight(Bullet.MOVEMENT_SPEED);
+		bullet.moveRight();
 
 		bullets.add(bullet);
 
@@ -48,8 +50,8 @@ class Edolite extends MovableSprite {
 			int lowerBulletYPos = this.yPos + this.height - GUN_ELEVATION + MULTIPLE_BULLETS_GAP;
 			Bullet lowerBullet = new Bullet(bulletXPos, lowerBulletYPos, strength);
 
-			lowerBullet.moveRight(Bullet.MOVEMENT_SPEED);
-			upperBullet.moveRight(Bullet.MOVEMENT_SPEED);
+			lowerBullet.moveRight();
+			upperBullet.moveRight();
 
 			bullets.add(upperBullet);
 			bullets.add(lowerBullet);

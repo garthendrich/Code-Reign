@@ -13,7 +13,6 @@ class Orglit extends MovableSprite {
 	public final static int MIN_MOVEMENT_SPEED = 1;
 	public final static int MAX_MOVEMENT_SPEED = 5;
 
-	private int movementSpeed;
 	protected int damage = 30;
 
 	public Orglit(int xPos, int yPos) {
@@ -25,11 +24,12 @@ class Orglit extends MovableSprite {
 
 		Random randomizer = new Random();
 
-		movementSpeed = MIN_MOVEMENT_SPEED + randomizer.nextInt(MAX_MOVEMENT_SPEED - MIN_MOVEMENT_SPEED + 1);
+		int randomMovementSpeed = MIN_MOVEMENT_SPEED + randomizer.nextInt(MAX_MOVEMENT_SPEED - MIN_MOVEMENT_SPEED + 1);
+		setMovementSpeed(randomMovementSpeed);
 
 		switch(randomizer.nextInt(2)) {
-			case 0: moveLeft(movementSpeed); break;
-			case 1: moveRight(movementSpeed); break;
+			case 0: moveLeft(); break;
+			case 1: moveRight(); break;
 			default:
 		}
 	}
@@ -48,7 +48,7 @@ class Orglit extends MovableSprite {
 		boolean isOrglitAtLeftmostEdge = (xPos == 0);
 		boolean isOrglitAtRightmostEdge = (xPos == View.WINDOW_WIDTH - this.width);
 
-		if (isOrglitAtLeftmostEdge) moveRight(movementSpeed);
-		else if (isOrglitAtRightmostEdge) moveLeft(movementSpeed);
+		if (isOrglitAtLeftmostEdge) moveRight();
+		else if (isOrglitAtRightmostEdge) moveLeft();
 	}
 }

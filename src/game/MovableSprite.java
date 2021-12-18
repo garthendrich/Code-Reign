@@ -6,27 +6,27 @@ import views.View;
 
 abstract class MovableSprite extends Sprite {
 
-	private int dX, dY;
+	private int dX, dY, movementSpeed;
 
 	public MovableSprite(int xPos, int yPos, Image image) {
 		super(xPos, yPos, image);
 	}
 
-	void moveUp(int distance) {
-		dY = -1 * distance;
+	void moveUp() {
+		dY = -1 * movementSpeed;
 	}
 
-	void moveDown(int distance) {
-		dY = distance;
+	void moveDown() {
+		dY = movementSpeed;
 	}
 
-	void moveLeft(int distance) {
-		dX = -1 * distance;
+	void moveLeft() {
+		dX = -1 * movementSpeed;
 		faceLeft();
 	}
 
-	void moveRight(int distance) {
-		dX = distance;
+	void moveRight() {
+		dX = movementSpeed;
 		faceRight();
 	}
 
@@ -49,5 +49,9 @@ abstract class MovableSprite extends Sprite {
 		yPos += dY;
 		if (yPos < 0) yPos = 0;
 		else if (yPos > highestYPos) yPos = highestYPos;
+	}
+
+	protected void setMovementSpeed(int movementSpeed) {
+		this.movementSpeed = movementSpeed;
 	}
 }

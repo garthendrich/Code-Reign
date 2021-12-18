@@ -20,6 +20,8 @@ class Bullet extends MovableSprite {
 	public Bullet(int xPos, int yPos, int damage, Image image) {
 		super(xPos, yPos, image);
 
+		setMovementSpeed(MOVEMENT_SPEED);
+
 		this.damage = damage;
 	}
 
