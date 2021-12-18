@@ -23,7 +23,7 @@ class Agmatron extends Orglit {
 
 	/**
 	 * Creates a corrupted bullet and adds it to the agmatron's arraylist of bullets. It spawns at
-	 * the left of the agmatron. It will choose a random movement between upward-leftward and
+	 * the left of the agmatron. It will choose a random movement of either upward-leftward or
 	 * downward-leftward.
 	 */
 	void shoot() {
@@ -45,7 +45,7 @@ class Agmatron extends Orglit {
 	/**
 	 * Reduces agmatron's health by a specified amount. Hides the agmatron sprite if health reaches 0.
 	 *
-	 * @param amount The amount of health to reduce.
+	 * @param amount The amount of health to deduct.
 	 */
 	void reduceHealthBy(int amount) {
 		health -= amount;

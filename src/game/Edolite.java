@@ -62,9 +62,9 @@ class Edolite extends MovableSprite {
 	/**
 	 * Increases edolite's strength by a specified amount.
 	 *
-	 * @param amount The amount of strength to increase.
+	 * @param amount The amount of strength to add.
 	 */
-	void gainStrength(int amount){
+	void gainStrength(int amount) {
 		strength += amount;
 	}
 
@@ -72,7 +72,7 @@ class Edolite extends MovableSprite {
 	/**
 	 * Reduces edolite's strength by a specified amount.
 	 *
-	 * @param amount The amount of strength to reduce.
+	 * @param amount The amount of strength to deduct.
 	 */
 	void reduceStrengthBy(int damage) {
 		strength -= damage;
