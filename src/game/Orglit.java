@@ -25,6 +25,10 @@ class Orglit extends MovableSprite {
 
 		this.damage = damage;
 
+		setupRandomInitialMovement();
+	}
+
+	private void setupRandomInitialMovement() {
 		Random randomizer = new Random();
 
 		int randomMovementSpeed = MIN_MOVEMENT_SPEED + randomizer.nextInt(MAX_MOVEMENT_SPEED - MIN_MOVEMENT_SPEED + 1);
