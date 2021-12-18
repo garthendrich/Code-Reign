@@ -4,7 +4,7 @@ import javafx.application.Application;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-import views.TitleView;
+import views.MainMenuView;
 
 public class Main extends Application {
 
@@ -17,7 +17,7 @@ public class Main extends Application {
 	public void start(Stage stage) {
 		Font.loadFont("file:src/assets/fonts/Notalot60.ttf", 20);
 
-		TitleView titleView = new TitleView();
+		MainMenuView titleView = new MainMenuView();
 		titleView.loadTo(stage);
 
 		stage.setTitle("Code:Reign");

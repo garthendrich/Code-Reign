@@ -23,7 +23,7 @@ import javafx.stage.Stage;
 
 import main.Main;
 
-public class TitleView extends View {
+public class MainMenuView extends View {
 
 	@Override
 	protected Scene createScene() {

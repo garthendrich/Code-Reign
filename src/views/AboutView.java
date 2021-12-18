@@ -73,7 +73,7 @@ class AboutView extends View {
 				public void handle(MouseEvent event) {
 					Stage stage = getStage();
 
-					TitleView titleView = new TitleView();
+					MainMenuView titleView = new MainMenuView();
 					titleView.loadTo(stage);
 				}
 			}
