@@ -2,7 +2,6 @@ package views;
 
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
@@ -21,30 +20,35 @@ class InstructionsView extends View {
 	@Override
 	protected Scene createScene() {
 		VBox root = new VBox();
-		root.setBackground(new Background(new BackgroundFill(Color.valueOf("F6C27D"), null, null)));
+		root.setBackground(new Background(new BackgroundFill(Color.valueOf(Main.BG_COLOR), null, null)));
 		root.setAlignment(Pos.CENTER);
-		root.setSpacing(75);
+		root.setSpacing(24);
 
-		Text instructionsTitle = new Text();
-		instructionsTitle.setText("Instructions");
-		instructionsTitle.setFont(Font.font(Main.NOTALOT60, 50));
-		instructionsTitle.setTextAlignment(TextAlignment.CENTER);
-		instructionsTitle.setTextOrigin(VPos.TOP);
+		Text title = new Text("Invasion incoming!");
+		title.setFont(Font.font(Main.NOTALOT60, 48));
+		title.setFill(Color.WHITE);
+		title.setStroke(Color.valueOf(Main.STROKE_COLOR));
+		title.setStrokeWidth(2);
 
 		Text instructions = new Text();
-		instructions.setText("Press the arrow keys to move the Edolite. \n "
-				+ "Press Spacebar to shoot. \n "
-				+ "Avoid colliding with enemies. \n "
-				+ "Pickup power-ups to help you survive. \n "
-				+ "To win the game, you must survive for 60 seconds.");
-		instructions.setFont(Font.font(Main.NOTALOT60, 30));
+		instructions.setText("As an Edolite, the destined hero of Arthane, you have to survive against the "
+				+ "insufferable Orglits and their king, the Agmatron.\n\n"
+				+ "Avoid getting hit by the enemies.\n"
+				+ "Use the arrow keys to move and space bar to shoot.\n"
+				+ "There are power-ups you can pick up to help you with your battle.\n"
+				+ "Survive for 60 seconds to win the game.\n\n "
+				+ "Defend the throne, Edolite! The fate of Arthane is in your hands.");
+		instructions.setFont(Font.font(Main.NOTALOT60, 24));
+		instructions.setFill(Color.WHITE);
+		instructions.setStroke(Color.valueOf(Main.STROKE_COLOR));
+		instructions.setStrokeWidth(1);
+		instructions.setWrappingWidth(Main.WINDOW_WIDTH);
 		instructions.setTextAlignment(TextAlignment.CENTER);
-		instructions.setTextOrigin(VPos.CENTER);
 
-		Button backButton = new Button("Return to Main Menu");
+		Button backButton = createThemedButton("Return to main menu");
 		backButton.setAlignment(Pos.BOTTOM_CENTER);
 
-		root.getChildren().addAll(instructionsTitle, instructions, backButton);
+		root.getChildren().addAll(title, instructions, backButton);
 
 		backButton.setOnMouseClicked(
 			new EventHandler<MouseEvent>() {
