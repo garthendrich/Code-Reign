@@ -56,7 +56,7 @@ public class GameTimer extends AnimationTimer {
 	private double agmatronSmashGameTime = 0;
 	private double agmatronShootGameTime = 0;
 
-	public GameTimer(GraphicsContext graphicsContext){
+	public GameTimer(GraphicsContext graphicsContext) {
 		this.graphicsContext = graphicsContext;
 
 		graphicsContext.setFont(Font.font(View.NOTALOT60, 20));

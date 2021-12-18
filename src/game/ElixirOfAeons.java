@@ -7,7 +7,7 @@ public class ElixirOfAeons extends PowerUp {
 	public final static Image IMAGE = new Image("assets/images/elixir_of_aeons.png", PowerUp.SIZE, PowerUp.SIZE, false, false);
 	public final static int STATUS_EFFECT_DURATION = 3;
 
-	ElixirOfAeons(int xPos, int yPos){
+	ElixirOfAeons(int xPos, int yPos) {
 		super(xPos, yPos, IMAGE);
 	}
 

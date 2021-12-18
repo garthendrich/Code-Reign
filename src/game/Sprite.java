@@ -23,14 +23,14 @@ abstract class Sprite {
 	}
 
 	//method that will check for collision of two sprites
-	boolean collidesWith(Sprite rect2)	{
+	boolean collidesWith(Sprite rect2) {
 		Rectangle2D rectangle1 = getHitBox();
 		Rectangle2D rectangle2 = rect2.getHitBox();
 		return rectangle1.intersects(rectangle2);
 	}
 
 	//method that will return the bounds of an image
-	private Rectangle2D getHitBox(){
+	private Rectangle2D getHitBox() {
 		return new Rectangle2D(xPos, yPos, width, height);
 	}
 
@@ -55,11 +55,11 @@ abstract class Sprite {
 		isHidden = true;
 	}
 
-	int getWidth(){
+	int getWidth() {
 		return width;
 	}
 
-	int getHeight(){
+	int getHeight() {
 		return height;
 	}
 

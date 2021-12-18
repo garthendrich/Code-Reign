@@ -117,7 +117,7 @@ class Edolite extends MovableSprite {
 		return strength;
 	}
 
-	ArrayList<Bullet> getBullets(){
+	ArrayList<Bullet> getBullets() {
 		return bullets;
 	}
 
