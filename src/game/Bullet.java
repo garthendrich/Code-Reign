@@ -1,7 +1,8 @@
 package game;
 
 import javafx.scene.image.Image;
-import views.View;;
+
+import views.View;
 
 class Bullet extends MovableSprite {
 

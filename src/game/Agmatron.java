@@ -2,7 +2,6 @@ package game;
 
 import java.util.ArrayList;
 import java.util.Random;
-
 import javafx.scene.image.Image;
 
 class Agmatron extends Orglit {

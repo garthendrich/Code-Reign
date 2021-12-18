@@ -1,6 +1,7 @@
 package game;
 
 import javafx.scene.image.Image;
+
 import views.View;
 
 abstract class MovableSprite extends Sprite {

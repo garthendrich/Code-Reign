@@ -2,6 +2,7 @@ package game;
 
 import java.util.Random;
 import javafx.scene.image.Image;
+
 import views.View;
 
 class Orglit extends MovableSprite {

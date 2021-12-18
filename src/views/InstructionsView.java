@@ -14,6 +14,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+
 import game.ElixirOfAeons;
 import game.Gemstone;
 import game.Hexcore;
