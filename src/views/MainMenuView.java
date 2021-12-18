@@ -11,7 +11,6 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 public class MainMenuView extends View {
@@ -19,7 +18,7 @@ public class MainMenuView extends View {
 	@Override
 	protected Parent createRoot() {
 		StackPane root = new StackPane();
-		root.setBackground(new Background(new BackgroundFill(Color.valueOf(View.BG_COLOR), null, null)));
+		root.setBackground(new Background(new BackgroundFill(BG_COLOR, null, null)));
 		root.setAlignment(Pos.TOP_CENTER);
 
 		ImageView backgroundElements = new ImageView(new Image("assets/images/main_menu_bg_elements.png", 768, 290, false, false));

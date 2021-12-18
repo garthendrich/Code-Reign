@@ -9,7 +9,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import game.GameTimer;
@@ -21,7 +20,7 @@ class GameView extends View {
 	@Override
 	protected Parent createRoot() {
 		StackPane root = new StackPane();
-		root.setBackground(new Background(new BackgroundFill(Color.valueOf(View.BG_COLOR), null, null)));
+		root.setBackground(new Background(new BackgroundFill(BG_COLOR, null, null)));
 
 		Canvas canvas = new Canvas(View.WINDOW_WIDTH, View.WINDOW_HEIGHT);
 		GraphicsContext graphicsContext = canvas.getGraphicsContext2D();

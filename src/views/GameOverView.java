@@ -8,7 +8,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
@@ -25,7 +24,7 @@ public class GameOverView extends View {
 	@Override
 	protected Parent createRoot() {
 		VBox root = new VBox();
-		root.setBackground(new Background(new BackgroundFill(Color.valueOf(View.BG_COLOR), null, null)));
+		root.setBackground(new Background(new BackgroundFill(BG_COLOR, null, null)));
 		root.setAlignment(Pos.CENTER);
 		root.setSpacing(32);
 
