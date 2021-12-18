@@ -1,12 +1,14 @@
 package views;
 
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
@@ -23,22 +25,53 @@ public class GameOverView extends View {
 	@Override
 	protected Parent createRoot() {
 		VBox root = new VBox();
-		root.setBackground(new Background(new BackgroundFill(Color.valueOf("F6C27D"), null, null)));
+		root.setBackground(new Background(new BackgroundFill(Color.valueOf(View.BG_COLOR), null, null)));
 		root.setAlignment(Pos.CENTER);
-		root.setSpacing(8);
+		root.setSpacing(32);
 
-		Text outComeMessageText;
+		VBox gameResultWrapper = new VBox();
+		gameResultWrapper.setAlignment(Pos.CENTER);
+		gameResultWrapper.setSpacing(8);
 
-		if (edoliteStrength >= 0) outComeMessageText = new Text("CONGRATULATIONS! YOU WIN!");
-		else outComeMessageText = new Text("GAME OVER! YOU LOSE!");
+		String outComeMessageString;
+		if (edoliteStrength >= 0) outComeMessageString = "CONGRATULATIONS!\nYOU WIN!";
+		else outComeMessageString = "GAME OVER! YOU LOSE!";
 
-		outComeMessageText.setFont(Font.font(View.NOTALOT60, 50));
+		Text outComeMessageText = createThemedText(outComeMessageString, 64, 2);
+		outComeMessageText.setTextAlignment(TextAlignment.CENTER);
 
-		Text orglitsKilledText = new Text("Orglits killed: " + orglitsKilled);
-		orglitsKilledText.setFont(Font.font(View.NOTALOT60, 30));
-		orglitsKilledText.setTextAlignment(TextAlignment.CENTER);
+		Text orglitsKilledText = createThemedText("Orglits killed: " + orglitsKilled, 32, 1);
 
-		root.getChildren().addAll(outComeMessageText, orglitsKilledText);
+		VBox buttonsWrapper = new VBox();
+		buttonsWrapper.setAlignment(Pos.CENTER);
+		buttonsWrapper.setSpacing(8);
+
+		Button newGameButton = createThemedButton("Play again");
+		Button mainMenuButton = createThemedButton("Main menu");
+
+		newGameButton.setOnMouseClicked(
+			new EventHandler<MouseEvent>() {
+				@Override
+				public void handle(MouseEvent event) {
+					GameView gameStage = new GameView();
+					gameStage.loadTo(stage);
+				}
+			}
+		);
+
+		mainMenuButton.setOnMouseClicked(
+			new EventHandler<MouseEvent>() {
+				@Override
+				public void handle(MouseEvent event) {
+					MainMenuView mainMenuView = new MainMenuView();
+					mainMenuView.loadTo(stage);
+				}
+			}
+		);
+
+		gameResultWrapper.getChildren().addAll(outComeMessageText, orglitsKilledText);
+		buttonsWrapper.getChildren().addAll(newGameButton, mainMenuButton);
+		root.getChildren().addAll(gameResultWrapper, buttonsWrapper);
 
 		return root;
 	}

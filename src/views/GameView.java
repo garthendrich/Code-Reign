@@ -21,10 +21,11 @@ class GameView extends View {
 	@Override
 	protected Parent createRoot() {
 		StackPane root = new StackPane();
-		root.setBackground(new Background(new BackgroundFill(Color.valueOf("F6C27D"), null, null)));
+		root.setBackground(new Background(new BackgroundFill(Color.valueOf(View.BG_COLOR), null, null)));
 
 		Canvas canvas = new Canvas(View.WINDOW_WIDTH, View.WINDOW_HEIGHT);
 		GraphicsContext graphicsContext = canvas.getGraphicsContext2D();
+
 		gameTimer = new GameTimer(graphicsContext);
 
 		root.getChildren().add(canvas);
