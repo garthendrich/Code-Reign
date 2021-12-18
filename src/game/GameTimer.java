@@ -32,6 +32,8 @@ public class GameTimer extends AnimationTimer {
 	public static final int POWER_UP_OCCURENCE_SECONDS = 5;
 
 	public static final int STATUS_BAR_MAX_LENGTH = 240;
+	public static final Color GREEN_COLOR = Color.valueOf("69CD2E");
+	public static final Color RED_COLOR = Color.valueOf("CC2D2D");
 
 	private Stage stage;
 	private GraphicsContext graphicsContext;
@@ -309,7 +311,7 @@ public class GameTimer extends AnimationTimer {
 
 	private void displayAllStatusBars() {
 		int edoliteStrength = edolite.getStrength();
-		displayStatusBar(16, 16, "strength", edoliteStrength, Edolite.MAX_INITIAL_STRENGTH + 100, "69CD2E");
+		displayStatusBar(16, 16, "strength", edoliteStrength, Edolite.MAX_INITIAL_STRENGTH + 100, GREEN_COLOR);
 
 		if (agmatron != null) {
 			int agmatronStatusBarXPos = View.WINDOW_WIDTH - STATUS_BAR_MAX_LENGTH - 16;
@@ -317,7 +319,7 @@ public class GameTimer extends AnimationTimer {
 			displayGameStatusText("Agmatron:", agmatronStatusBarXPos + 4, 16);
 
 			int agmatronHealth = agmatron.getHealth();
-			displayStatusBar(agmatronStatusBarXPos, 44, "health", agmatronHealth, Agmatron.MAX_HEALTH, "CC2D2D");
+			displayStatusBar(agmatronStatusBarXPos, 44, "health", agmatronHealth, Agmatron.MAX_HEALTH, RED_COLOR);
 		}
 	}
 
@@ -327,7 +329,7 @@ public class GameTimer extends AnimationTimer {
 			String statusLabel,
 			int statusValue,
 			int maxStatusValue,
-			String hexColor) {
+			Color color) {
 
 		double statusBarPercentage = statusValue / (double) maxStatusValue;
 		int statusBarLength =  (int) (statusBarPercentage * STATUS_BAR_MAX_LENGTH);
@@ -336,7 +338,7 @@ public class GameTimer extends AnimationTimer {
 		}
 
 		graphicsContext.setGlobalAlpha(0.75);
-		graphicsContext.setFill(Color.valueOf(hexColor));
+		graphicsContext.setFill(color);
 		graphicsContext.fillRect(xPos, yPos, statusBarLength, 32);
 		graphicsContext.setGlobalAlpha(1);
 
