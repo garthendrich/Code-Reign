@@ -9,7 +9,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
-import main.Main;
 
 public class GameOverView extends View {
 
@@ -33,15 +32,15 @@ public class GameOverView extends View {
 		if (edoliteStrength >= 0) outComeMessageText = new Text("CONGRATULATIONS! YOU WIN!");
 		else outComeMessageText = new Text("GAME OVER! YOU LOSE!");
 
-		outComeMessageText.setFont(Font.font(Main.NOTALOT60, 50));
+		outComeMessageText.setFont(Font.font(View.NOTALOT60, 50));
 
 		Text orglitsKilledText = new Text("Orglits killed: " + orglitsKilled);
-		orglitsKilledText.setFont(Font.font(Main.NOTALOT60, 30));
+		orglitsKilledText.setFont(Font.font(View.NOTALOT60, 30));
 		orglitsKilledText.setTextAlignment(TextAlignment.CENTER);
 
 		root.getChildren().addAll(outComeMessageText, orglitsKilledText);
 
-		return new Scene(root, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
+		return new Scene(root, View.WINDOW_WIDTH, View.WINDOW_HEIGHT);
 	}
 
 }

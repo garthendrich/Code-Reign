@@ -12,14 +12,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
-import main.Main;
-
 class InstructionsView extends View {
 
 	@Override
 	protected Scene createScene() {
 		VBox root = new VBox();
-		root.setBackground(new Background(new BackgroundFill(Color.valueOf(Main.BG_COLOR), null, null)));
+		root.setBackground(new Background(new BackgroundFill(Color.valueOf(View.BG_COLOR), null, null)));
 		root.setAlignment(Pos.CENTER);
 		root.setSpacing(24);
 
@@ -33,7 +31,7 @@ class InstructionsView extends View {
 				+ "Survive for 60 seconds to win the game.\n\n "
 				+ "Defend the throne, Edolite! The fate of Arthane is in your hands.";
 		Text instructions = createThemedText(instructionsString, 24, 1);
-		instructions.setWrappingWidth(Main.WINDOW_WIDTH);
+		instructions.setWrappingWidth(View.WINDOW_WIDTH);
 		instructions.setTextAlignment(TextAlignment.CENTER);
 
 		Button backButton = createThemedButton("Return to main menu");
@@ -50,6 +48,6 @@ class InstructionsView extends View {
 			}
 		);
 
-		return new Scene(root, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
+		return new Scene(root, View.WINDOW_WIDTH, View.WINDOW_HEIGHT);
 	}
 }

@@ -11,8 +11,6 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-
-import main.Main;
 import game.GameTimer;
 
 class GameView extends View {
@@ -24,13 +22,13 @@ class GameView extends View {
 		StackPane root = new StackPane();
 		root.setBackground(new Background(new BackgroundFill(Color.valueOf("F6C27D"), null, null)));
 
-		Canvas canvas = new Canvas(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
+		Canvas canvas = new Canvas(View.WINDOW_WIDTH, View.WINDOW_HEIGHT);
 		GraphicsContext graphicsContext = canvas.getGraphicsContext2D();
 		gameTimer = new GameTimer(graphicsContext);
 
 		root.getChildren().add(canvas);
 
-		Scene scene = new Scene(root, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
+		Scene scene = new Scene(root, View.WINDOW_WIDTH, View.WINDOW_HEIGHT);
 
 		scene.setOnKeyPressed(
 			new EventHandler<KeyEvent>() {

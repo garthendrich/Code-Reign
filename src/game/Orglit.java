@@ -2,8 +2,7 @@ package game;
 
 import java.util.Random;
 import javafx.scene.image.Image;
-
-import main.Main;
+import views.View;
 
 class Orglit extends MovableSprite {
 
@@ -55,7 +54,7 @@ class Orglit extends MovableSprite {
 
 	void updateMovement() {
 		boolean isOrglitAtLeftmostEdge = (xPos == 0);
-		boolean isOrglitAtRightmostEdge = (xPos == Main.WINDOW_WIDTH - this.width);
+		boolean isOrglitAtRightmostEdge = (xPos == View.WINDOW_WIDTH - this.width);
 
 		if (isOrglitAtLeftmostEdge) moveRight(movementSpeed);
 		else if (isOrglitAtRightmostEdge) moveLeft(movementSpeed);

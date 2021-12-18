@@ -1,8 +1,7 @@
 package game;
 
 import javafx.scene.image.Image;
-
-import main.Main;;
+import views.View;;
 
 class Bullet extends MovableSprite {
 
@@ -32,9 +31,9 @@ class Bullet extends MovableSprite {
 
 	private void manageCollisionToEdge() {
 		boolean isBulletAtLeftmostEdge = (xPos == 0);
-		boolean isBulletAtRightmostEdge = (xPos == Main.WINDOW_WIDTH - this.width);
+		boolean isBulletAtRightmostEdge = (xPos == View.WINDOW_WIDTH - this.width);
 		boolean isBulletAtTopmostEdge = (yPos == 0);
-		boolean isBulletAtBottommostEdge = (yPos == Main.WINDOW_HEIGHT - this.height);
+		boolean isBulletAtBottommostEdge = (yPos == View.WINDOW_HEIGHT - this.height);
 
 		if (isBulletAtLeftmostEdge || isBulletAtRightmostEdge || isBulletAtTopmostEdge || isBulletAtBottommostEdge) {
 			collide();

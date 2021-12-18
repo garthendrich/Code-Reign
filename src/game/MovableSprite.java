@@ -1,8 +1,7 @@
 package game;
 
 import javafx.scene.image.Image;
-
-import main.Main;
+import views.View;
 
 abstract class MovableSprite extends Sprite {
 
@@ -39,8 +38,8 @@ abstract class MovableSprite extends Sprite {
 	}
 
 	void updatePosition() {
-		int highestXPos = Main.WINDOW_WIDTH - this.width;
-		int highestYPos = Main.WINDOW_HEIGHT - this.height;
+		int highestXPos = View.WINDOW_WIDTH - this.width;
+		int highestYPos = View.WINDOW_HEIGHT - this.height;
 
 		xPos += dX;
 		if (xPos < 0) xPos = 0;

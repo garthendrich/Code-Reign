@@ -14,18 +14,16 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
-import main.Main;
-
 public class MainMenuView extends View {
 
 	@Override
 	protected Scene createScene() {
 		StackPane root = new StackPane();
-		root.setBackground(new Background(new BackgroundFill(Color.valueOf(Main.BG_COLOR), null, null)));
+		root.setBackground(new Background(new BackgroundFill(Color.valueOf(View.BG_COLOR), null, null)));
 		root.setAlignment(Pos.TOP_CENTER);
 
 		ImageView backgroundElements = new ImageView(new Image("assets/images/main_menu_bg_elements.png", 768, 290, false, false));
-		backgroundElements.setFitWidth(Main.WINDOW_WIDTH);
+		backgroundElements.setFitWidth(View.WINDOW_WIDTH);
 		backgroundElements.setPreserveRatio(true);
 
 		VBox content = new VBox();
@@ -76,7 +74,7 @@ public class MainMenuView extends View {
 			}
 		);
 
-		return new Scene(root, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
+		return new Scene(root, View.WINDOW_WIDTH, View.WINDOW_HEIGHT);
 	}
 }
 

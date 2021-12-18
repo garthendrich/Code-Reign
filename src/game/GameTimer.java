@@ -10,9 +10,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
-
-import main.Main;
 import views.GameOverView;
+import views.View;
 
 public class GameTimer extends AnimationTimer {
 
@@ -56,7 +55,7 @@ public class GameTimer extends AnimationTimer {
 	public GameTimer(GraphicsContext graphicsContext){
 		this.graphicsContext = graphicsContext;
 
-		graphicsContext.setFont(Font.font(Main.NOTALOT60, 20));
+		graphicsContext.setFont(Font.font(View.NOTALOT60, 20));
 		graphicsContext.setTextBaseline(VPos.TOP);
 
 		spawnSmallOrglits(ORGLIT_INITIAL_SPAWN_COUNT);
@@ -106,11 +105,11 @@ public class GameTimer extends AnimationTimer {
 
 	private void spawnSmallOrglits(int spawnCount) {
 		for (int spawned = 0; spawned < spawnCount; spawned++) {
-			int canvasMiddleX = Main.WINDOW_WIDTH / 2;
-			int highestXPos = Main.WINDOW_WIDTH - Orglit.WIDTH;
+			int canvasMiddleX = View.WINDOW_WIDTH / 2;
+			int highestXPos = View.WINDOW_WIDTH - Orglit.WIDTH;
 			int randomXPos = generateRandomNumber(canvasMiddleX, highestXPos);
 
-			int highestYPos = Main.WINDOW_HEIGHT - Orglit.HEIGHT;
+			int highestYPos = View.WINDOW_HEIGHT - Orglit.HEIGHT;
 			int randomYPos = generateRandomNumber(0, highestYPos);
 
 			smallOrglits.add(new Orglit(randomXPos, randomYPos));
@@ -118,11 +117,11 @@ public class GameTimer extends AnimationTimer {
 	}
 
 	private void spawnAgmatron() {
-		int canvasMiddleX = Main.WINDOW_WIDTH / 2;
-		int highestXPos = Main.WINDOW_WIDTH - Agmatron.WIDTH;
+		int canvasMiddleX = View.WINDOW_WIDTH / 2;
+		int highestXPos = View.WINDOW_WIDTH - Agmatron.WIDTH;
 		int randomXPos = generateRandomNumber(canvasMiddleX, highestXPos);
 
-		int highestYPos = Main.WINDOW_HEIGHT - Agmatron.HEIGHT;
+		int highestYPos = View.WINDOW_HEIGHT - Agmatron.HEIGHT;
 		int randomYPos = generateRandomNumber(0, highestYPos);
 
 		agmatron = new Agmatron(randomXPos, randomYPos);
@@ -143,10 +142,10 @@ public class GameTimer extends AnimationTimer {
 	}
 
 	private void spawnPowerUp() {
-		int canvasMiddleX = Main.WINDOW_WIDTH / 2;
+		int canvasMiddleX = View.WINDOW_WIDTH / 2;
 		int randomXPos = generateRandomNumber(0, canvasMiddleX);
 
-		int highestYPos = Main.WINDOW_HEIGHT - PowerUp.SIZE;
+		int highestYPos = View.WINDOW_HEIGHT - PowerUp.SIZE;
 		int randomYPos = generateRandomNumber(0, highestYPos);
 
 		Random randomizer = new Random();
@@ -299,7 +298,7 @@ public class GameTimer extends AnimationTimer {
 	}
 
 	private void clearGameCanvas() {
-		graphicsContext.clearRect(0, 0, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
+		graphicsContext.clearRect(0, 0, View.WINDOW_WIDTH, View.WINDOW_HEIGHT);
 	}
 
 	private void displayGameStatus() {
@@ -313,7 +312,7 @@ public class GameTimer extends AnimationTimer {
 		displayStatusBar(16, 16, "strength", edoliteStrength, Edolite.MAX_INITIAL_STRENGTH + 100, "69CD2E");
 
 		if (agmatron != null) {
-			int agmatronStatusBarXPos = Main.WINDOW_WIDTH - STATUS_BAR_MAX_LENGTH - 16;
+			int agmatronStatusBarXPos = View.WINDOW_WIDTH - STATUS_BAR_MAX_LENGTH - 16;
 
 			displayGameStatusText("Agmatron:", agmatronStatusBarXPos + 4, 16);
 
@@ -350,12 +349,12 @@ public class GameTimer extends AnimationTimer {
 
 	private void displayGameTimeLeft() {
 		graphicsContext.setTextAlign(TextAlignment.CENTER);
-		displayGameStatusText("Time left", Main.WINDOW_WIDTH / 2, 16);
+		displayGameStatusText("Time left", View.WINDOW_WIDTH / 2, 16);
 
-		graphicsContext.setFont(Font.font(Main.NOTALOT60, 28));
-		displayGameStatusText("" + (MAX_GAME_TIME - (int) gameTime), Main.WINDOW_WIDTH / 2, 40);
+		graphicsContext.setFont(Font.font(View.NOTALOT60, 28));
+		displayGameStatusText("" + (MAX_GAME_TIME - (int) gameTime), View.WINDOW_WIDTH / 2, 40);
 
-		graphicsContext.setFont(Font.font(Main.NOTALOT60, 20));
+		graphicsContext.setFont(Font.font(View.NOTALOT60, 20));
 		graphicsContext.setTextAlign(TextAlignment.LEFT);
 	}
 
