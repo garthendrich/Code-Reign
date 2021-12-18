@@ -1,6 +1,7 @@
 package main;
 
 import javafx.application.Application;
+import javafx.scene.image.Image;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -15,6 +16,7 @@ public class Main extends Application {
 		MainMenuView titleView = new MainMenuView();
 		titleView.loadTo(stage);
 
+		stage.getIcons().add(new Image("assets/images/icon.png", 64, 64, false, false));
 		stage.setTitle("Code:Reign");
 		stage.setResizable(false);
 		stage.show();
