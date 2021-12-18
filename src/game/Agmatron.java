@@ -42,7 +42,7 @@ class Agmatron extends Orglit {
 		health -= amount;
 
 		if (health <= 0) {
-			die();
+			this.vanish();
 		}
 	}
 

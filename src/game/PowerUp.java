@@ -11,4 +11,8 @@ abstract class PowerUp extends Sprite {
 	}
 
 	abstract void applyTo(Edolite edolite);
+
+	void despawn() {
+		isHidden = true;
+	}
 }

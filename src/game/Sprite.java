@@ -7,6 +7,7 @@ import javafx.scene.image.Image;
 abstract class Sprite {
 	protected Image image;
 	protected int xPos, yPos, width, height;
+	protected boolean isHidden = false;
 	protected boolean isHorizontallyFlipped = false;
 
 	public Sprite(int xPos, int yPos, Image image) {
@@ -45,11 +46,19 @@ abstract class Sprite {
 		isHorizontallyFlipped = false;
 	}
 
+	void vanish() {
+		isHidden = true;
+	}
+
 	public int getWidth(){
 		return width;
 	}
 
 	public int getHeight(){
 		return height;
+	}
+
+	boolean isHidden() {
+		return isHidden;
 	}
 }

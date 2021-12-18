@@ -13,7 +13,6 @@ class Orglit extends MovableSprite {
 	public final static int MIN_MOVEMENT_SPEED = 1;
 	public final static int MAX_MOVEMENT_SPEED = 5;
 
-	private boolean isAlive = true;
 	private int movementSpeed;
 	protected int damage = 30;
 
@@ -37,14 +36,6 @@ class Orglit extends MovableSprite {
 
 	public int getDamage() {
 		return damage;
-	}
-
-	void die() {
-		isAlive = false;
-	}
-
-	boolean isAlive() {
-		return isAlive;
 	}
 
 	@Override

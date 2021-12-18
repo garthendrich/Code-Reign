@@ -78,6 +78,7 @@ public class GameTimer extends AnimationTimer {
 
 		updateMovableSpritePositions();
 		manageSpriteCollisions();
+		deleteHiddenSprites();
 		updateCanvas();
 
 		checkGameEnd();
@@ -133,18 +134,18 @@ public class GameTimer extends AnimationTimer {
 	private void managePowerUpSpawns() {
 		double powerUpSpawnElapsedSeconds = gameTime - powerUpSpawnGameTime;
 
-		if (powerUpSpawnElapsedSeconds > POWER_UP_OCCURENCE_SECONDS) {
-			deSpawnPowerUp();
+		if (powerUp != null && powerUpSpawnElapsedSeconds > POWER_UP_OCCURENCE_SECONDS) {
+			powerUp.despawn();
 		}
 
 		if (powerUpSpawnElapsedSeconds > POWER_UP_SPAWN_INTERVAL_SECONDS) {
-			spawnPowerUp();
+			powerUp = createRandomPowerUp();
 
 			powerUpSpawnGameTime = gameTime;
 		}
 	}
 
-	private void spawnPowerUp() {
+	private PowerUp createRandomPowerUp() {
 		int canvasMiddleX = View.WINDOW_WIDTH / 2;
 		int randomXPos = generateRandomNumber(0, canvasMiddleX);
 
@@ -153,15 +154,12 @@ public class GameTimer extends AnimationTimer {
 
 		Random randomizer = new Random();
 		switch(randomizer.nextInt(3)) {
-			case 0: powerUp = new Hexcore(randomXPos, randomYPos); break;
-			case 1: powerUp = new ElixirOfAeons(randomXPos, randomYPos); break;
-			case 2: powerUp = new Gemstone(randomXPos, randomYPos); break;
+			case 0: return new Hexcore(randomXPos, randomYPos);
+			case 1: return new ElixirOfAeons(randomXPos, randomYPos);
+			case 2: return new Gemstone(randomXPos, randomYPos);
 			default:
 		}
-	}
-
-	private void deSpawnPowerUp() {
-		powerUp = null;
+		return null;
 	}
 
 	private void manageAgmatronAttacks() {
@@ -189,7 +187,7 @@ public class GameTimer extends AnimationTimer {
 			manageCollisionOf(smallOrglit, edolite);
 
 			for (Bullet edoliteBullet : edoliteBullets) {
-				if (smallOrglit.isAlive()) {
+				if (!smallOrglit.isHidden()) {
 					manageCollisionOf(edoliteBullet, smallOrglit);
 				}
 			}
@@ -206,18 +204,14 @@ public class GameTimer extends AnimationTimer {
 			for (Bullet agmatronBullet : agmatronBullets) {
 				manageCollisionOf(agmatronBullet, edolite);
 			}
-			deleteCollidedBullets(agmatronBullets);
 		}
-
-		deleteDeadOrglits();
-		deleteCollidedBullets(edoliteBullets);
 	}
 
 	private void manageCollisionOf(Edolite edolite, PowerUp powerUp) {
 		if (edolite.collidesWith(powerUp) == false) return;
 
 		powerUp.applyTo(edolite);
-		deSpawnPowerUp();
+		powerUp.despawn();
 	}
 
 	private void manageCollisionOf(Orglit orglit, Edolite edolite) {
@@ -231,7 +225,7 @@ public class GameTimer extends AnimationTimer {
 			agmatronSmashGameTime = gameTime;
 
 		} else {
-			orglit.die();
+			orglit.vanish();
 		}
 
 		int orglitDamage = orglit.getDamage();
@@ -247,12 +241,12 @@ public class GameTimer extends AnimationTimer {
 			Agmatron agmatron = (Agmatron) orglit;
 			agmatron.reduceHealthBy(bulletDamage);
 		} else {
-			orglit.die();
+			orglit.vanish();
 		}
 
-		bullet.collide();
+		bullet.vanish();
 
-		if (orglit.isAlive() == false) {
+		if (orglit.isHidden()) {
 			orglitsKilled++;
 		}
 	}
@@ -263,32 +257,42 @@ public class GameTimer extends AnimationTimer {
 		int bulletDamage = bullet.getDamage();
 		edolite.reduceStrengthBy(bulletDamage);
 
-		bullet.collide();
+		bullet.vanish();
+	}
+
+	private void deleteHiddenSprites() {
+		deleteDeadOrglits();
+
+		ArrayList<Bullet> edoliteBullets = edolite.getBullets();
+		deleteCollidedBulletsFrom(edoliteBullets);
+
+		if (agmatron != null) {
+			ArrayList<Bullet> agmatronBullets = agmatron.getBullets();
+			deleteCollidedBulletsFrom(agmatronBullets);
+		}
+
+		if (powerUp != null && powerUp.isHidden()) powerUp = null;
 	}
 
 	private void deleteDeadOrglits() {
-		if (agmatron != null && agmatron.isAlive() == false) agmatron = null;
+		for (int index = 0; index < smallOrglits.size(); index++) {
+			Orglit smallOrglit = smallOrglits.get(index);
 
-		ArrayList<Orglit> deadOrglits = new ArrayList<Orglit>();
-
-		for (Orglit smallOrglit : smallOrglits) if (smallOrglit.isAlive() == false) {
-			deadOrglits.add(smallOrglit);
-		}
-
-		for (Orglit deadOrglit : deadOrglits) smallOrglits.remove(deadOrglit);
-	}
-
-	private void deleteCollidedBullets(ArrayList<Bullet> bullets) {
-		ArrayList<Bullet> collidedBullets = new ArrayList<Bullet>();
-
-		for (Bullet bullet : bullets) {
-			if (bullet.hasCollided()) {
-				collidedBullets.add(bullet);
+			if (smallOrglit.isHidden()) {
+				smallOrglits.remove(smallOrglit);
 			}
 		}
 
-		for (Bullet collidedBullet : collidedBullets) {
-			bullets.remove(collidedBullet);
+		if (agmatron != null && agmatron.isHidden()) agmatron = null;
+	}
+
+	private void deleteCollidedBulletsFrom(ArrayList<Bullet> bullets) {
+		for (int index = 0; index < bullets.size(); index++) {
+			Bullet bullet = bullets.get(index);
+
+			if (bullet.isHidden()) {
+				bullets.remove(bullet);
+			}
 		}
 	}
 

@@ -12,7 +12,6 @@ class Bullet extends MovableSprite {
 	public final static int MOVEMENT_SPEED = 8;
 
 	private int damage;
-	private boolean hasCollided = false;
 
 	public Bullet(int xPos, int yPos, int damage) {
 		this(xPos, yPos, damage, IMAGE);
@@ -37,19 +36,11 @@ class Bullet extends MovableSprite {
 		boolean isBulletAtBottommostEdge = (yPos == View.WINDOW_HEIGHT - this.height);
 
 		if (isBulletAtLeftmostEdge || isBulletAtRightmostEdge || isBulletAtTopmostEdge || isBulletAtBottommostEdge) {
-			collide();
+			this.vanish();
 		}
-	}
-
-	void collide() {
-		hasCollided = true;
 	}
 
 	int getDamage() {
 		return damage;
-	}
-
-	boolean hasCollided() {
-		return hasCollided;
 	}
 }
