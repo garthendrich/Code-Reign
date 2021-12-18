@@ -9,17 +9,16 @@ class Agmatron extends Orglit {
 	public final static int WIDTH = 88;
 	public final static int HEIGHT = 96;
 	public final static Image IMAGE = new Image("assets/images/agmatron.png", WIDTH, HEIGHT, false, false);
-	public final static int SMASH_DAMAGE = 50;
 	public final static int MAX_HEALTH = 3000;
+	public final static int DAMAGE = 50;
 
 	private int health;
 	private ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 
 	public Agmatron(int xPos, int yPos) {
-		super(xPos, yPos, IMAGE);
+		super(xPos, yPos, IMAGE, DAMAGE);
 
 		health = MAX_HEALTH;
-		damage = SMASH_DAMAGE;
 	}
 
 	void shoot() {

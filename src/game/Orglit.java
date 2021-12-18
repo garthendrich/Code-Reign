@@ -10,17 +10,20 @@ class Orglit extends MovableSprite {
 	public final static int WIDTH = 24;
 	public final static int HEIGHT = 28;
 	public final static Image IMAGE = new Image("assets/images/orglit.png", WIDTH, HEIGHT, false, false);
+	public final static int DAMAGE = 30;
 	public final static int MIN_MOVEMENT_SPEED = 1;
 	public final static int MAX_MOVEMENT_SPEED = 5;
 
-	protected int damage = 30;
+	private int damage;
 
 	public Orglit(int xPos, int yPos) {
-		this(xPos, yPos, IMAGE);
+		this(xPos, yPos, IMAGE, DAMAGE);
 	}
 
-	public Orglit(int xPos, int yPos, Image image) {
+	public Orglit(int xPos, int yPos, Image image, int damage) {
 		super(xPos, yPos, image);
+
+		this.damage = damage;
 
 		Random randomizer = new Random();
 
