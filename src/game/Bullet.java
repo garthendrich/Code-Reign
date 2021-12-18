@@ -31,6 +31,9 @@ class Bullet extends MovableSprite {
 		manageCollisionToEdge();
 	}
 
+	/**
+	 * Hides the bullet sprite if it reaches the edge of the window.
+	 */
 	private void manageCollisionToEdge() {
 		boolean isBulletAtLeftmostEdge = (xPos == 0);
 		boolean isBulletAtRightmostEdge = (xPos == View.WINDOW_WIDTH - this.width);
