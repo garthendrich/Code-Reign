@@ -9,7 +9,6 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
@@ -24,29 +23,20 @@ class InstructionsView extends View {
 		root.setAlignment(Pos.CENTER);
 		root.setSpacing(24);
 
-		Text title = new Text("Invasion incoming!");
-		title.setFont(Font.font(Main.NOTALOT60, 48));
-		title.setFill(Color.WHITE);
-		title.setStroke(Color.valueOf(Main.STROKE_COLOR));
-		title.setStrokeWidth(2);
+		Text title = createThemedText("Invasion incoming!", 48, 2);
 
-		Text instructions = new Text();
-		instructions.setText("As an Edolite, the destined hero of Arthane, you have to survive against the "
+		String instructionsString = "As an Edolite, the destined hero of Arthane, you have to survive against the "
 				+ "insufferable Orglits and their king, the Agmatron.\n\n"
 				+ "Avoid getting hit by the enemies.\n"
 				+ "Use the arrow keys to move and space bar to shoot.\n"
 				+ "There are power-ups you can pick up to help you with your battle.\n"
 				+ "Survive for 60 seconds to win the game.\n\n "
-				+ "Defend the throne, Edolite! The fate of Arthane is in your hands.");
-		instructions.setFont(Font.font(Main.NOTALOT60, 24));
-		instructions.setFill(Color.WHITE);
-		instructions.setStroke(Color.valueOf(Main.STROKE_COLOR));
-		instructions.setStrokeWidth(1);
+				+ "Defend the throne, Edolite! The fate of Arthane is in your hands.";
+		Text instructions = createThemedText(instructionsString, 24, 1);
 		instructions.setWrappingWidth(Main.WINDOW_WIDTH);
 		instructions.setTextAlignment(TextAlignment.CENTER);
 
 		Button backButton = createThemedButton("Return to main menu");
-		backButton.setAlignment(Pos.BOTTOM_CENTER);
 
 		root.getChildren().addAll(title, instructions, backButton);
 

@@ -12,7 +12,6 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import main.Main;
@@ -33,11 +32,7 @@ public class MainMenuView extends View {
 		content.setAlignment(Pos.CENTER);
 		content.setSpacing(32);
 
-		Text title = new Text("Code:Reign");
-		title.setFont(Font.font(Main.NOTALOT60, 96));
-		title.setFill(Color.WHITE);
-		title.setStroke(Color.valueOf(Main.STROKE_COLOR));
-		title.setStrokeWidth(4);
+		Text title = createThemedText("Code:Reign", 96, 4);
 
 		VBox buttonsWrapper = new VBox();
 		buttonsWrapper.setAlignment(Pos.CENTER);
