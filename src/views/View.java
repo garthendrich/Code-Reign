@@ -5,7 +5,7 @@ import javafx.stage.Stage;
 
 abstract class View {
 
-	private Stage stage;
+	protected Stage stage;
 
 	abstract protected Scene createScene();
 
@@ -13,9 +13,5 @@ abstract class View {
 		Scene scene = createScene();
 		stage.setScene(scene);
 		this.stage = stage;
-	}
-
-	protected Stage getStage() {
-		return stage;
 	}
 }

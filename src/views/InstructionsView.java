@@ -13,7 +13,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
-import javafx.stage.Stage;
 
 import main.Main;
 
@@ -51,8 +50,6 @@ class InstructionsView extends View {
 			new EventHandler<MouseEvent>() {
 				@Override
 				public void handle(MouseEvent event) {
-					Stage stage = getStage();
-
 					MainMenuView titleView = new MainMenuView();
 					titleView.loadTo(stage);
 				}

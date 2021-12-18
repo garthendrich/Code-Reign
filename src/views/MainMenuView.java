@@ -19,7 +19,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
 import main.Main;
 
@@ -61,8 +60,6 @@ public class MainMenuView extends View {
 			new EventHandler<MouseEvent>() {
 				@Override
 				public void handle(MouseEvent event) {
-					Stage stage = getStage();
-
 					GameView gameStage = new GameView();
 					gameStage.loadTo(stage);
 				}
@@ -73,8 +70,6 @@ public class MainMenuView extends View {
 			new EventHandler<MouseEvent>() {
 				@Override
 				public void handle(MouseEvent event) {
-					Stage stage = getStage();
-
 					InstructionsView instructionsView = new InstructionsView();
 					instructionsView.loadTo(stage);
 				}
@@ -85,8 +80,6 @@ public class MainMenuView extends View {
 			new EventHandler<MouseEvent>() {
 				@Override
 				public void handle(MouseEvent event) {
-					Stage stage = getStage();
-
 					AboutView aboutView = new AboutView();
 					aboutView.loadTo(stage);
 				}
