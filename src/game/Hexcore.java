@@ -11,6 +11,11 @@ public class Hexcore extends PowerUp {
 		super(xPos, yPos, IMAGE);
 	}
 
+	/**
+	 * Increases the given edolite's strength by a certain amount.
+	 *
+	 * @param edolite The edolite that will gain strength.
+	 */
 	@Override
 	void applyTo(Edolite edolite) {
 		edolite.gainStrength(STRENGTH_BONUS);
