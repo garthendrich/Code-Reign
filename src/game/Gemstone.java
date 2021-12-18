@@ -2,7 +2,7 @@ package game;
 
 import javafx.scene.image.Image;
 
-class Gemstone extends PowerUp {
+public class Gemstone extends PowerUp {
 
 	public final static Image IMAGE = new Image("assets/images/gemstone.png", PowerUp.SIZE, PowerUp.SIZE, false, false);
 

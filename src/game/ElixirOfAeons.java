@@ -2,7 +2,7 @@ package game;
 
 import javafx.scene.image.Image;
 
-class ElixirOfAeons extends PowerUp {
+public class ElixirOfAeons extends PowerUp {
 
 	public final static Image IMAGE = new Image("assets/images/elixir_of_aeons.png", PowerUp.SIZE, PowerUp.SIZE, false, false);
 
