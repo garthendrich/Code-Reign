@@ -11,9 +11,8 @@ abstract class Sprite {
 	protected int width;
 	protected int height;
 	protected Image image;
-
+	protected boolean isFacingRight = true;
 	protected boolean isHidden = false;
-	protected boolean isHorizontallyFlipped = false;
 
 	public Sprite(int xPos, int yPos, Image image) {
 		this.xPos = xPos;
@@ -36,7 +35,7 @@ abstract class Sprite {
 	}
 
 	void render(GraphicsContext graphicsContext) {
-		if (!isHorizontallyFlipped) {
+		if (isFacingRight) {
 			graphicsContext.drawImage(image, xPos, yPos);
 		}
 		else {
@@ -45,11 +44,11 @@ abstract class Sprite {
 	}
 
 	protected void faceLeft() {
-		isHorizontallyFlipped = true;
+		isFacingRight = false;
 	}
 
 	protected void faceRight() {
-		isHorizontallyFlipped = false;
+		isFacingRight = true;
 	}
 
 	void vanish() {

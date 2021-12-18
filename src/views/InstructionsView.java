@@ -75,7 +75,7 @@ class InstructionsView extends View {
 	private Label createPowerUpLabel(String textString, Image image) {
 		Label label = new Label(textString, new ImageView(image));
 		label.setFont(Font.font(View.NOTALOT60, 20));
-		label.setTextFill(STROKE_COLOR);
+		label.setTextFill(PRIMARY_COLOR);
 		label.setGraphicTextGap(8);
 		return label;
 	}

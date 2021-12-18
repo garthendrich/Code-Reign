@@ -107,7 +107,7 @@ public class GameTimer extends AnimationTimer {
 
 		manageOrglitSpawns();
 		managePowerUpSpawns();
-		manageAgmatronAttacks();
+		manageAgmatronProjectiles();
 
 		updateMovableSpritePositions();
 		manageSpriteCollisions();
@@ -195,7 +195,7 @@ public class GameTimer extends AnimationTimer {
 		return null;
 	}
 
-	private void manageAgmatronAttacks() {
+	private void manageAgmatronProjectiles() {
 		if (agmatron == null) return;
 
 		double agmatronShootElapsedSeconds = gameTime - agmatronShootGameTime;
@@ -401,7 +401,7 @@ public class GameTimer extends AnimationTimer {
 
 	private void displayGameStatusText(String text, int xPos, int yPos) {
 		graphicsContext.setFill(Color.WHITE);
-		graphicsContext.setStroke(View.STROKE_COLOR);
+		graphicsContext.setStroke(View.PRIMARY_COLOR);
 		graphicsContext.fillText(text, xPos, yPos);
 		graphicsContext.strokeText(text, xPos, yPos);
 	}

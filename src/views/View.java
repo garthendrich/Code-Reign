@@ -21,7 +21,7 @@ public abstract class View {
 	public static final int WINDOW_HEIGHT = 500;
 	public static final String NOTALOT60 = "Notalot60";
 	public static final Color BG_COLOR = Color.valueOf("F6C27D");
-	public static final Color STROKE_COLOR = Color.valueOf("634E32");
+	public static final Color PRIMARY_COLOR = Color.valueOf("634E32");
 
 	protected Stage stage;
 	protected Scene scene;
@@ -35,23 +35,23 @@ public abstract class View {
 		this.stage = stage;
 	}
 
-	protected Button createThemedButton(String text) {
-		Button button = new Button(text);
-		button.setMinWidth(160);
-		button.setBorder(new Border(new BorderStroke(STROKE_COLOR, BorderStrokeStyle.SOLID, null, new BorderWidths(2))));
-		button.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
-		button.setPadding(new Insets(8, 16, 8, 16));
-		button.setFont(Font.font(View.NOTALOT60, 20));
-		button.setTextFill(STROKE_COLOR);
-		return button;
-	}
-
 	protected Text createThemedText(String text, int size, int strokeWidth) {
 		Text textNode = new Text(text);
 		textNode.setFont(Font.font(View.NOTALOT60, size));
 		textNode.setFill(Color.WHITE);
-		textNode.setStroke(STROKE_COLOR);
+		textNode.setStroke(PRIMARY_COLOR);
 		textNode.setStrokeWidth(strokeWidth);
 		return textNode;
+	}
+
+	protected Button createThemedButton(String text) {
+		Button button = new Button(text);
+		button.setMinWidth(160);
+		button.setBorder(new Border(new BorderStroke(PRIMARY_COLOR, BorderStrokeStyle.SOLID, null, new BorderWidths(2))));
+		button.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
+		button.setPadding(new Insets(8, 16, 8, 16));
+		button.setFont(Font.font(View.NOTALOT60, 20));
+		button.setTextFill(PRIMARY_COLOR);
+		return button;
 	}
 }
