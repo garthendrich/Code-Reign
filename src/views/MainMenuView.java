@@ -40,10 +40,6 @@ public class MainMenuView extends View {
 		Button instructionsButton = createThemedButton("Instructions");
 		Button aboutButton = createThemedButton("About");
 
-		buttonsWrapper.getChildren().addAll(startGameButton, instructionsButton, aboutButton);
-		content.getChildren().addAll(title, buttonsWrapper);
-		root.getChildren().addAll(backgroundElements, content);
-
 		startGameButton.setOnMouseClicked(
 			new EventHandler<MouseEvent>() {
 				@Override
@@ -73,6 +69,10 @@ public class MainMenuView extends View {
 				}
 			}
 		);
+
+		buttonsWrapper.getChildren().addAll(startGameButton, instructionsButton, aboutButton);
+		content.getChildren().addAll(title, buttonsWrapper);
+		root.getChildren().addAll(backgroundElements, content);
 
 		return root;
 	}

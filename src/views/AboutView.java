@@ -41,8 +41,6 @@ class AboutView extends View {
 
 		Button backButton = createThemedButton("Return to main menu");
 
-		root.getChildren().addAll(header, devsHeader, devsInfo, referencesHeader, referencesInfo, backButton);
-
 		backButton.setOnMouseClicked(
 			new EventHandler<MouseEvent>() {
 				@Override
@@ -52,6 +50,8 @@ class AboutView extends View {
 				}
 			}
 		);
+
+		root.getChildren().addAll(header, devsHeader, devsInfo, referencesHeader, referencesInfo, backButton);
 
 		return root;
 	}
