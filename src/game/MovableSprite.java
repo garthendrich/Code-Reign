@@ -14,22 +14,22 @@ abstract class MovableSprite extends Sprite {
 		super(xPos, yPos, image);
 	}
 
-	void moveUp() {
-		dY = -1 * movementSpeed;
-	}
-
-	void moveDown() {
-		dY = movementSpeed;
-	}
-
 	void moveLeft() {
-		dX = -1 * movementSpeed;
+		dX = -movementSpeed;
 		faceLeft();
 	}
 
 	void moveRight() {
 		dX = movementSpeed;
 		faceRight();
+	}
+
+	void moveUp() {
+		dY = -movementSpeed;
+	}
+
+	void moveDown() {
+		dY = movementSpeed;
 	}
 
 	void stopMovingHorizontally() {
@@ -40,6 +40,10 @@ abstract class MovableSprite extends Sprite {
 		dY = 0;
 	}
 
+	/**
+	 * Updates the sprite's position based on its dx and dy. The updated position is bounded by
+	 * the window's edges.
+	 */
 	void updatePosition() {
 		int highestXPos = View.WINDOW_WIDTH - this.width;
 		int highestYPos = View.WINDOW_HEIGHT - this.height;
