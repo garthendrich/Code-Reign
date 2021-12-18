@@ -21,6 +21,11 @@ class Agmatron extends Orglit {
 		health = MAX_HEALTH;
 	}
 
+	/**
+	 * Creates a corrupted bullet and adds it to the agmatron's arraylist of bullets. It spawns at
+	 * the left of the agmatron. It will choose a random movement between upward-leftward and
+	 * downward-leftward.
+	 */
 	void shoot() {
 		int bulletXPos = this.xPos - Bullet.WIDTH;
 		int bulletYPos = this.yPos - Bullet.HEIGHT + (this.height / 2);
@@ -37,6 +42,11 @@ class Agmatron extends Orglit {
 		bullets.add(bullet);
     }
 
+	/**
+	 * Reduces agmatron's health by a specified amount. Hides the agmatron sprite if health reaches 0.
+	 *
+	 * @param amount The amount of health to reduce.
+	 */
 	void reduceHealthBy(int amount) {
 		health -= amount;
 
