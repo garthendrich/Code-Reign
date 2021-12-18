@@ -26,14 +26,11 @@ public abstract class View {
 	protected Stage stage;
 	protected Scene scene;
 
-	View() {
-		Parent root = createRoot();
-		scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
-	}
-
 	abstract protected Parent createRoot();
 
 	public void loadTo(Stage stage) {
+		Parent root = createRoot();
+		scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
 		stage.setScene(scene);
 		this.stage = stage;
 	}
