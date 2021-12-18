@@ -2,7 +2,7 @@ package views;
 
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -17,7 +17,7 @@ import javafx.scene.text.Text;
 public class MainMenuView extends View {
 
 	@Override
-	protected Scene createScene() {
+	protected Parent createRoot() {
 		StackPane root = new StackPane();
 		root.setBackground(new Background(new BackgroundFill(Color.valueOf(View.BG_COLOR), null, null)));
 		root.setAlignment(Pos.TOP_CENTER);
@@ -74,7 +74,7 @@ public class MainMenuView extends View {
 			}
 		);
 
-		return new Scene(root, View.WINDOW_WIDTH, View.WINDOW_HEIGHT);
+		return root;
 	}
 }
 

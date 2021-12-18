@@ -2,7 +2,7 @@ package views;
 
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
@@ -15,7 +15,7 @@ import javafx.scene.text.TextAlignment;
 class InstructionsView extends View {
 
 	@Override
-	protected Scene createScene() {
+	protected Parent createRoot() {
 		VBox root = new VBox();
 		root.setBackground(new Background(new BackgroundFill(Color.valueOf(View.BG_COLOR), null, null)));
 		root.setAlignment(Pos.CENTER);
@@ -48,6 +48,6 @@ class InstructionsView extends View {
 			}
 		);
 
-		return new Scene(root, View.WINDOW_WIDTH, View.WINDOW_HEIGHT);
+		return root;
 	}
 }

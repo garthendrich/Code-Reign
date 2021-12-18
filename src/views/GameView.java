@@ -1,7 +1,7 @@
 package views;
 
 import javafx.event.EventHandler;
-import javafx.scene.Scene;
+import javafx.scene.Parent;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
@@ -11,6 +11,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+
 import game.GameTimer;
 
 class GameView extends View {
@@ -18,7 +19,7 @@ class GameView extends View {
 	private GameTimer gameTimer;
 
 	@Override
-	protected Scene createScene() {
+	protected Parent createRoot() {
 		StackPane root = new StackPane();
 		root.setBackground(new Background(new BackgroundFill(Color.valueOf("F6C27D"), null, null)));
 
@@ -28,7 +29,12 @@ class GameView extends View {
 
 		root.getChildren().add(canvas);
 
-		Scene scene = new Scene(root, View.WINDOW_WIDTH, View.WINDOW_HEIGHT);
+		return root;
+	}
+
+	@Override
+	public void loadTo(Stage stage) {
+		super.loadTo(stage);
 
 		scene.setOnKeyPressed(
 			new EventHandler<KeyEvent>() {
@@ -49,13 +55,6 @@ class GameView extends View {
 				}
 			}
 		);
-
-		return scene;
-	}
-
-	@Override
-	public void loadTo(Stage stage) {
-		super.loadTo(stage);
 
 		gameTimer.receiveStage(stage);
 		gameTimer.start();

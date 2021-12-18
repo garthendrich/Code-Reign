@@ -1,6 +1,7 @@
 package views;
 
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Background;
@@ -23,11 +24,16 @@ public abstract class View {
 	public static final String STROKE_COLOR = "634E32";
 
 	protected Stage stage;
+	protected Scene scene;
 
-	abstract protected Scene createScene();
+	View() {
+		Parent root = createRoot();
+		scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
+	}
+
+	abstract protected Parent createRoot();
 
 	public void loadTo(Stage stage) {
-		Scene scene = createScene();
 		stage.setScene(scene);
 		this.stage = stage;
 	}

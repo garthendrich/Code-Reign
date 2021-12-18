@@ -1,7 +1,7 @@
 package views;
 
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
+import javafx.scene.Parent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.VBox;
@@ -21,7 +21,7 @@ public class GameOverView extends View {
 	}
 
 	@Override
-	protected Scene createScene() {
+	protected Parent createRoot() {
 		VBox root = new VBox();
 		root.setBackground(new Background(new BackgroundFill(Color.valueOf("F6C27D"), null, null)));
 		root.setAlignment(Pos.CENTER);
@@ -40,7 +40,7 @@ public class GameOverView extends View {
 
 		root.getChildren().addAll(outComeMessageText, orglitsKilledText);
 
-		return new Scene(root, View.WINDOW_WIDTH, View.WINDOW_HEIGHT);
+		return root;
 	}
 
 }
