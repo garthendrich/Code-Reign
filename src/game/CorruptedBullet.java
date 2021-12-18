@@ -10,7 +10,7 @@ class CorruptedBullet extends Bullet {
 	public final static int DAMAGE = 30;
 	public final static int MOVEMENT_SPEED = 2;
 
-	public CorruptedBullet(int xPos, int yPos) {
+	CorruptedBullet(int xPos, int yPos) {
 		super(xPos, yPos, DAMAGE, IMAGE);
 
 		setMovementSpeed(MOVEMENT_SPEED);

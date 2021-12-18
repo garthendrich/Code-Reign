@@ -16,11 +16,11 @@ class Orglit extends MovableSprite {
 
 	private int damage;
 
-	public Orglit(int xPos, int yPos) {
+	Orglit(int xPos, int yPos) {
 		this(xPos, yPos, IMAGE, DAMAGE);
 	}
 
-	public Orglit(int xPos, int yPos, Image image, int damage) {
+	Orglit(int xPos, int yPos, Image image, int damage) {
 		super(xPos, yPos, image);
 
 		this.damage = damage;
@@ -47,7 +47,7 @@ class Orglit extends MovableSprite {
 		updateMovement();
 	}
 
-	void updateMovement() {
+	private void updateMovement() {
 		boolean isOrglitAtLeftmostEdge = (xPos == 0);
 		boolean isOrglitAtRightmostEdge = (xPos == View.WINDOW_WIDTH - this.width);
 
@@ -55,7 +55,7 @@ class Orglit extends MovableSprite {
 		else if (isOrglitAtRightmostEdge) moveLeft();
 	}
 
-	public int getDamage() {
+	int getDamage() {
 		return damage;
 	}
 }

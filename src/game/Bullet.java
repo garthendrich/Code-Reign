@@ -13,11 +13,11 @@ class Bullet extends MovableSprite {
 
 	private int damage;
 
-	public Bullet(int xPos, int yPos, int damage) {
+	Bullet(int xPos, int yPos, int damage) {
 		this(xPos, yPos, damage, IMAGE);
 	}
 
-	public Bullet(int xPos, int yPos, int damage, Image image) {
+	Bullet(int xPos, int yPos, int damage, Image image) {
 		super(xPos, yPos, image);
 
 		setMovementSpeed(MOVEMENT_SPEED);

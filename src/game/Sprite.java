@@ -14,7 +14,7 @@ abstract class Sprite {
 	protected boolean isFacingRight = true;
 	protected boolean isHidden = false;
 
-	public Sprite(int xPos, int yPos, Image image) {
+	Sprite(int xPos, int yPos, Image image) {
 		this.xPos = xPos;
 		this.yPos = yPos;
 		this.image = image;
@@ -23,7 +23,7 @@ abstract class Sprite {
 	}
 
 	//method that will check for collision of two sprites
-	public boolean collidesWith(Sprite rect2)	{
+	boolean collidesWith(Sprite rect2)	{
 		Rectangle2D rectangle1 = getHitBox();
 		Rectangle2D rectangle2 = rect2.getHitBox();
 		return rectangle1.intersects(rectangle2);
@@ -55,11 +55,11 @@ abstract class Sprite {
 		isHidden = true;
 	}
 
-	public int getWidth(){
+	int getWidth(){
 		return width;
 	}
 
-	public int getHeight(){
+	int getHeight(){
 		return height;
 	}
 

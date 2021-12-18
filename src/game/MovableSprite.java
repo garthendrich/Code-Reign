@@ -10,7 +10,7 @@ abstract class MovableSprite extends Sprite {
 	private int dY;
 	private int movementSpeed;
 
-	public MovableSprite(int xPos, int yPos, Image image) {
+	MovableSprite(int xPos, int yPos, Image image) {
 		super(xPos, yPos, image);
 	}
 

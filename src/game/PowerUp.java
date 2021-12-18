@@ -6,7 +6,7 @@ abstract class PowerUp extends Sprite {
 
 	public final static int SIZE = 24;
 
-	public PowerUp(int xPos, int yPos, Image image) {
+	PowerUp(int xPos, int yPos, Image image) {
 		super(xPos, yPos, image);
 	}
 

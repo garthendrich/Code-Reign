@@ -19,7 +19,7 @@ class Edolite extends MovableSprite {
 	private ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 	private ArrayList<StatusEffect> statusEffects = new ArrayList<StatusEffect>();
 
-	public Edolite(int xPos, int yPos) {
+	Edolite(int xPos, int yPos) {
 		super(xPos, yPos, IMAGE);
 
 		setMovementSpeed(MOVEMENT_SPEED);
@@ -53,7 +53,7 @@ class Edolite extends MovableSprite {
 		}
     }
 
-	public void gainStrength(int amount){
+	void gainStrength(int amount){
 		strength += amount;
 	}
 
@@ -85,7 +85,7 @@ class Edolite extends MovableSprite {
 		return strength;
 	}
 
-	public ArrayList<Bullet> getBullets(){
+	ArrayList<Bullet> getBullets(){
 		return bullets;
 	}
 

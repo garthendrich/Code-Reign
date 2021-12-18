@@ -15,7 +15,7 @@ class Agmatron extends Orglit {
 	private int health;
 	private ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 
-	public Agmatron(int xPos, int yPos) {
+	Agmatron(int xPos, int yPos) {
 		super(xPos, yPos, IMAGE, DAMAGE);
 
 		health = MAX_HEALTH;
