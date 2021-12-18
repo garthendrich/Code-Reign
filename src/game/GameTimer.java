@@ -221,6 +221,7 @@ public class GameTimer extends AnimationTimer {
 
 	private void manageCollisionOf(Orglit orglit, Edolite edolite) {
 		if (orglit.collidesWith(edolite) == false) return;
+		if (edolite.hasStatusEffect(StatusEffect.INVULNERABILITY)) return;
 
 		if (orglit instanceof Agmatron) {
 			double agmatronSmashElapsedSeconds = gameTime - agmatronSmashGameTime;
@@ -233,7 +234,7 @@ public class GameTimer extends AnimationTimer {
 		}
 
 		int orglitDamage = orglit.getDamage();
-		edolite.receiveDamage(orglitDamage);
+		edolite.reduceStrengthBy(orglitDamage);
 	}
 
 	private void manageCollisionOf(Bullet bullet, Orglit orglit) {
@@ -259,7 +260,7 @@ public class GameTimer extends AnimationTimer {
 		if (bullet.collidesWith(edolite) == false) return;
 
 		int bulletDamage = bullet.getDamage();
-		edolite.receiveDamage(bulletDamage);
+		edolite.reduceStrengthBy(bulletDamage);
 
 		bullet.collide();
 	}

@@ -56,7 +56,7 @@ class Edolite extends MovableSprite {
 		}
     }
 
-	void receiveDamage(int damage) {
+	void reduceStrengthBy(int damage) {
 		if (!hasStatusEffect(StatusEffect.INVULNERABILITY)) {
 			strength -= damage;
 		}
@@ -83,7 +83,7 @@ class Edolite extends MovableSprite {
 		statusEffects.remove(statusEffect);
 	}
 
-	private boolean hasStatusEffect(String statusEffectType) {
+	boolean hasStatusEffect(String statusEffectType) {
 		for (StatusEffect currentStatusEffect : statusEffects) {
 			if (currentStatusEffect.isOfType(statusEffectType)) {
 				return true;
