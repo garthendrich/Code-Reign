@@ -15,6 +15,9 @@ class StatusEffect extends Thread {
         this.affectedEdolite = affectedEdolite;
     }
 
+    /**
+     * Waits for a specified duration before removing the status effect from the affected edolite.
+     */
     @Override
 	public void run() {
 		try {
