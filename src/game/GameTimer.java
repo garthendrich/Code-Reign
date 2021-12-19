@@ -241,14 +241,14 @@ public class GameTimer extends AnimationTimer {
 	}
 
 	private void manageCollisionOf(Edolite edolite, PowerUp powerUp) {
-		if (edolite.collidesWith(powerUp) == false) return;
+		if (edolite.isCollidingWith(powerUp) == false) return;
 
 		powerUp.applyTo(edolite);
 		powerUp.vanish();
 	}
 
 	private void manageCollisionOf(Orglit orglit, Edolite edolite) {
-		if (orglit.collidesWith(edolite) == false) return;
+		if (orglit.isCollidingWith(edolite) == false) return;
 		if (edolite.hasStatusEffect(StatusEffect.INVULNERABILITY)) return;
 
 		if (orglit instanceof Agmatron) {
@@ -266,7 +266,7 @@ public class GameTimer extends AnimationTimer {
 	}
 
 	private void manageCollisionOf(Bullet bullet, Orglit orglit) {
-		if (bullet.collidesWith(orglit) == false) return;
+		if (bullet.isCollidingWith(orglit) == false) return;
 
 		if (orglit instanceof Agmatron) {
 			int bulletDamage = bullet.getDamage();
@@ -285,7 +285,7 @@ public class GameTimer extends AnimationTimer {
 	}
 
 	private void manageCollisionOf(Bullet bullet, Edolite edolite) {
-		if (bullet.collidesWith(edolite) == false) return;
+		if (bullet.isCollidingWith(edolite) == false) return;
 
 		int bulletDamage = bullet.getDamage();
 		edolite.reduceStrengthBy(bulletDamage);

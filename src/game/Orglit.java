@@ -29,7 +29,7 @@ class Orglit extends MovableSprite {
 	}
 
 	/**
-	 * Sets the orglit's random movement speed between the determined values and randomly chooses
+	 * Randomly sets the orglit's movement speed between the determined values and randomly chooses
 	 * an initial movement of either left or right.
 	 */
 	private void setupRandomInitialMovement() {
