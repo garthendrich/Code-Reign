@@ -567,6 +567,11 @@ public class GameTimer extends AnimationTimer {
 		return min + randomizer.nextInt(max - min + 1);
 	}
 
+	/**
+	 * Returns an arraylist of all sprites
+	 *
+	 * @return The arraylist of sprites.
+	 */
 	private ArrayList<Sprite> getAllSprites() {
 		ArrayList<Sprite> sprites = new ArrayList<Sprite>();
 
@@ -578,6 +583,11 @@ public class GameTimer extends AnimationTimer {
 		return sprites;
 	}
 
+	/**
+	 * Returns an arraylist of all movable sprites
+	 *
+	 * @return The arraylist of movable sprites.
+	 */
 	private ArrayList<MovableSprite> getAllMovableSprites() {
 		ArrayList<MovableSprite> movableSprites = new ArrayList<MovableSprite>();
 
