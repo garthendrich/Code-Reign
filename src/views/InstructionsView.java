@@ -46,12 +46,7 @@ class InstructionsView extends View {
 		instructions.setWrappingWidth(View.WINDOW_WIDTH);
 		instructions.setTextAlignment(TextAlignment.CENTER);
 
-		VBox powerUpsInfo = new VBox();
-		powerUpsInfo.setAlignment(Pos.CENTER);
-		Label hexcoreInfo = createPowerUpLabel("Hexcore: increases strength", Hexcore.IMAGE);
-		Label elixirOfAeonsInfo = createPowerUpLabel("Elixir of Aeons: grants invulnerability", ElixirOfAeons.IMAGE);
-		Label gemstoneInfo = createPowerUpLabel("Gemstone: increases bullets per shot", Gemstone.IMAGE);
-		powerUpsInfo.getChildren().addAll(hexcoreInfo, elixirOfAeonsInfo, gemstoneInfo);
+		VBox powerUpsInfo = createPowerUpsInfo();
 
 		Text closingMessage = createThemedText("Defend the throne, Edolite! The fate of Arthane is in your hands.", 24, 1);
 
@@ -70,6 +65,19 @@ class InstructionsView extends View {
 		root.getChildren().addAll(title, shortStory, instructions, powerUpsInfo, closingMessage, backButton);
 
 		return root;
+	}
+
+	private VBox createPowerUpsInfo() {
+		VBox powerUpsInfo = new VBox();
+		powerUpsInfo.setAlignment(Pos.CENTER);
+
+		Label hexcoreInfo = createPowerUpLabel("Hexcore: increases strength", Hexcore.IMAGE);
+		Label elixirOfAeonsInfo = createPowerUpLabel("Elixir of Aeons: grants invulnerability", ElixirOfAeons.IMAGE);
+		Label gemstoneInfo = createPowerUpLabel("Gemstone: increases bullets per shot", Gemstone.IMAGE);
+
+		powerUpsInfo.getChildren().addAll(hexcoreInfo, elixirOfAeonsInfo, gemstoneInfo);
+
+		return powerUpsInfo;
 	}
 
 	private Label createPowerUpLabel(String textString, Image image) {

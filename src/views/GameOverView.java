@@ -28,6 +28,16 @@ public class GameOverView extends View {
 		root.setAlignment(Pos.CENTER);
 		root.setSpacing(32);
 
+		VBox gameResultWrapper = createGameResultWrapper();
+
+		VBox buttonsWrapper = createButtonsWrapper();
+
+		root.getChildren().addAll(gameResultWrapper, buttonsWrapper);
+
+		return root;
+	}
+
+	private VBox createGameResultWrapper() {
 		VBox gameResultWrapper = new VBox();
 		gameResultWrapper.setAlignment(Pos.CENTER);
 		gameResultWrapper.setSpacing(8);
@@ -41,6 +51,12 @@ public class GameOverView extends View {
 
 		Text orglitsKilledText = createThemedText("Orglits killed: " + orglitsKilled, 32, 1);
 
+		gameResultWrapper.getChildren().addAll(outComeMessageText, orglitsKilledText);
+
+		return gameResultWrapper;
+	}
+
+	private VBox createButtonsWrapper() {
 		VBox buttonsWrapper = new VBox();
 		buttonsWrapper.setAlignment(Pos.CENTER);
 		buttonsWrapper.setSpacing(8);
@@ -68,11 +84,8 @@ public class GameOverView extends View {
 			}
 		);
 
-		gameResultWrapper.getChildren().addAll(outComeMessageText, orglitsKilledText);
 		buttonsWrapper.getChildren().addAll(newGameButton, mainMenuButton);
-		root.getChildren().addAll(gameResultWrapper, buttonsWrapper);
 
-		return root;
+		return buttonsWrapper;
 	}
-
 }
