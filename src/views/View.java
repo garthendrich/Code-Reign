@@ -26,8 +26,18 @@ public abstract class View {
 	protected Stage stage;
 	protected Scene scene;
 
+	/**
+	 * Creates a root node for the view.
+	 *
+	 * @return The root node
+	 */
 	abstract protected Parent createRoot();
 
+	/**
+	 * Creates a scene from a particular root node and sets it to the given stage.
+	 *
+	 * @param stage The stage where the scene will be set.
+	 */
 	public void loadTo(Stage stage) {
 		Parent root = createRoot();
 		scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -35,6 +45,14 @@ public abstract class View {
 		this.stage = stage;
 	}
 
+	/**
+	 * Creates a designed Text node.
+	 *
+	 * @param text
+	 * @param size
+	 * @param strokeWidth
+	 * @return The designed Text node
+	 */
 	protected Text createThemedText(String text, int size, int strokeWidth) {
 		Text textNode = new Text(text);
 		textNode.setFont(Font.font(View.NOTALOT60, size));
@@ -44,6 +62,12 @@ public abstract class View {
 		return textNode;
 	}
 
+	/**
+	 * Creates a designed Button node.
+	 *
+	 * @param text
+	 * @return The designed Button node
+	 */
 	protected Button createThemedButton(String text) {
 		Button button = new Button(text);
 		button.setMinWidth(160);
