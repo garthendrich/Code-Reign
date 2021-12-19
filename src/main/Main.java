@@ -1,3 +1,13 @@
+/**
+ * CMSC 22 Object-Oriented Programming
+ * Mini Project
+ * First Semester, A.Y. 2021-2022
+ *
+ * @author Alesundreau Dale Ratuiste
+ * @author Garth Hendrich Lapitan
+ * @date 2021-12-19
+ */
+
 package main;
 
 import javafx.application.Application;
