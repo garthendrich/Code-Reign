@@ -25,7 +25,7 @@ class AboutView extends View {
 		Text devsHeader = createThemedText("Game Developers", 28, 1);
 
 		String devsInfoString = "Alesundreau Dale Ratuiste and Garth Hendrich Lapitan\n"
-				+ "Sophomores, BS Computer Science\n"
+				+ "II - BS Computer Science\n"
 				+ "University of the Philippines - Los Banos";
 		Text devsInfo = createThemedText(devsInfoString, 24, 1);
 		devsInfo.setTextAlignment(TextAlignment.CENTER);

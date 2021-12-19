@@ -1,32 +1,35 @@
 package game;
 
 import javafx.scene.image.Image;
+
 import views.View;
 
 abstract class MovableSprite extends Sprite {
 
-	private int dX, dY;
+	private int dX;
+	private int dY;
+	private int movementSpeed;
 
-	public MovableSprite(int xPos, int yPos, Image image) {
+	MovableSprite(int xPos, int yPos, Image image) {
 		super(xPos, yPos, image);
 	}
 
-	void moveUp(int distance) {
-		dY = -1 * distance;
-	}
-
-	void moveDown(int distance) {
-		dY = distance;
-	}
-
-	void moveLeft(int distance) {
-		dX = -1 * distance;
+	void moveLeft() {
+		dX = -movementSpeed;
 		faceLeft();
 	}
 
-	void moveRight(int distance) {
-		dX = distance;
+	void moveRight() {
+		dX = movementSpeed;
 		faceRight();
+	}
+
+	void moveUp() {
+		dY = -movementSpeed;
+	}
+
+	void moveDown() {
+		dY = movementSpeed;
 	}
 
 	void stopMovingHorizontally() {
@@ -37,6 +40,10 @@ abstract class MovableSprite extends Sprite {
 		dY = 0;
 	}
 
+	/**
+	 * Updates the sprite's position based on its dx and dy. The updated position is bounded by
+	 * the window's edges.
+	 */
 	void updatePosition() {
 		int highestXPos = View.WINDOW_WIDTH - this.width;
 		int highestYPos = View.WINDOW_HEIGHT - this.height;
@@ -48,5 +55,9 @@ abstract class MovableSprite extends Sprite {
 		yPos += dY;
 		if (yPos < 0) yPos = 0;
 		else if (yPos > highestYPos) yPos = highestYPos;
+	}
+
+	protected void setMovementSpeed(int movementSpeed) {
+		this.movementSpeed = movementSpeed;
 	}
 }

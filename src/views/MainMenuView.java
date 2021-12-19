@@ -25,12 +25,28 @@ public class MainMenuView extends View {
 		backgroundElements.setFitWidth(View.WINDOW_WIDTH);
 		backgroundElements.setPreserveRatio(true);
 
+		VBox content = createContent();
+
+		root.getChildren().addAll(backgroundElements, content);
+
+		return root;
+	}
+
+	private VBox createContent() {
 		VBox content = new VBox();
 		content.setAlignment(Pos.CENTER);
 		content.setSpacing(32);
 
 		Text title = createThemedText("Code:Reign", 96, 4);
 
+		VBox buttonsWrapper = createButtonsWrapper();
+
+		content.getChildren().addAll(title, buttonsWrapper);
+
+		return content;
+	}
+
+	private VBox createButtonsWrapper() {
 		VBox buttonsWrapper = new VBox();
 		buttonsWrapper.setAlignment(Pos.CENTER);
 		buttonsWrapper.setSpacing(8);
@@ -70,10 +86,7 @@ public class MainMenuView extends View {
 		);
 
 		buttonsWrapper.getChildren().addAll(startGameButton, instructionsButton, aboutButton);
-		content.getChildren().addAll(title, buttonsWrapper);
-		root.getChildren().addAll(backgroundElements, content);
 
-		return root;
+		return buttonsWrapper;
 	}
 }
-

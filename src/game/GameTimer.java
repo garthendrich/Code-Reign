@@ -10,6 +10,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+
 import views.GameOverView;
 import views.View;
 
@@ -17,8 +18,15 @@ public class GameTimer extends AnimationTimer {
 
 	public static final int MAX_GAME_TIME = 60;
 
+	public static final int STATUS_BAR_MAX_LENGTH = 240;
+	public static final Color GREEN_COLOR = Color.valueOf("69CD2E");
+	public static final Color RED_COLOR = Color.valueOf("CC2D2D");
+
 	public static final int EDOLITE_INITIAL_X_POS = 150;
 	public static final int EDOLITE_INITIAL_Y_POS = 250;
+
+	public static final int POWER_UP_SPAWN_INTERVAL_SECONDS = 10;
+	public static final int POWER_UP_OCCURENCE_SECONDS = 5;
 
 	public static final int ORGLIT_INITIAL_SPAWN_COUNT = 7;
 	public static final int ORGLIT_SPAWN_COUNT = 3;
@@ -28,33 +36,27 @@ public class GameTimer extends AnimationTimer {
 	public static final int AGMATRON_SMASH_DELAY_SECONDS = 1;
 	public static final int AGMATRON_SHOOT_INTERVAL_SECONDS = 1;
 
-	public static final int POWER_UP_SPAWN_INTERVAL_SECONDS = 10;
-	public static final int POWER_UP_OCCURENCE_SECONDS = 5;
-
-	public static final int STATUS_BAR_MAX_LENGTH = 240;
-	public static final Color GREEN_COLOR = Color.valueOf("69CD2E");
-	public static final Color RED_COLOR = Color.valueOf("CC2D2D");
-
 	private Stage stage;
 	private GraphicsContext graphicsContext;
 
+	private ArrayList<KeyCode> keysHeld = new ArrayList<KeyCode>();
+
 	private Edolite edolite = new Edolite(EDOLITE_INITIAL_X_POS, EDOLITE_INITIAL_Y_POS);
-	private Agmatron agmatron = null;
-	private ArrayList<Orglit> smallOrglits = new ArrayList<Orglit>();
 	private PowerUp powerUp = null;
+	private ArrayList<Orglit> smallOrglits = new ArrayList<Orglit>();
+	private Agmatron agmatron = null;
+
+	private int orglitsKilled = 0;
+	private boolean isAgmatronSpawned = false;
 
 	private long gameStartTimeInNanos = -1;
 	private double gameTime;
-	private double smallOrglitSpawnGameTime = 0;
 	private double powerUpSpawnGameTime = 0;
+	private double smallOrglitSpawnGameTime = 0;
 	private double agmatronSmashGameTime = 0;
 	private double agmatronShootGameTime = 0;
-	private boolean isAgmatronSpawned = false;
-	private int orglitsKilled = 0;
 
-	private ArrayList<KeyCode> keysHeld = new ArrayList<KeyCode>();
-
-	public GameTimer(GraphicsContext graphicsContext){
+	public GameTimer(GraphicsContext graphicsContext) {
 		this.graphicsContext = graphicsContext;
 
 		graphicsContext.setFont(Font.font(View.NOTALOT60, 20));
@@ -67,21 +69,79 @@ public class GameTimer extends AnimationTimer {
 		this.stage = stage;
 	}
 
+	/**
+	 * Handles a given pressed key.
+	 *
+	 * This controls the edolite's attack and movement.
+	 *
+	 * @param key The pressed key.
+	 */
+	public void handleKeyPress(KeyCode key) {
+		if ((key == KeyCode.SPACE) && !isKeyHeld(KeyCode.SPACE)) {
+			edolite.shoot();
+		}
+
+		if (keysHeld.contains(key) == false) {
+			keysHeld.add(key);
+			updateEdoliteMovement();
+		}
+	}
+
+	/**
+	 * Handles a given released key.
+	 *
+	 * This controls the edolite's movement.
+	 *
+	 * @param key The released key.
+	 */
+	public void handleKeyRelease(KeyCode key) {
+		keysHeld.remove(key);
+		updateEdoliteMovement();
+	}
+
+	/**
+	 * Updates the edolite's movement based on the pressed keys.
+	 */
+	private void updateEdoliteMovement() {
+		if (isKeyHeld(KeyCode.LEFT) && isKeyHeld(KeyCode.RIGHT)) edolite.stopMovingHorizontally();
+		else if (isKeyHeld(KeyCode.LEFT)) edolite.moveLeft();
+		else if (isKeyHeld(KeyCode.RIGHT)) edolite.moveRight();
+		else edolite.stopMovingHorizontally();
+
+		if (isKeyHeld(KeyCode.UP) && isKeyHeld(KeyCode.DOWN)) edolite.stopMovingVertically();
+		else if (isKeyHeld(KeyCode.UP)) edolite.moveUp();
+		else if (isKeyHeld(KeyCode.DOWN)) edolite.moveDown();
+		else edolite.stopMovingVertically();
+	}
+
+	private boolean isKeyHeld(KeyCode key) {
+		return keysHeld.contains(key);
+	}
+
 	@Override
 	public void handle(long currentTimeInNanos) {
 		updateGameTime(currentTimeInNanos);
 
 		manageOrglitSpawns();
 		managePowerUpSpawns();
-		manageAgmatronAttacks();
+		manageAgmatronProjectiles();
 
 		updateMovableSpritePositions();
 		manageSpriteCollisions();
+		deleteHiddenSprites();
 		updateCanvas();
 
 		checkGameEnd();
 	}
 
+	/**
+	 * Updates the game time given the current time in nanoseconds.
+	 *
+	 * The game time is based on the elapsed seconds since this AnimationTimer has started. Thus,
+	 * the game start time is recorded once.
+	 *
+	 * @param currentTimeInNanos The current time in nanoseconds.
+	 */
 	private void updateGameTime(long currentTimeInNanos) {
 		if (gameStartTimeInNanos == -1) {
 			gameStartTimeInNanos = currentTimeInNanos;
@@ -90,6 +150,12 @@ public class GameTimer extends AnimationTimer {
 		gameTime = (currentTimeInNanos - gameStartTimeInNanos) / 1_000_000_000.0;
 	}
 
+	/**
+	 * Responsible for spawning orglits at certain time periods.
+	 *
+	 * A number of small orglits are spawned every given time interval.
+	 * The agmatron is spawned once at a certain game time.
+	 */
 	private void manageOrglitSpawns() {
 		double smallOrglitSpawnElapsedSeconds = gameTime - smallOrglitSpawnGameTime;
 		if (smallOrglitSpawnElapsedSeconds > ORGLIT_SPAWN_INTERVAL_SECONDS) {
@@ -105,6 +171,13 @@ public class GameTimer extends AnimationTimer {
 		}
 	}
 
+	/**
+	 * Spawns a number of small orglits.
+	 *
+	 * These orglits are spawned at a random location at the right half side of the game window.
+	 *
+	 * @param spawnCount The number of small orglits to be spawned.
+	 */
 	private void spawnSmallOrglits(int spawnCount) {
 		for (int spawned = 0; spawned < spawnCount; spawned++) {
 			int canvasMiddleX = View.WINDOW_WIDTH / 2;
@@ -118,6 +191,11 @@ public class GameTimer extends AnimationTimer {
 		}
 	}
 
+	/**
+	 * Spawns the agmatron.
+	 *
+	 * It is spawned at a random location at the right half side of the game window.
+	 */
 	private void spawnAgmatron() {
 		int canvasMiddleX = View.WINDOW_WIDTH / 2;
 		int highestXPos = View.WINDOW_WIDTH - Agmatron.WIDTH;
@@ -129,21 +207,29 @@ public class GameTimer extends AnimationTimer {
 		agmatron = new Agmatron(randomXPos, randomYPos);
 	}
 
+	/**
+	 * Responsible for spawning and despawning power-ups at certain time intervals.
+	 */
 	private void managePowerUpSpawns() {
 		double powerUpSpawnElapsedSeconds = gameTime - powerUpSpawnGameTime;
 
-		if (powerUpSpawnElapsedSeconds > POWER_UP_OCCURENCE_SECONDS) {
-			deSpawnPowerUp();
+		if (powerUp != null && powerUpSpawnElapsedSeconds > POWER_UP_OCCURENCE_SECONDS) {
+			powerUp.vanish();
 		}
 
 		if (powerUpSpawnElapsedSeconds > POWER_UP_SPAWN_INTERVAL_SECONDS) {
-			spawnPowerUp();
+			powerUp = createRandomPowerUp();
 
 			powerUpSpawnGameTime = gameTime;
 		}
 	}
 
-	private void spawnPowerUp() {
+	/**
+	 * Creates a random power-up at a random location at the left half side of the game window.
+	 *
+	 * @return The created power-up.
+	 */
+	private PowerUp createRandomPowerUp() {
 		int canvasMiddleX = View.WINDOW_WIDTH / 2;
 		int randomXPos = generateRandomNumber(0, canvasMiddleX);
 
@@ -152,18 +238,20 @@ public class GameTimer extends AnimationTimer {
 
 		Random randomizer = new Random();
 		switch(randomizer.nextInt(3)) {
-			case 0: powerUp = new Hexcore(randomXPos, randomYPos); break;
-			case 1: powerUp = new ElixirOfAeons(randomXPos, randomYPos); break;
-			case 2: powerUp = new Gemstone(randomXPos, randomYPos); break;
+			case 0: return new Hexcore(randomXPos, randomYPos);
+			case 1: return new ElixirOfAeons(randomXPos, randomYPos);
+			case 2: return new Gemstone(randomXPos, randomYPos);
 			default:
 		}
+		return null;
 	}
 
-	private void deSpawnPowerUp() {
-		powerUp = null;
-	}
-
-	private void manageAgmatronAttacks() {
+	/**
+	 * Controls agmatron's attacks.
+	 *
+	 * The agmatron shoots projectiles at a certain time interval.
+	 */
+	private void manageAgmatronProjectiles() {
 		if (agmatron == null) return;
 
 		double agmatronShootElapsedSeconds = gameTime - agmatronShootGameTime;
@@ -174,11 +262,17 @@ public class GameTimer extends AnimationTimer {
 		}
 	}
 
+	/**
+	 * Updates the positions of all movable sprites.
+	 */
 	private void updateMovableSpritePositions() {
 		ArrayList<MovableSprite> movableSprites = getAllMovableSprites();
 		for (MovableSprite movableSprite : movableSprites) movableSprite.updatePosition();
 	}
 
+	/**
+	 * Manages the collisions of all sprites.
+	 */
 	private void manageSpriteCollisions() {
 		ArrayList<Bullet> edoliteBullets = edolite.getBullets();
 
@@ -188,7 +282,7 @@ public class GameTimer extends AnimationTimer {
 			manageCollisionOf(smallOrglit, edolite);
 
 			for (Bullet edoliteBullet : edoliteBullets) {
-				if (smallOrglit.isAlive()) {
+				if (!smallOrglit.isHidden()) {
 					manageCollisionOf(edoliteBullet, smallOrglit);
 				}
 			}
@@ -205,22 +299,30 @@ public class GameTimer extends AnimationTimer {
 			for (Bullet agmatronBullet : agmatronBullets) {
 				manageCollisionOf(agmatronBullet, edolite);
 			}
-			deleteCollidedBullets(agmatronBullets);
 		}
-
-		deleteDeadOrglits();
-		deleteCollidedBullets(edoliteBullets);
 	}
 
+	/**
+	 * Applies the power-up to a colliding edolite.
+	 *
+	 * @param edolite
+	 * @param powerUp
+	 */
 	private void manageCollisionOf(Edolite edolite, PowerUp powerUp) {
-		if (edolite.collidesWith(powerUp) == false) return;
+		if (edolite.isCollidingWith(powerUp) == false) return;
 
 		powerUp.applyTo(edolite);
-		deSpawnPowerUp();
+		powerUp.vanish();
 	}
 
+	/**
+	 * The orglit damages a colliding edolite.
+	 *
+	 * @param orglit
+	 * @param edolite
+	 */
 	private void manageCollisionOf(Orglit orglit, Edolite edolite) {
-		if (orglit.collidesWith(edolite) == false) return;
+		if (orglit.isCollidingWith(edolite) == false) return;
 		if (edolite.hasStatusEffect(StatusEffect.INVULNERABILITY)) return;
 
 		if (orglit instanceof Agmatron) {
@@ -230,15 +332,21 @@ public class GameTimer extends AnimationTimer {
 			agmatronSmashGameTime = gameTime;
 
 		} else {
-			orglit.die();
+			orglit.vanish();
 		}
 
 		int orglitDamage = orglit.getDamage();
 		edolite.reduceStrengthBy(orglitDamage);
 	}
 
+	/**
+	 * The bullet damages a colliding orglit.
+	 *
+	 * @param bullet
+	 * @param orglit
+	 */
 	private void manageCollisionOf(Bullet bullet, Orglit orglit) {
-		if (bullet.collidesWith(orglit) == false) return;
+		if (bullet.isCollidingWith(orglit) == false) return;
 
 		if (orglit instanceof Agmatron) {
 			int bulletDamage = bullet.getDamage();
@@ -246,51 +354,81 @@ public class GameTimer extends AnimationTimer {
 			Agmatron agmatron = (Agmatron) orglit;
 			agmatron.reduceHealthBy(bulletDamage);
 		} else {
-			orglit.die();
+			orglit.vanish();
 		}
 
-		bullet.collide();
+		bullet.vanish();
 
-		if (orglit.isAlive() == false) {
+		if (orglit.isHidden()) {
 			orglitsKilled++;
 		}
 	}
 
+	/**
+	 * The bullet damages a colliding edolite.
+	 *
+	 * @param bullet
+	 * @param edolite
+	 */
 	private void manageCollisionOf(Bullet bullet, Edolite edolite) {
-		if (bullet.collidesWith(edolite) == false) return;
+		if (bullet.isCollidingWith(edolite) == false) return;
 
 		int bulletDamage = bullet.getDamage();
 		edolite.reduceStrengthBy(bulletDamage);
 
-		bullet.collide();
+		bullet.vanish();
 	}
 
-	private void deleteDeadOrglits() {
-		if (agmatron != null && agmatron.isAlive() == false) agmatron = null;
+	/**
+	 * Deletes all sprites that were vanished.
+	 */
+	private void deleteHiddenSprites() {
+		deleteDeadOrglits();
 
-		ArrayList<Orglit> deadOrglits = new ArrayList<Orglit>();
+		ArrayList<Bullet> edoliteBullets = edolite.getBullets();
+		deleteCollidedBulletsFrom(edoliteBullets);
 
-		for (Orglit smallOrglit : smallOrglits) if (smallOrglit.isAlive() == false) {
-			deadOrglits.add(smallOrglit);
+		if (agmatron != null) {
+			ArrayList<Bullet> agmatronBullets = agmatron.getBullets();
+			deleteCollidedBulletsFrom(agmatronBullets);
 		}
 
-		for (Orglit deadOrglit : deadOrglits) smallOrglits.remove(deadOrglit);
+		if (powerUp != null && powerUp.isHidden()) powerUp = null;
 	}
 
-	private void deleteCollidedBullets(ArrayList<Bullet> bullets) {
-		ArrayList<Bullet> collidedBullets = new ArrayList<Bullet>();
+	/**
+	 * Deletes all vanished orglits.
+	 */
+	private void deleteDeadOrglits() {
+		for (int index = 0; index < smallOrglits.size(); index++) {
+			Orglit smallOrglit = smallOrglits.get(index);
 
-		for (Bullet bullet : bullets) {
-			if (bullet.hasCollided()) {
-				collidedBullets.add(bullet);
+			if (smallOrglit.isHidden()) {
+				smallOrglits.remove(smallOrglit);
 			}
 		}
 
-		for (Bullet collidedBullet : collidedBullets) {
-			bullets.remove(collidedBullet);
+		if (agmatron != null && agmatron.isHidden()) agmatron = null;
+	}
+
+	/**
+	 * Deletes the vanished bullets from a given list.
+	 *
+	 * @param bullets
+	 */
+	private void deleteCollidedBulletsFrom(ArrayList<Bullet> bullets) {
+		for (int index = 0; index < bullets.size(); index++) {
+			Bullet bullet = bullets.get(index);
+
+			if (bullet.isHidden()) {
+				bullets.remove(bullet);
+			}
 		}
 	}
 
+	/**
+	 * Updates the content of the game canvas.
+	 */
 	private void updateCanvas() {
 		clearGameCanvas();
 
@@ -300,16 +438,25 @@ public class GameTimer extends AnimationTimer {
 		displayGameStatus();
 	}
 
+	/**
+	 * Clears the whole game canvas.
+	 */
 	private void clearGameCanvas() {
 		graphicsContext.clearRect(0, 0, View.WINDOW_WIDTH, View.WINDOW_HEIGHT);
 	}
 
+	/**
+	 * Displays all game statuses.
+	 */
 	private void displayGameStatus() {
 		displayAllStatusBars();
 		displayOrglitsKilled();
 		displayGameTimeLeft();
 	}
 
+	/**
+	 * Displays the status bars of edolite and agmatron.
+	 */
 	private void displayAllStatusBars() {
 		int edoliteStrength = edolite.getStrength();
 		displayStatusBar(16, 16, "strength", edoliteStrength, Edolite.MAX_INITIAL_STRENGTH + 100, GREEN_COLOR);
@@ -324,6 +471,16 @@ public class GameTimer extends AnimationTimer {
 		}
 	}
 
+	/**
+	 * Renders the status bar to the game canvas given the information.
+	 *
+	 * @param xPos
+	 * @param yPos
+	 * @param statusLabel
+	 * @param statusValue
+	 * @param maxStatusValue
+	 * @param color
+	 */
 	private void displayStatusBar(
 			int xPos,
 			int yPos,
@@ -346,10 +503,16 @@ public class GameTimer extends AnimationTimer {
 		displayGameStatusText(statusValue + " " + statusLabel, xPos + 8, yPos + 4);
 	}
 
+	/**
+	 * Displays the number of orglits killed by the edolite.
+	 */
 	private void displayOrglitsKilled() {
 		displayGameStatusText(orglitsKilled + " orglits killed", 24, 56);
 	}
 
+	/**
+	 * Renders the game time left to the game canvas.
+	 */
 	private void displayGameTimeLeft() {
 		graphicsContext.setTextAlign(TextAlignment.CENTER);
 		displayGameStatusText("Time left", View.WINDOW_WIDTH / 2, 16);
@@ -361,13 +524,27 @@ public class GameTimer extends AnimationTimer {
 		graphicsContext.setTextAlign(TextAlignment.LEFT);
 	}
 
+	/**
+	 * Renders a text to the game canvas given the information.
+	 *
+	 * @param text
+	 * @param xPos
+	 * @param yPos
+	 */
 	private void displayGameStatusText(String text, int xPos, int yPos) {
 		graphicsContext.setFill(Color.WHITE);
-		graphicsContext.setStroke(View.STROKE_COLOR);
+		graphicsContext.setStroke(View.PRIMARY_COLOR);
 		graphicsContext.fillText(text, xPos, yPos);
 		graphicsContext.strokeText(text, xPos, yPos);
 	}
 
+	/**
+	 * Checks whether the game has ended.
+	 *
+	 * The game ends if the edolite dies or the game time reaches the max game time.
+	 *
+	 * Loads the game over screen to the stage if the game has ended.
+	 */
 	private void checkGameEnd() {
 		if (edolite.isAlive() == false || gameTime >= MAX_GAME_TIME) {
 			this.stop();
@@ -378,11 +555,23 @@ public class GameTimer extends AnimationTimer {
 		}
 	}
 
+	/**
+	 * Returns a random number between a minimum and a maximum value.
+	 *
+	 * @param min The minimum random number.
+	 * @param max The maximum random number.
+	 * @return The random number.
+	 */
 	private int generateRandomNumber(int min, int max) {
 		Random randomizer = new Random();
 		return min + randomizer.nextInt(max - min + 1);
 	}
 
+	/**
+	 * Returns an arraylist of all sprites
+	 *
+	 * @return The arraylist of sprites.
+	 */
 	private ArrayList<Sprite> getAllSprites() {
 		ArrayList<Sprite> sprites = new ArrayList<Sprite>();
 
@@ -394,53 +583,26 @@ public class GameTimer extends AnimationTimer {
 		return sprites;
 	}
 
+	/**
+	 * Returns an arraylist of all movable sprites
+	 *
+	 * @return The arraylist of movable sprites.
+	 */
 	private ArrayList<MovableSprite> getAllMovableSprites() {
 		ArrayList<MovableSprite> movableSprites = new ArrayList<MovableSprite>();
 
-		ArrayList<Bullet> edoliteBullets = edolite.getBullets();
 		movableSprites.add(edolite);
+		ArrayList<Bullet> edoliteBullets = edolite.getBullets();
 		movableSprites.addAll(edoliteBullets);
 
 		movableSprites.addAll(smallOrglits);
 
 		if (agmatron != null) {
-			ArrayList<Bullet> agmatronBullets = agmatron.getBullets();
 			movableSprites.add(agmatron);
+			ArrayList<Bullet> agmatronBullets = agmatron.getBullets();
 			movableSprites.addAll(agmatronBullets);
 		}
 
 		return movableSprites;
-	}
-
-	public void handleKeyPress(KeyCode key) {
-		if ((key == KeyCode.SPACE) && !isKeyHeld(KeyCode.SPACE)) {
-			edolite.shoot();
-		}
-
-		if (keysHeld.contains(key) == false) {
-			keysHeld.add(key);
-			updateEdoliteMovement();
-		}
-	}
-
-	public void handleKeyRelease(KeyCode key) {
-		keysHeld.remove(key);
-		updateEdoliteMovement();
-	}
-
-	private void updateEdoliteMovement() {
-		if (isKeyHeld(KeyCode.UP) && isKeyHeld(KeyCode.DOWN)) edolite.stopMovingVertically();
-		else if (isKeyHeld(KeyCode.UP)) edolite.moveUp(Edolite.MOVEMENT_SPEED);
-		else if (isKeyHeld(KeyCode.DOWN)) edolite.moveDown(Edolite.MOVEMENT_SPEED);
-		else edolite.stopMovingVertically();
-
-		if (isKeyHeld(KeyCode.LEFT) && isKeyHeld(KeyCode.RIGHT)) edolite.stopMovingHorizontally();
-		else if (isKeyHeld(KeyCode.LEFT)) edolite.moveLeft(Edolite.MOVEMENT_SPEED);
-		else if (isKeyHeld(KeyCode.RIGHT)) edolite.moveRight(Edolite.MOVEMENT_SPEED);
-		else edolite.stopMovingHorizontally();
-	}
-
-	private boolean isKeyHeld(KeyCode key) {
-		return keysHeld.contains(key);
 	}
 }

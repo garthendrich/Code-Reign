@@ -1,7 +1,8 @@
 package game;
 
 import javafx.scene.image.Image;
-import views.View;;
+
+import views.View;
 
 class Bullet extends MovableSprite {
 
@@ -11,14 +12,15 @@ class Bullet extends MovableSprite {
 	public final static int MOVEMENT_SPEED = 8;
 
 	private int damage;
-	private boolean hasCollided = false;
 
-	public Bullet(int xPos, int yPos, int damage) {
+	Bullet(int xPos, int yPos, int damage) {
 		this(xPos, yPos, damage, IMAGE);
 	}
 
-	public Bullet(int xPos, int yPos, int damage, Image image) {
+	Bullet(int xPos, int yPos, int damage, Image image) {
 		super(xPos, yPos, image);
+
+		setMovementSpeed(MOVEMENT_SPEED);
 
 		this.damage = damage;
 	}
@@ -29,6 +31,9 @@ class Bullet extends MovableSprite {
 		manageCollisionToEdge();
 	}
 
+	/**
+	 * Hides the bullet sprite if it reaches the edge of the window.
+	 */
 	private void manageCollisionToEdge() {
 		boolean isBulletAtLeftmostEdge = (xPos == 0);
 		boolean isBulletAtRightmostEdge = (xPos == View.WINDOW_WIDTH - this.width);
@@ -36,19 +41,11 @@ class Bullet extends MovableSprite {
 		boolean isBulletAtBottommostEdge = (yPos == View.WINDOW_HEIGHT - this.height);
 
 		if (isBulletAtLeftmostEdge || isBulletAtRightmostEdge || isBulletAtTopmostEdge || isBulletAtBottommostEdge) {
-			collide();
+			this.vanish();
 		}
-	}
-
-	void collide() {
-		hasCollided = true;
 	}
 
 	int getDamage() {
 		return damage;
-	}
-
-	boolean hasCollided() {
-		return hasCollided;
 	}
 }
