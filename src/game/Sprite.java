@@ -22,24 +22,36 @@ abstract class Sprite {
 		this.height = (int) image.getHeight();
 	}
 
-	//method that will check for collision of two sprites
-	boolean collidesWith(Sprite rect2)	{
-		Rectangle2D rectangle1 = getHitBox();
-		Rectangle2D rectangle2 = rect2.getHitBox();
-		return rectangle1.intersects(rectangle2);
+	/**
+	 * Checks whether this sprite is colliding with another given sprite.
+	 *
+	 * @param anotherSprite
+	 * @return true if both sprites collide, false otherwise.
+	 */
+	boolean isCollidingWith(Sprite anotherSprite) {
+		Rectangle2D thisSpriteHitbox = getHitBox();
+		Rectangle2D anotherSpriteHitbox = anotherSprite.getHitBox();
+		return thisSpriteHitbox.intersects(anotherSpriteHitbox);
 	}
 
-	//method that will return the bounds of an image
-	private Rectangle2D getHitBox(){
+	private Rectangle2D getHitBox() {
 		return new Rectangle2D(xPos, yPos, width, height);
 	}
 
+	/**
+	 * Renders the sprite's image to the graphics context's canvas
+	 *
+	 * The image will be rendered normally if the sprite is facing to the right. Otherwise, the
+	 * image will be rendered horizontally flipped if the sprite is facing to the left.
+	 *
+	 * @param graphicsContext The graphics context of the game canvas
+	 */
 	void render(GraphicsContext graphicsContext) {
 		if (isFacingRight) {
 			graphicsContext.drawImage(image, xPos, yPos);
 		}
 		else {
-			graphicsContext.drawImage(image, 0, 0, width, height, xPos + width, yPos, -width, height);
+			graphicsContext.drawImage(image, xPos + width, yPos, -width, height);
 		}
 	}
 
@@ -55,11 +67,11 @@ abstract class Sprite {
 		isHidden = true;
 	}
 
-	int getWidth(){
+	int getWidth() {
 		return width;
 	}
 
-	int getHeight(){
+	int getHeight() {
 		return height;
 	}
 
