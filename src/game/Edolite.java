@@ -40,18 +40,18 @@ class Edolite extends MovableSprite {
 
 		int bulletXPos = this.xPos + this.width;
 		int bulletYPos = this.yPos + this.height - GUN_ELEVATION - (Bullet.HEIGHT / 2);
-		Bullet bullet = new Bullet(bulletXPos, bulletYPos, strength);
+		Bullet bullet = new Bullet(bulletXPos, bulletYPos, this.strength);
 		bullet.moveRight();
 
 		bullets.add(bullet);
 
 		if (hasStatusEffect(StatusEffect.WARRIORS_FURY)) {
 			int upperBulletYPos = this.yPos + this.height - GUN_ELEVATION - Bullet.HEIGHT - MULTIPLE_BULLETS_GAP;
-			Bullet upperBullet = new Bullet(bulletXPos, upperBulletYPos, strength);
+			Bullet upperBullet = new Bullet(bulletXPos, upperBulletYPos, this.strength);
 			upperBullet.moveRight();
 
 			int lowerBulletYPos = this.yPos + this.height - GUN_ELEVATION + MULTIPLE_BULLETS_GAP;
-			Bullet lowerBullet = new Bullet(bulletXPos, lowerBulletYPos, strength);
+			Bullet lowerBullet = new Bullet(bulletXPos, lowerBulletYPos, this.strength);
 			lowerBullet.moveRight();
 
 			bullets.add(upperBullet);
