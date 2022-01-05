@@ -18,7 +18,7 @@ class AboutView extends View {
 		VBox root = new VBox();
 		root.setBackground(new Background(new BackgroundFill(BG_COLOR, null, null)));
 		root.setAlignment(Pos.CENTER);
-		root.setSpacing(16);
+		root.setSpacing(8);
 
 		Text header = createThemedText("About", 48, 2);
 
@@ -32,7 +32,8 @@ class AboutView extends View {
 
 		Text referencesHeader = createThemedText("References", 28, 1);
 
-		String referencesInfoString = "Guide code: CMSC 22 Everwing by Ma'am Miyah Queliste\n"
+		String referencesInfoString = "Template code: CMSC 22 Mini Project Template\n"
+				+ "Guide code: CMSC 22 Everwing by Ma'am Miyah Queliste\n"
 				+ "Sprite Images: by Penusbmic (penusbmic.itch.io)\n"
 				+ "Pixel Font: Notalot60 by Chequered Ink (chequered.ink)";
 		Text referencesInfo = createThemedText(referencesInfoString, 24, 1);
