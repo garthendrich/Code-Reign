@@ -77,13 +77,13 @@ public class GameTimer extends AnimationTimer {
 	 * @param key The pressed key.
 	 */
 	public void handleKeyPress(KeyCode key) {
-		if ((key == KeyCode.SPACE) && !isKeyHeld(KeyCode.SPACE)) {
-			edolite.shoot();
-		}
-
-		if (keysHeld.contains(key) == false) {
+		if (!isKeyHeld(key)) {
 			keysHeld.add(key);
 			updateEdoliteMovement();
+
+			if (key == KeyCode.SPACE) {
+				edolite.shoot();
+			}
 		}
 	}
 

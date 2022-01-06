@@ -13,7 +13,7 @@ class Edolite extends MovableSprite {
 	public final static int MAX_INITIAL_STRENGTH = 150;
 	public final static int MOVEMENT_SPEED = 3;
 	public final static int GUN_ELEVATION = 30;
-	public final static int MULTIPLE_BULLETS_GAP = 16;
+	public final static int BULLETS_GAP = 4;
 
 	private int strength;
 	private ArrayList<Bullet> bullets = new ArrayList<Bullet>();
@@ -39,22 +39,21 @@ class Edolite extends MovableSprite {
 		faceRight();
 
 		int bulletXPos = this.xPos + this.width;
-		int bulletYPos = this.yPos + this.height - GUN_ELEVATION - (Bullet.HEIGHT / 2);
-		Bullet bullet = new Bullet(bulletXPos, bulletYPos, this.strength);
-		bullet.moveRight();
 
-		bullets.add(bullet);
+		int middleBulletYPos = this.yPos + this.height - GUN_ELEVATION - (Bullet.HEIGHT / 2);
+		Bullet middleBullet = new Bullet(bulletXPos, middleBulletYPos, this.strength);
+		middleBullet.moveRight();
+		bullets.add(middleBullet);
 
 		if (hasStatusEffect(StatusEffect.WARRIORS_FURY)) {
-			int upperBulletYPos = this.yPos + this.height - GUN_ELEVATION - Bullet.HEIGHT - MULTIPLE_BULLETS_GAP;
+			int upperBulletYPos = middleBulletYPos - Bullet.HEIGHT - BULLETS_GAP;
 			Bullet upperBullet = new Bullet(bulletXPos, upperBulletYPos, this.strength);
 			upperBullet.moveRight();
+			bullets.add(upperBullet);
 
-			int lowerBulletYPos = this.yPos + this.height - GUN_ELEVATION + MULTIPLE_BULLETS_GAP;
+			int lowerBulletYPos = middleBulletYPos + Bullet.HEIGHT + BULLETS_GAP;
 			Bullet lowerBullet = new Bullet(bulletXPos, lowerBulletYPos, this.strength);
 			lowerBullet.moveRight();
-
-			bullets.add(upperBullet);
 			bullets.add(lowerBullet);
 		}
     }

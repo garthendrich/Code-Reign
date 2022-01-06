@@ -59,8 +59,8 @@ public class MainMenuView extends View {
 			new EventHandler<MouseEvent>() {
 				@Override
 				public void handle(MouseEvent event) {
-					GameView gameStage = new GameView();
-					gameStage.loadTo(stage);
+					GameView gameView = new GameView();
+					gameView.loadTo(stage);
 				}
 			}
 		);
