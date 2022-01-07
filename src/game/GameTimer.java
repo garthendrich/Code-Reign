@@ -350,8 +350,6 @@ public class GameTimer extends AnimationTimer {
 
 		if (orglit instanceof Agmatron) {
 			int bulletDamage = bullet.getDamage();
-
-			Agmatron agmatron = (Agmatron) orglit;
 			agmatron.reduceHealthBy(bulletDamage);
 		} else {
 			orglit.vanish();
